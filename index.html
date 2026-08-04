@@ -1,129 +1,544 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR" data-lang="pt">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Henrique Sugi — Developer</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <title>Henrique Sugi — Desenvolvedor de Software</title>
+    <meta
+      name="description"
+      content="Portfólio de Henrique Sadao Sugi, estudante de ADS e desenvolvedor de software."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- HERO -->
-    <section class="hero">
-      <div class="avatar">HS</div>
-      <h1>Henrique Sugi</h1>
-      <p class="subtitle">Aspiring Software Developer · ADS Student at PUCPR</p>
-      <p class="location">📍 Curitiba, Brasil — PUCPR</p>
-      <div class="hero-links">
-        <a
-          href="https://www.linkedin.com/in/henrique-sugi-50b6152a5/"
-          target="_blank"
-          >LinkedIn</a
-        >
-        <a href="https://github.com/sugixp" target="_blank">GitHub</a>
-      </div>
-    </section>
+    <div class="scanline" aria-hidden="true"></div>
 
-    <!-- ABOUT -->
-    <section class="section">
-      <h2>About</h2>
-      <p>
-        I'm a Systems Analysis and Development student at PUCPR, focused on
-        building a career as a software engineer. I'm passionate about backend
-        development, cloud technologies, and creating practical projects that
-        solve real problems.
-      </p>
-    </section>
-
-    <!-- SKILLS -->
-    <section class="section">
-      <h2>Skills</h2>
-      <div class="tags">
-        <span class="tag">Python</span>
-        <span class="tag">SQL</span>
-        <span class="tag">SQLite</span>
-        <span class="tag">REST APIs</span>
-        <span class="tag">Git</span>
-        <span class="tag">GitHub</span>
-        <span class="tag">HTML</span>
-        <span class="tag">CSS</span>
-        <span class="tag">JavaScript</span>
-        <span class="tag">Azure</span>
-        <span class="tag">Cloud Computing</span>
-        <span class="tag">Linux</span>
-      </div>
-    </section>
-
-    <!-- CERTIFICATIONS -->
-    <section class="section">
-      <h2>Certifications</h2>
-      <div class="cards">
-        <div class="card">
-          <h3>Google IT Support</h3>
-          <p>Professional Certificate — Coursera</p>
-        </div>
-        <div class="card">
-          <h3>IBM Data Science</h3>
-          <p>Professional Certificate — Coursera</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section class="section">
-      <h2>Projects</h2>
-      <div class="cards">
-        <div class="card">
-          <h3>Currency Converter</h3>
-          <p>
-            Real-time currency converter using Python and the Open Exchange
-            Rates API. Supports 150+ currencies.
-          </p>
-          <div class="tags" style="margin-top: 12px">
-            <span class="tag">Python</span>
-            <span class="tag">REST API</span>
-          </div>
-          <a
-            href="https://github.com/sugixp/currency-converter"
-            target="_blank"
-            class="card-link"
-            >View on GitHub →</a
+    <header class="topbar">
+      <div class="wrap topbar-inner">
+        <a href="#top" class="brand">
+          <span class="brand-mark">HS</span>
+          <span class="brand-name">sugi<span class="dim">.</span>dev</span>
+        </a>
+        <nav class="topnav">
+          <a href="#sobre" data-pt="Sobre" data-en="About">Sobre</a>
+          <a href="#projetos" data-pt="Projetos" data-en="Projects">Projetos</a>
+          <a href="#stack" data-pt="Stack" data-en="Stack">Stack</a>
+          <a href="#trajetoria" data-pt="Trajetória" data-en="Journey"
+            >Trajetória</a
           >
-        </div>
-        <div class="card">
-          <h3>Task Manager</h3>
-          <p>
-            Command-line task manager with full CRUD operations and persistent
-            storage using SQLite.
-          </p>
-          <div class="tags" style="margin-top: 12px">
-            <span class="tag">Python</span>
-            <span class="tag">SQLite</span>
-            <span class="tag">CRUD</span>
-          </div>
-          <a
-            href="https://github.com/sugixp/task-manager"
-            target="_blank"
-            class="card-link"
-            >View on GitHub →</a
+          <a href="#contato" data-pt="Contato" data-en="Contact">Contato</a>
+        </nav>
+        <div class="topbar-actions">
+          <span class="status-chip">
+            <span class="dot" aria-hidden="true"></span>
+            <span
+              data-pt="disponível para estágio"
+              data-en="open to internships"
+              >disponível para estágio</span
+            >
+          </span>
+          <button
+            id="lang-toggle"
+            class="lang-toggle"
+            aria-label="Toggle language"
           >
+            <span class="lang-opt is-active" data-code="pt">PT</span>
+            <span class="lang-sep">/</span>
+            <span class="lang-opt" data-code="en">EN</span>
+          </button>
         </div>
       </div>
-    </section>
+    </header>
 
-    <!-- FOOTER -->
-    <footer>
-      <p>
-        Built with HTML, CSS & JavaScript ·
-        <a href="https://github.com/sugixp" target="_blank"
-          >github.com/sugixp</a
+    <main id="top">
+      <!-- ============ HERO / STATUS PANEL ============ -->
+      <section class="hero">
+        <div class="wrap hero-inner">
+          <div class="hero-text">
+            <p
+              class="eyebrow"
+              data-pt="// perfil.status"
+              data-en="// profile.status"
+            >
+              // perfil.status
+            </p>
+            <h1>
+              <span data-pt="Henrique Sadao Sugi" data-en="Henrique Sadao Sugi"
+                >Henrique Sadao Sugi</span
+              >
+            </h1>
+            <p
+              class="hero-role"
+              data-pt="Desenvolvedor de software em formação"
+              data-en="Software developer in training"
+            >
+              Desenvolvedor de software em formação
+            </p>
+            <p
+              class="hero-desc"
+              data-pt="Estudante de Análise e Desenvolvimento de Sistemas (PUCPR), construindo APIs, aprendendo a colocar sistemas no ar e documentando cada etapa do processo — do primeiro commit ao deploy em nuvem."
+              data-en="Systems Analysis and Development student (PUCPR), building APIs, learning to ship real systems, and documenting every step of the process — from first commit to cloud deploy."
+            >
+              Estudante de Análise e Desenvolvimento de Sistemas (PUCPR),
+              construindo APIs, aprendendo a colocar sistemas no ar e
+              documentando cada etapa do processo — do primeiro commit ao deploy
+              em nuvem.
+            </p>
+            <div class="hero-actions">
+              <a
+                href="#projetos"
+                class="btn btn-primary"
+                data-pt="Ver projetos"
+                data-en="View projects"
+                >Ver projetos</a
+              >
+              <a
+                href="#contato"
+                class="btn btn-ghost"
+                data-pt="Entrar em contato"
+                data-en="Get in touch"
+                >Entrar em contato</a
+              >
+            </div>
+          </div>
+
+          <div class="status-panel" role="group" aria-label="status">
+            <div class="status-panel-head">
+              <span
+                class="status-panel-title"
+                data-pt="status do sistema"
+                data-en="system status"
+                >status do sistema</span
+              >
+              <span class="status-pill">
+                <span class="dot" aria-hidden="true"></span>
+                <span data-pt="online" data-en="online">online</span>
+              </span>
+            </div>
+            <dl class="status-list">
+              <div class="status-row">
+                <dt data-pt="localização" data-en="location">localização</dt>
+                <dd>Curitiba, BR</dd>
+              </div>
+              <div class="status-row">
+                <dt data-pt="formação" data-en="education">formação</dt>
+                <dd
+                  data-pt="ADS · PUCPR · 3º semestre"
+                  data-en="ADS · PUCPR · 3rd semester"
+                >
+                  ADS · PUCPR · 3º semestre
+                </dd>
+              </div>
+              <div class="status-row">
+                <dt data-pt="idiomas" data-en="languages">idiomas</dt>
+                <dd
+                  data-pt="PT nativo · EN C1 · JP avançado"
+                  data-en="PT native · EN C1 · JP advanced"
+                >
+                  PT nativo · EN C1 · JP avançado
+                </dd>
+              </div>
+              <div class="status-row">
+                <dt data-pt="experiência intl." data-en="intl. experience">
+                  experiência intl.
+                </dt>
+                <dd data-pt="6+ anos · Japão" data-en="6+ years · Japan">
+                  6+ anos · Japão
+                </dd>
+              </div>
+              <div class="status-row">
+                <dt data-pt="foco atual" data-en="current focus">foco atual</dt>
+                <dd data-pt="1º estágio em dev" data-en="1st dev internship">
+                  1º estágio em dev
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SOBRE ============ -->
+      <section id="sobre" class="section">
+        <div class="wrap">
+          <p class="eyebrow" data-pt="// sobre" data-en="// about">// sobre</p>
+          <h2
+            data-pt="De linha de produção a linha de código"
+            data-en="From production line to code"
+          >
+            De linha de produção a linha de código
+          </h2>
+          <p
+            class="section-lead"
+            data-pt="Antes de estudar desenvolvimento, passei mais de seis anos trabalhando em ambiente industrial internacional no Japão — em processos de montagem elétrica e logística de abastecimento, sob padrões rígidos de qualidade. Hoje aplico essa mesma disciplina em outro tipo de sistema: escrevo APIs, conecto bancos de dados, escrevo testes automatizados e coloco projetos no ar, do zero até a nuvem."
+            data-en="Before studying software development, I spent over six years working in an international industrial environment in Japan — in electrical assembly and supply-chain logistics, under strict quality standards. Today I apply that same discipline to a different kind of system: I write APIs, connect databases, write automated tests, and ship projects from scratch to the cloud."
+          >
+            Antes de estudar desenvolvimento, passei mais de seis anos
+            trabalhando em ambiente industrial internacional no Japão — em
+            processos de montagem elétrica e logística de abastecimento, sob
+            padrões rígidos de qualidade. Hoje aplico essa mesma disciplina em
+            outro tipo de sistema: escrevo APIs, conecto bancos de dados,
+            escrevo testes automatizados e coloco projetos no ar, do zero até a
+            nuvem.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ PROJETOS ============ -->
+      <section id="projetos" class="section section-alt">
+        <div class="wrap">
+          <p class="eyebrow" data-pt="// projetos" data-en="// projects">
+            // projetos
+          </p>
+          <h2 data-pt="Serviços em execução" data-en="Running services">
+            Serviços em execução
+          </h2>
+
+          <div class="projects-grid">
+            <!-- FEATURED -->
+            <article class="project-card project-card-featured">
+              <div class="project-top">
+                <span
+                  class="project-badge"
+                  data-pt="destaque"
+                  data-en="featured"
+                  >destaque</span
+                >
+                <span class="project-status">
+                  <span class="dot" aria-hidden="true"></span>
+                  <span data-pt="deploy validado" data-en="deploy verified"
+                    >deploy validado</span
+                  >
+                </span>
+              </div>
+              <h3>task-api</h3>
+              <p
+                data-pt="API REST de gerenciamento de tarefas com autenticação JWT, isolamento de dados por usuário, testes automatizados, containerizada com Docker e publicada na AWS. Inclui front-end próprio consumindo a API."
+                data-en="Task-management REST API with JWT authentication, per-user data isolation, automated tests, Dockerized and deployed to AWS. Ships with its own front-end consuming the API."
+              >
+                API REST de gerenciamento de tarefas com autenticação JWT,
+                isolamento de dados por usuário, testes automatizados,
+                containerizada com Docker e publicada na AWS. Inclui front-end
+                próprio consumindo a API.
+              </p>
+              <ul class="tag-list">
+                <li>FastAPI</li>
+                <li>SQLAlchemy</li>
+                <li>JWT</li>
+                <li>Pytest</li>
+                <li>Docker</li>
+                <li>AWS</li>
+              </ul>
+              <div class="project-links">
+                <a
+                  href="https://github.com/sugixp/task-api"
+                  target="_blank"
+                  rel="noopener"
+                  >GitHub →</a
+                >
+                <a
+                  href="https://sugixp.github.io/task-api/"
+                  target="_blank"
+                  rel="noopener"
+                  data-pt="Demo →"
+                  data-en="Demo →"
+                  >Demo →</a
+                >
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div class="project-top">
+                <span class="project-status">
+                  <span class="dot dot-muted" aria-hidden="true"></span>
+                  <span data-pt="estável" data-en="stable">estável</span>
+                </span>
+              </div>
+              <h3>currency-converter</h3>
+              <p
+                data-pt="Conversor de moedas em Python consumindo a API real da Open Exchange Rates, com suporte a mais de 150 moedas."
+                data-en="Currency converter in Python consuming the real Open Exchange Rates API, supporting 150+ currencies."
+              >
+                Conversor de moedas em Python consumindo a API real da Open
+                Exchange Rates, com suporte a mais de 150 moedas.
+              </p>
+              <ul class="tag-list">
+                <li>Python</li>
+                <li>REST API</li>
+              </ul>
+              <div class="project-links">
+                <a
+                  href="https://github.com/sugixp/currency-converter"
+                  target="_blank"
+                  rel="noopener"
+                  >GitHub →</a
+                >
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div class="project-top">
+                <span class="project-status">
+                  <span class="dot dot-muted" aria-hidden="true"></span>
+                  <span data-pt="estável" data-en="stable">estável</span>
+                </span>
+              </div>
+              <h3>task-manager</h3>
+              <p
+                data-pt="Gerenciador de tarefas em linha de comando, com CRUD completo e armazenamento persistente em SQLite."
+                data-en="Command-line task manager with full CRUD operations and persistent SQLite storage."
+              >
+                Gerenciador de tarefas em linha de comando, com CRUD completo e
+                armazenamento persistente em SQLite.
+              </p>
+              <ul class="tag-list">
+                <li>Python</li>
+                <li>SQLite</li>
+                <li>CRUD</li>
+              </ul>
+              <div class="project-links">
+                <a
+                  href="https://github.com/sugixp/task-manager"
+                  target="_blank"
+                  rel="noopener"
+                  >GitHub →</a
+                >
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ STACK ============ -->
+      <section id="stack" class="section">
+        <div class="wrap">
+          <p class="eyebrow" data-pt="// stack" data-en="// stack">// stack</p>
+          <h2 data-pt="Ferramentas em uso" data-en="Tools in use">
+            Ferramentas em uso
+          </h2>
+
+          <div class="stack-grid">
+            <div class="stack-group">
+              <h3 data-pt="Linguagens" data-en="Languages">Linguagens</h3>
+              <ul class="tag-list tag-list-mono">
+                <li>Python</li>
+                <li>SQL</li>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+              </ul>
+            </div>
+            <div class="stack-group">
+              <h3
+                data-pt="Frameworks &amp; Ferramentas"
+                data-en="Frameworks &amp; Tools"
+              >
+                Frameworks &amp; Ferramentas
+              </h3>
+              <ul class="tag-list tag-list-mono">
+                <li>FastAPI</li>
+                <li>SQLAlchemy</li>
+                <li>Pytest</li>
+                <li>Git / GitHub</li>
+              </ul>
+            </div>
+            <div class="stack-group">
+              <h3 data-pt="Cloud &amp; Infra" data-en="Cloud &amp; Infra">
+                Cloud &amp; Infra
+              </h3>
+              <ul class="tag-list tag-list-mono">
+                <li>Docker</li>
+                <li>AWS Elastic Beanstalk</li>
+                <li>Linux</li>
+              </ul>
+            </div>
+            <div class="stack-group">
+              <h3 data-pt="Em aprendizado" data-en="Currently learning">
+                Em aprendizado
+              </h3>
+              <ul class="tag-list tag-list-mono tag-list-planned">
+                <li>AWS Developer Associate</li>
+                <li>Java (OCP)</li>
+                <li>Kubernetes (CKAD)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CERTIFICAÇÕES ============ -->
+      <section class="section section-alt">
+        <div class="wrap">
+          <p class="eyebrow" data-pt="// credenciais" data-en="// credentials">
+            // credenciais
+          </p>
+          <h2 data-pt="Certificações" data-en="Certifications">
+            Certificações
+          </h2>
+
+          <div class="cert-grid">
+            <div class="cert-item">
+              <span class="cert-check" aria-hidden="true">✓</span>
+              <div>
+                <p class="cert-name">
+                  Google IT Support Professional Certificate
+                </p>
+                <p class="cert-meta">Google · Coursera · 2025</p>
+              </div>
+            </div>
+            <div class="cert-item">
+              <span class="cert-check" aria-hidden="true">✓</span>
+              <div>
+                <p class="cert-name">
+                  IBM Data Science Professional Certificate
+                </p>
+                <p class="cert-meta">IBM · Coursera · 2025</p>
+              </div>
+            </div>
+            <div class="cert-item">
+              <span class="cert-check" aria-hidden="true">✓</span>
+              <div>
+                <p class="cert-name">Duolingo English Test — C1 (135 pts)</p>
+                <p
+                  class="cert-meta"
+                  data-pt="Proficiência em inglês"
+                  data-en="English proficiency"
+                >
+                  Proficiência em inglês
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ TRAJETÓRIA ============ -->
+      <section id="trajetoria" class="section">
+        <div class="wrap">
+          <p class="eyebrow" data-pt="// trajetória" data-en="// journey">
+            // trajetória
+          </p>
+          <h2
+            data-pt="Experiência internacional"
+            data-en="International experience"
+          >
+            Experiência internacional
+          </h2>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-marker" aria-hidden="true"></div>
+              <div class="timeline-content">
+                <p class="timeline-date">
+                  2025 — <span data-pt="atual" data-en="present">atual</span>
+                </p>
+                <h3 data-pt="Estudante de ADS" data-en="ADS Student">
+                  Estudante de ADS
+                </h3>
+                <p
+                  data-pt="PUCPR, Curitiba — foco em desenvolvimento de software"
+                  data-en="PUCPR, Curitiba — focus on software development"
+                >
+                  PUCPR, Curitiba — foco em desenvolvimento de software
+                </p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-marker" aria-hidden="true"></div>
+              <div class="timeline-content">
+                <p class="timeline-date">2023 — 2025</p>
+                <h3 data-pt="Operador de Maquinário" data-en="Machine Operator">
+                  Operador de Maquinário
+                </h3>
+                <p
+                  data-pt="Mitsubishi Motors Corporation — Okazaki, Japão. Montagem elétrica de veículos e relatórios de qualidade e segurança."
+                  data-en="Mitsubishi Motors Corporation — Okazaki, Japan. Vehicle electrical assembly and quality/safety reporting."
+                >
+                  Mitsubishi Motors Corporation — Okazaki, Japão. Montagem
+                  elétrica de veículos e relatórios de qualidade e segurança.
+                </p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-marker" aria-hidden="true"></div>
+              <div class="timeline-content">
+                <p class="timeline-date">2016 — 2021</p>
+                <h3
+                  data-pt="Auxiliar de Logística"
+                  data-en="Logistics Assistant"
+                >
+                  Auxiliar de Logística
+                </h3>
+                <p
+                  data-pt="Advics (Grupo Toyota) — Handa, Japão. Controle de recebimento de peças e abastecimento de linha de produção."
+                  data-en="Advics (Toyota Group) — Handa, Japan. Parts receiving control and production line supply."
+                >
+                  Advics (Grupo Toyota) — Handa, Japão. Controle de recebimento
+                  de peças e abastecimento de linha de produção.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CONTATO ============ -->
+      <section id="contato" class="section section-contact">
+        <div class="wrap">
+          <p class="eyebrow" data-pt="// contato" data-en="// contact">
+            // contato
+          </p>
+          <h2 data-pt="Vamos conversar" data-en="Let's talk">
+            Vamos conversar
+          </h2>
+          <p
+            class="section-lead"
+            data-pt="Aberto a oportunidades de estágio em desenvolvimento de software em Curitiba."
+            data-en="Open to software development internship opportunities in Curitiba."
+          >
+            Aberto a oportunidades de estágio em desenvolvimento de software em
+            Curitiba.
+          </p>
+          <div class="contact-links">
+            <a href="mailto:sugisadao@proton.me" class="btn btn-primary"
+              >sugisadao@proton.me</a
+            >
+            <a
+              href="https://www.linkedin.com/in/henrique-sugi-50b6152a5"
+              target="_blank"
+              rel="noopener"
+              class="btn btn-ghost"
+              >LinkedIn →</a
+            >
+            <a
+              href="https://github.com/sugixp"
+              target="_blank"
+              rel="noopener"
+              class="btn btn-ghost"
+              >GitHub →</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap footer-inner">
+        <span
+          data-pt="Construído com HTML, CSS e JavaScript · Publicado via GitHub Pages"
+          data-en="Built with HTML, CSS and JavaScript · Published via GitHub Pages"
+          >Construído com HTML, CSS e JavaScript · Publicado via GitHub
+          Pages</span
         >
-      </p>
+        <span>© 2026 Henrique Sugi</span>
+      </div>
     </footer>
 
-    <script src="js/script.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
