@@ -15,6 +15,11 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css" />
+    <!-- Start downloading section data in parallel with the JS modules. -->
+    <link rel="preload" href="data/projects.json" as="fetch" crossorigin />
+    <link rel="preload" href="data/stack.json" as="fetch" crossorigin />
+    <link rel="preload" href="data/certifications.json" as="fetch" crossorigin />
+    <link rel="preload" href="data/experience.json" as="fetch" crossorigin />
   </head>
   <body>
     <div class="scanline" aria-hidden="true"></div>
@@ -224,56 +229,28 @@
             Ferramentas em uso
           </h2>
 
-          <div class="stack-grid">
-            <div class="stack-group">
-              <h3 data-pt="Linguagens" data-en="Languages">Linguagens</h3>
-              <ul class="tag-list tag-list-mono">
-                <li>Python</li>
-                <li>SQL</li>
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>JavaScript</li>
-              </ul>
-            </div>
-            <div class="stack-group">
-              <h3
-                data-pt="Frameworks &amp; Ferramentas"
-                data-en="Frameworks &amp; Tools"
+          <!-- Rendered from data/stack.json by js/render/stack.js -->
+          <div id="stack-root" class="stack-grid" aria-busy="true">
+            <p class="fallback-note">
+              <span
+                data-pt="Esta seção não carregou. Veja o perfil completo no LinkedIn:"
+                data-en="This section didn't load. See the full profile on LinkedIn:"
+                >Esta seção não carregou. Veja o perfil completo no
+                LinkedIn:</span
               >
-                Frameworks &amp; Ferramentas
-              </h3>
-              <ul class="tag-list tag-list-mono">
-                <li>FastAPI</li>
-                <li>SQLAlchemy</li>
-                <li>Pytest</li>
-                <li>Git / GitHub</li>
-              </ul>
-            </div>
-            <div class="stack-group">
-              <h3 data-pt="Cloud &amp; Infra" data-en="Cloud &amp; Infra">
-                Cloud &amp; Infra
-              </h3>
-              <ul class="tag-list tag-list-mono">
-                <li>Docker</li>
-                <li>AWS Elastic Beanstalk</li>
-                <li>Linux</li>
-              </ul>
-            </div>
-            <div class="stack-group">
-              <h3 data-pt="Em aprendizado" data-en="Currently learning">
-                Em aprendizado
-              </h3>
-              <ul class="tag-list tag-list-mono tag-list-planned">
-                <li>Azure</li>
-                <li>IoT</li>
-              </ul>
-            </div>
+              <a
+                href="https://www.linkedin.com/in/henrique-sugi-50b6152a5"
+                target="_blank"
+                rel="noopener"
+                >LinkedIn →</a
+              >
+            </p>
           </div>
         </div>
       </section>
 
       <!-- ============ CERTIFICAÇÕES ============ -->
-      <section class="section section-alt">
+      <section id="certificacoes" class="section section-alt">
         <div class="wrap">
           <p class="eyebrow" data-pt="// credenciais" data-en="// credentials">
             // credenciais
@@ -282,38 +259,22 @@
             Certificações
           </h2>
 
-          <div class="cert-grid">
-            <div class="cert-item">
-              <span class="cert-check" aria-hidden="true">✓</span>
-              <div>
-                <p class="cert-name">
-                  Google IT Support Professional Certificate
-                </p>
-                <p class="cert-meta">Google · Coursera · 2025</p>
-              </div>
-            </div>
-            <div class="cert-item">
-              <span class="cert-check" aria-hidden="true">✓</span>
-              <div>
-                <p class="cert-name">
-                  IBM Data Science Professional Certificate
-                </p>
-                <p class="cert-meta">IBM · Coursera · 2025</p>
-              </div>
-            </div>
-            <div class="cert-item">
-              <span class="cert-check" aria-hidden="true">✓</span>
-              <div>
-                <p class="cert-name">Duolingo English Test — C1 (135 pts)</p>
-                <p
-                  class="cert-meta"
-                  data-pt="Proficiência em inglês"
-                  data-en="English proficiency"
-                >
-                  Proficiência em inglês
-                </p>
-              </div>
-            </div>
+          <!-- Rendered from data/certifications.json by js/render/certifications.js -->
+          <div id="certifications-root" class="cert-grid" aria-busy="true">
+            <p class="fallback-note">
+              <span
+                data-pt="Esta seção não carregou. Veja o perfil completo no LinkedIn:"
+                data-en="This section didn't load. See the full profile on LinkedIn:"
+                >Esta seção não carregou. Veja o perfil completo no
+                LinkedIn:</span
+              >
+              <a
+                href="https://www.linkedin.com/in/henrique-sugi-50b6152a5"
+                target="_blank"
+                rel="noopener"
+                >LinkedIn →</a
+              >
+            </p>
           </div>
         </div>
       </section>
@@ -326,60 +287,23 @@
           </p>
           <h2 data-pt="Experiência" data-en="Experience">Experiência</h2>
 
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-marker" aria-hidden="true"></div>
-              <div class="timeline-content">
-                <p class="timeline-date">
-                  2025 — <span data-pt="atual" data-en="present">atual</span>
-                </p>
-                <h3 data-pt="Estudante de ADS" data-en="ADS Student">
-                  Estudante de ADS
-                </h3>
-                <p
-                  data-pt="PUCPR, Curitiba — foco em desenvolvimento de software"
-                  data-en="PUCPR, Curitiba — focus on software development"
-                >
-                  PUCPR, Curitiba — foco em desenvolvimento de software
-                </p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-marker" aria-hidden="true"></div>
-              <div class="timeline-content">
-                <p class="timeline-date">2023 — 2025</p>
-                <h3 data-pt="Operador de Maquinário" data-en="Machine Operator">
-                  Operador de Maquinário
-                </h3>
-                <p
-                  data-pt="Mitsubishi Motors Corporation — Okazaki, Japão. Montagem elétrica de veículos e relatórios de qualidade e segurança."
-                  data-en="Mitsubishi Motors Corporation — Okazaki, Japan. Vehicle electrical assembly and quality/safety reporting."
-                >
-                  Mitsubishi Motors Corporation — Okazaki, Japão. Montagem
-                  elétrica de veículos e relatórios de qualidade e segurança.
-                </p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-marker" aria-hidden="true"></div>
-              <div class="timeline-content">
-                <p class="timeline-date">2016 — 2021</p>
-                <h3
-                  data-pt="Auxiliar de Logística"
-                  data-en="Logistics Assistant"
-                >
-                  Auxiliar de Logística
-                </h3>
-                <p
-                  data-pt="Advics (Grupo Toyota) — Handa, Japão. Controle de recebimento de peças e abastecimento de linha de produção."
-                  data-en="Advics (Toyota Group) — Handa, Japan. Parts receiving control and production line supply."
-                >
-                  Advics (Grupo Toyota) — Handa, Japão. Controle de recebimento
-                  de peças e abastecimento de linha de produção.
-                </p>
-              </div>
-            </div>
-          </div>
+          <!-- Rendered from data/experience.json by js/render/experience.js -->
+          <ol id="experience-root" class="timeline" aria-busy="true">
+            <li class="fallback-note">
+              <span
+                data-pt="Esta seção não carregou. Veja o perfil completo no LinkedIn:"
+                data-en="This section didn't load. See the full profile on LinkedIn:"
+                >Esta seção não carregou. Veja o perfil completo no
+                LinkedIn:</span
+              >
+              <a
+                href="https://www.linkedin.com/in/henrique-sugi-50b6152a5"
+                target="_blank"
+                rel="noopener"
+                >LinkedIn →</a
+              >
+            </li>
+          </ol>
         </div>
       </section>
 

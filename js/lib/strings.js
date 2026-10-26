@@ -15,6 +15,7 @@ const STRINGS = {
         filterLabel: "Filtrar projetos por tecnologia",
         filterAll: "todas",
         projectCount: (n) => (n === 1 ? "1 projeto" : `${n} projetos`),
+        present: "atual",
     },
     en: {
         featured: "featured",
@@ -29,6 +30,7 @@ const STRINGS = {
         filterLabel: "Filter projects by technology",
         filterAll: "all",
         projectCount: (n) => (n === 1 ? "1 project" : `${n} projects`),
+        present: "present",
     },
 };
 
