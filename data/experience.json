@@ -1,0 +1,32 @@
+{
+  "$schema": "./schema/experience.schema.json",
+  "experience": [
+    {
+      "start": "2025",
+      "end": null,
+      "title": { "pt": "Estudante de ADS", "en": "ADS Student" },
+      "description": {
+        "pt": "PUCPR, Curitiba — foco em desenvolvimento de software",
+        "en": "PUCPR, Curitiba — focus on software development"
+      }
+    },
+    {
+      "start": "2023",
+      "end": "2025",
+      "title": { "pt": "Operador de Maquinário", "en": "Machine Operator" },
+      "description": {
+        "pt": "Mitsubishi Motors Corporation — Okazaki, Japão. Montagem elétrica de veículos e relatórios de qualidade e segurança.",
+        "en": "Mitsubishi Motors Corporation — Okazaki, Japan. Vehicle electrical assembly and quality/safety reporting."
+      }
+    },
+    {
+      "start": "2016",
+      "end": "2021",
+      "title": { "pt": "Auxiliar de Logística", "en": "Logistics Assistant" },
+      "description": {
+        "pt": "Advics (Grupo Toyota) — Handa, Japão. Controle de recebimento de peças e abastecimento de linha de produção.",
+        "en": "Advics (Toyota Group) — Handa, Japan. Parts receiving control and production line supply."
+      }
+    }
+  ]
+}

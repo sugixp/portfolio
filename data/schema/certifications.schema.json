@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Certifications",
+  "type": "object",
+  "properties": {
+    "$schema": { "type": "string" },
+    "certifications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "$ref": "common.schema.json#/$defs/localized" },
+          "meta": { "$ref": "common.schema.json#/$defs/localized" },
+          "url": { "$ref": "common.schema.json#/$defs/url" }
+        },
+        "required": ["name", "meta"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["certifications"],
+  "additionalProperties": false
+}

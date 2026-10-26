@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Projects",
+  "type": "object",
+  "properties": {
+    "$schema": { "type": "string" },
+    "projects": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/project" }
+    }
+  },
+  "required": ["projects"],
+  "additionalProperties": false,
+  "$defs": {
+    "project": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique slug, used in URLs. Lowercase letters, digits and hyphens.",
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+        },
+        "title": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+        "description": { "$ref": "common.schema.json#/$defs/localized" },
+        "tech": {
+          "type": "array",
+          "items": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "links": {
+          "type": "object",
+          "properties": {
+            "repo": { "$ref": "common.schema.json#/$defs/url" },
+            "demo": { "$ref": "common.schema.json#/$defs/url" }
+          },
+          "additionalProperties": false
+        },
+        "status": {
+          "enum": ["deployed", "stable", "in-progress", "archived"]
+        },
+        "featured": { "type": "boolean" }
+      },
+      "required": ["id", "title", "description", "tech", "links", "status", "featured"],
+      "additionalProperties": false
+    }
+  }
+}

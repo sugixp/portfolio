@@ -1,0 +1,26 @@
+{
+  "$schema": "./schema/stack.schema.json",
+  "groups": [
+    {
+      "id": "languages",
+      "title": { "pt": "Linguagens", "en": "Languages" },
+      "items": ["Python", "SQL", "HTML", "CSS", "JavaScript"]
+    },
+    {
+      "id": "frameworks",
+      "title": { "pt": "Frameworks & Ferramentas", "en": "Frameworks & Tools" },
+      "items": ["FastAPI", "SQLAlchemy", "Pytest", "Git / GitHub"]
+    },
+    {
+      "id": "infra",
+      "title": { "pt": "Cloud & Infra", "en": "Cloud & Infra" },
+      "items": ["Docker", "AWS Elastic Beanstalk", "Linux"]
+    },
+    {
+      "id": "learning",
+      "title": { "pt": "Em aprendizado", "en": "Currently learning" },
+      "items": ["Azure", "IoT"],
+      "planned": true
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "./schema/certifications.schema.json",
+  "certifications": [
+    {
+      "name": "Google IT Support Professional Certificate",
+      "meta": "Google · Coursera · 2025"
+    },
+    {
+      "name": "IBM Data Science Professional Certificate",
+      "meta": "IBM · Coursera · 2025"
+    },
+    {
+      "name": "Duolingo English Test — C1 (135 pts)",
+      "meta": { "pt": "Proficiência em inglês", "en": "English proficiency" }
+    }
+  ]
+}

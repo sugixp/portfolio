@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Shared definitions",
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "translated": {
+      "description": "Text in both site languages.",
+      "type": "object",
+      "properties": {
+        "pt": { "$ref": "#/$defs/nonEmptyString" },
+        "en": { "$ref": "#/$defs/nonEmptyString" }
+      },
+      "required": ["pt", "en"],
+      "additionalProperties": false
+    },
+    "localized": {
+      "description": "Either a language-neutral string or text in both languages.",
+      "oneOf": [
+        { "$ref": "#/$defs/nonEmptyString" },
+        { "$ref": "#/$defs/translated" }
+      ]
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    }
+  }
+}
