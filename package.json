@@ -1,0 +1,10 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "description": "Personal portfolio of Henrique Sugi. Plain HTML/CSS/JS served by GitHub Pages; this file only holds dev tooling.",
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "test": "node --test"
+  }
+}
