@@ -12,6 +12,9 @@ const STRINGS = {
         },
         repo: "GitHub",
         demo: "Demo",
+        filterLabel: "Filtrar projetos por tecnologia",
+        filterAll: "todas",
+        projectCount: (n) => (n === 1 ? "1 projeto" : `${n} projetos`),
     },
     en: {
         featured: "featured",
@@ -23,6 +26,9 @@ const STRINGS = {
         },
         repo: "GitHub",
         demo: "Demo",
+        filterLabel: "Filter projects by technology",
+        filterAll: "all",
+        projectCount: (n) => (n === 1 ? "1 project" : `${n} projects`),
     },
 };
 
