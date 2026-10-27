@@ -3,27 +3,53 @@
   "title": "Experience",
   "type": "object",
   "properties": {
-    "$schema": { "type": "string" },
+    "$schema": {
+      "type": "string"
+    },
     "experience": {
       "description": "Most recent first.",
       "type": "array",
       "items": {
         "type": "object",
         "properties": {
-          "start": { "type": "string", "pattern": "^\\d{4}$" },
-          "end": {
-            "description": "null means the role is current.",
-            "type": ["string", "null"],
+          "start": {
+            "type": "string",
             "pattern": "^\\d{4}$"
           },
-          "title": { "$ref": "common.schema.json#/$defs/localized" },
-          "description": { "$ref": "common.schema.json#/$defs/localized" }
+          "end": {
+            "description": "null means the role is current.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^\\d{4}$"
+          },
+          "kind": {
+            "description": "\"education\" goes to the Education section of the CV; anything else (default \"work\") to Experience. The site timeline shows both.",
+            "enum": [
+              "work",
+              "education"
+            ]
+          },
+          "title": {
+            "$ref": "common.schema.json#/$defs/localized"
+          },
+          "description": {
+            "$ref": "common.schema.json#/$defs/localized"
+          }
         },
-        "required": ["start", "end", "title", "description"],
+        "required": [
+          "start",
+          "end",
+          "title",
+          "description"
+        ],
         "additionalProperties": false
       }
     }
   },
-  "required": ["experience"],
+  "required": [
+    "experience"
+  ],
   "additionalProperties": false
 }
