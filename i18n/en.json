@@ -110,7 +110,8 @@
   "experience": {
     "eyebrow": "// journey",
     "title": "Experience",
-    "present": "present"
+    "present": "present",
+    "expected": "expected {year}"
   },
   "contact": {
     "eyebrow": "// contact",

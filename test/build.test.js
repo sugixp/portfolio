@@ -154,3 +154,12 @@ test("the timeline and the CV list experience most recent first", async () => {
         assert.ok(isDescending(cvDates.slice(-2)), `${locale._meta.lang} cv experience: ${cvDates}`);
     }
 });
+
+test("dateRange shows the expected completion year when there is one", async () => {
+    const { dateRange } = await import("../templates/parts.mjs");
+    const { translator } = await import("../scripts/lib/i18n.mjs");
+    const t = translator(content.locales.find((l) => l._meta.lang === "pt"));
+    assert.equal(dateRange(t, { start: "2016", end: "2021" }), "2016–2021");
+    assert.equal(dateRange(t, { start: "2025", end: null }), "2025–atual");
+    assert.equal(dateRange(t, { start: "2025", end: null, expectedEnd: "2027" }), "2025 – previsão de conclusão 2027");
+});

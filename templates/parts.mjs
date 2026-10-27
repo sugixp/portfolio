@@ -4,6 +4,13 @@ import { join } from "node:path";
 import { html } from "../scripts/lib/html.mjs";
 import { localize } from "../scripts/lib/localize.mjs";
 
+/** "2023–2025", "2025–atual" or, with expectedEnd, "2025 – previsão de conclusão 2027". */
+export function dateRange(t, item) {
+    if (item.end) return `${item.start}–${item.end}`;
+    if (item.expectedEnd) return `${item.start} – ${t("experience.expected", { year: item.expectedEnd })}`;
+    return `${item.start}–${t("experience.present")}`;
+}
+
 const STATUS_LAMP = { deployed: "ok", stable: "ok", "in-progress": "warn", archived: "off" };
 
 /**

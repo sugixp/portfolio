@@ -3,7 +3,7 @@ import { html } from "../scripts/lib/html.mjs";
 import { plural } from "../scripts/lib/i18n.mjs";
 import { localize } from "../scripts/lib/localize.mjs";
 import { collectTechs, sortProjects } from "../scripts/lib/projects.mjs";
-import { lamp, projectPreview, statusLamp } from "./parts.mjs";
+import { dateRange, lamp, projectPreview, statusLamp } from "./parts.mjs";
 import { cvPdfPath } from "./cv.mjs";
 
 function external(href, content, attrs = "") {
@@ -164,7 +164,7 @@ function experience({ t, lang, data }) {
           <ol class="timeline">
             ${items.map(
                 (item) => html`<li class="timeline-item reveal">
-              <p class="timeline-date mono">${item.start}–${item.end ?? t("experience.present")}</p>
+              <p class="timeline-date mono">${dateRange(t, item)}</p>
               <h3>${localize(item.title, lang)}</h3>
               <p>${localize(item.description, lang)}</p>
             </li>`,

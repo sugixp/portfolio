@@ -24,6 +24,11 @@
             ],
             "pattern": "^\\d{4}$"
           },
+          "expectedEnd": {
+            "description": "Expected completion year while end is null (e.g. a degree in progress). Shown as \"2025 – expected 2027\".",
+            "type": "string",
+            "pattern": "^d{4}$"
+          },
           "kind": {
             "description": "\"education\" goes to the Education section of the CV; anything else (default \"work\") to Experience. The site timeline shows both.",
             "enum": [

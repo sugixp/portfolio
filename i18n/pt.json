@@ -110,7 +110,8 @@
   "experience": {
     "eyebrow": "// trajetória",
     "title": "Experiência",
-    "present": "atual"
+    "present": "atual",
+    "expected": "previsão de conclusão {year}"
   },
   "contact": {
     "eyebrow": "// contato",

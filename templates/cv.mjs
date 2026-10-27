@@ -4,6 +4,7 @@
 import { html } from "../scripts/lib/html.mjs";
 import { localize } from "../scripts/lib/localize.mjs";
 import { sortProjects } from "../scripts/lib/projects.mjs";
+import { dateRange } from "./parts.mjs";
 
 const strip = (url) => url.replace(/^https:\/\//, "").replace(/\/$/, "");
 
@@ -31,7 +32,7 @@ function section(title, content) {
 
 export function cvArticle(ctx) {
     const { t, lang, site, data } = ctx;
-    const range = (e) => `${e.start}–${e.end ?? t("experience.present")}`;
+    const range = (e) => dateRange(t, e);
     const timeline = data.experience.experience;
     const education = timeline.filter((e) => e.kind === "education");
     const work = timeline.filter((e) => e.kind !== "education");
