@@ -258,3 +258,47 @@ gerada. Para revisar, rode `npm run start:drafts`. Para publicar, troque para `f
 Stack, certificações e experiência seguem a mesma ideia, em `data/stack.json`,
 `data/certifications.json` e `data/experience.json`. Textos de interface (títulos de
 seção, botões, painel de status) ficam em `i18n/pt.json` e `i18n/en.json`.
+
+## Roadmap
+
+Projeto em pausa desde 27/10/2026. Para retomar: `git pull` (o workflow de dados comita
+na `main` todo dia), `npm install` e `npm start`.
+
+### Etapas pendentes
+
+- **4. Versão em japonês:** criar `i18n/ja.json` com `"_meta": { "lang": "ja", "path": "ja/",
+  "reviewed": false, … }` e as mesmas chaves de `pt.json` (um teste confere), mais os campos
+  `"ja"` nos dados. Enquanto `reviewed` for `false`, `/ja/` não é gerada nem entra no sitemap.
+  Carregar uma fonte com japonês só nessa página.
+- **5. Notas técnicas (devlog):** posts em Markdown em `content/notes/`, convertidos no build
+  (uma lib de Markdown como devDependency), com título, data, tags, tempo de leitura,
+  idioma, filtro por tag e feed RSS. Começar com uma nota de exemplo marcada como rascunho.
+- **6. Gráficos com os dados do GitHub:** heatmap de atividade em SVG com versão em texto,
+  barras de linguagens e, nos cards, a última atualização e a linguagem principal. Os dados
+  já estão em `data/github.json`; para o heatmap, a API de eventos cobre só 90 dias, então
+  talvez seja preciso a API GraphQL (`contributionsCollection`).
+- **7. Qualidade:** testes end-to-end com Playwright na CI (navegação, filtro, diálogo,
+  terminal, idioma e tema, no desktop e no celular), axe nas páginas principais, Lighthouse
+  CI (`numberOfRuns: 3`, mínimo 0.9, performance como aviso) e botão "copiar e-mail" no
+  contato, com feedback acessível. O `@playwright/test` já está nas devDependencies.
+
+### Conteúdo pendente
+
+- **Previsão de conclusão do curso:** preencher `"expectedEnd": "AAAA"` no item de formação
+  em `data/experience.json`. Site e currículo passam a mostrar "2025 – previsão de conclusão
+  AAAA".
+- **Experiência no Japão:** trocar as `description` da Mitsubishi e da Advics em
+  `data/experience.json` pelos textos finais.
+- **Estudos de caso:** escrever o `learned` ("O que aprendi") de `currency-converter` e
+  `task-manager` em `data/projects.json`, revisar o resto e trocar `"draft"` para `false`.
+- **Prévias:** gravar GIFs dos projetos de linha de comando, se quiser substituir o texto
+  do terminal.
+
+### Adicionar um projeto, em resumo
+
+1. Acrescente um objeto ao array em `data/projects.json` (campos na seção
+   [Como adicionar um projeto](#como-adicionar-um-projeto)).
+2. Opcional: `"preview": { "type": "screenshot", "alt": {…} }` e `npm run previews` (captura
+   a demo), ou `"preview": { "type": "terminal", … }` com o exemplo do README.
+3. `npm start` para conferir (o filtro, o terminal e o currículo se atualizam sozinhos).
+4. Comite as imagens geradas e dê push na `main`. O deploy publica o site e o PDF.
