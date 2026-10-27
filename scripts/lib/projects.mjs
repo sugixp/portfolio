@@ -1,4 +1,4 @@
-// Pure project-list logic: ordering and technology filtering.
+// Project-list ordering and the technology list behind the filter. Pure, used at build time.
 
 /** Featured projects first; otherwise keeps the order of projects.json. */
 export function sortProjects(projects) {
@@ -12,10 +12,4 @@ export function sortProjects(projects) {
 export function collectTechs(projects) {
     const techs = new Set(projects.flatMap((p) => p.tech));
     return [...techs].sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }));
-}
-
-/** Projects that use the given technology; all of them when tech is null. */
-export function filterByTech(projects, tech) {
-    if (!tech) return projects;
-    return projects.filter((p) => p.tech.includes(tech));
 }

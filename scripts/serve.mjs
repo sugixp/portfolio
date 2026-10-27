@@ -1,46 +1,65 @@
-// Minimal static server for local development (npm start).
-// fetch() does not work over file://, so the site needs a real server;
-// this avoids adding a dependency just for that.
+// Minimal static server for local development (npm start), without dependencies.
+// Serves dist/ under the same base path as GitHub Pages (/portfolio/), including
+// the trailing-slash redirect and 404.html, so local behaves like production.
 import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
 import { extname, join, normalize, resolve } from "node:path";
 
-const ROOT = resolve(".");
-const PORT = Number(process.env.PORT) || 8080;
+const ROOT = resolve("dist");
+const PORT = Number(process.env.PORT) || 4173;
+const { url: siteUrl } = JSON.parse(await readFile("data/site.json", "utf8"));
+const BASE = new URL(siteUrl).pathname; // "/portfolio/"
 
 const TYPES = {
     ".html": "text/html; charset=utf-8",
     ".css": "text/css; charset=utf-8",
     ".js": "text/javascript; charset=utf-8",
-    ".mjs": "text/javascript; charset=utf-8",
     ".json": "application/json; charset=utf-8",
+    ".xml": "application/xml; charset=utf-8",
+    ".txt": "text/plain; charset=utf-8",
     ".svg": "image/svg+xml",
     ".png": "image/png",
+    ".webp": "image/webp",
+    ".avif": "image/avif",
     ".ico": "image/x-icon",
-    ".webmanifest": "application/manifest+json",
+    ".pdf": "application/pdf",
 };
 
-createServer(async (req, res) => {
-    const pathname = decodeURIComponent(new URL(req.url, "http://localhost").pathname);
-    let path = normalize(join(ROOT, pathname));
+async function send(res, status, path) {
+    const body = await readFile(path); // read first: a missing file must not leave headers half-sent
+    res.writeHead(status, {
+        "Content-Type": TYPES[extname(path)] || "application/octet-stream",
+        "Cache-Control": "no-store",
+    });
+    res.end(body);
+}
 
-    // Refuse anything that escapes the project folder.
+createServer(async (req, res) => {
+    const { pathname } = new URL(req.url, "http://localhost");
+    if (pathname === "/" || pathname === BASE.slice(0, -1)) {
+        res.writeHead(301, { Location: BASE }).end();
+        return;
+    }
+    const path = normalize(join(ROOT, decodeURIComponent(pathname.slice(BASE.length))));
+    // Refuse anything that escapes dist/.
     if (!path.startsWith(ROOT)) {
         res.writeHead(403).end();
         return;
     }
 
     try {
-        if ((await stat(path)).isDirectory()) path = join(path, "index.html");
-        const body = await readFile(path);
-        res.writeHead(200, {
-            "Content-Type": TYPES[extname(path)] || "application/octet-stream",
-            "Cache-Control": "no-store",
-        });
-        res.end(body);
+        if (!pathname.startsWith(BASE)) throw new Error("outside base path");
+        if ((await stat(path)).isDirectory()) {
+            if (!pathname.endsWith("/")) {
+                res.writeHead(301, { Location: `${pathname}/` }).end();
+                return;
+            }
+            return await send(res, 200, join(path, "index.html"));
+        }
+        await send(res, 200, path);
     } catch {
-        res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" }).end("404");
+        await send(res, 404, join(ROOT, "404.html")).catch(() => res.writeHead(404).end("404"));
     }
 }).listen(PORT, () => {
-    console.log(`Serving ${ROOT} at http://localhost:${PORT}`);
+    console.log(`Serving dist/ at http://localhost:${PORT}${BASE}`);
 });
