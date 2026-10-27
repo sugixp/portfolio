@@ -7,9 +7,11 @@
 import { cp, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { dirname, join, posix } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { html } from "./lib/html.mjs";
 import { publishedLocales, translator } from "./lib/i18n.mjs";
 import { layout } from "../templates/layout.mjs";
 import { homeBody } from "../templates/home.mjs";
+import { notFoundBody } from "../templates/not-found.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DATA_FILES = ["site", "projects", "stack", "certifications", "experience"];
@@ -72,6 +74,16 @@ export async function build({ outDir = join(ROOT, "dist"), root = ROOT } = {}) {
         }));
         pages.push(relPath);
     }
+
+    const ctx = context(content, content.locales[0]);
+    await writePage(outDir, "404.html", layout(ctx, {
+        title: `${ctx.t("notFound.title")} — ${ctx.site.shortName}`,
+        description: ctx.t("notFound.text"),
+        navPrefix: ctx.homePath(content.locales[0]),
+        head: html`<meta name="robots" content="noindex" />`,
+        body: notFoundBody(ctx),
+    }));
+    pages.push("404.html");
 
     for (const dir of STATIC_DIRS) await cp(join(root, dir), join(outDir, dir), { recursive: true });
     return { pages };

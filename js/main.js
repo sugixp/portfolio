@@ -5,3 +5,7 @@ import { initLangSwitch } from "./lang-switch.js";
 
 initProjectFilter(document.querySelector("[data-project-filter]"));
 initLangSwitch();
+
+// 404 page: show which address was requested (textContent, never markup).
+const route = document.querySelector("[data-route]");
+if (route) route.textContent = location.pathname;
