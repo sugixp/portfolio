@@ -57,6 +57,94 @@
           "",
           "59.0 USD = 299.13 BRL"
         ]
+      },
+      "caseStudy": {
+        "draft": true,
+        "problem": {
+          "pt": "Converter valores entre moedas com cotações atualizadas, direto no terminal, sem abrir um site de câmbio a cada consulta.",
+          "en": "Convert amounts between currencies with up-to-date rates, straight from the terminal, without opening an exchange website for every lookup."
+        },
+        "decisions": [
+          {
+            "pt": "Consumir a API pública open.er-api.com (ExchangeRate-API), que não exige chave: o programa funciona logo depois do clone.",
+            "en": "Use the public open.er-api.com API (ExchangeRate-API), which needs no key: the program works right after cloning."
+          },
+          {
+            "pt": "Usar a biblioteca requests para a chamada HTTP e para ler o JSON da resposta.",
+            "en": "Use the requests library for the HTTP call and to read the JSON response."
+          },
+          {
+            "pt": "Separar responsabilidades em funções: buscar_taxas() faz a requisição, converter() calcula e exibe, main() controla o laço de interação.",
+            "en": "Split responsibilities into functions: buscar_taxas() makes the request, converter() calculates and prints, main() runs the interaction loop."
+          },
+          {
+            "pt": "Exibir a data da última atualização da cotação, que vem da própria API, para que o resultado possa ser conferido.",
+            "en": "Show when the rate was last updated, as reported by the API, so the result can be checked."
+          }
+        ],
+        "architecture": {
+          "steps": [
+            {
+              "label": {
+                "pt": "Entrada no terminal",
+                "en": "Terminal input"
+              },
+              "detail": {
+                "pt": "moeda de origem, destino e valor",
+                "en": "source currency, target currency, amount"
+              }
+            },
+            {
+              "label": "buscar_taxas()",
+              "detail": "GET open.er-api.com/v6/latest/{moeda}"
+            },
+            {
+              "label": "converter()",
+              "detail": {
+                "pt": "valor × taxa da moeda de destino",
+                "en": "amount × target currency rate"
+              }
+            },
+            {
+              "label": {
+                "pt": "Saída",
+                "en": "Output"
+              },
+              "detail": {
+                "pt": "resultado e data da cotação",
+                "en": "result and rate date"
+              }
+            }
+          ]
+        },
+        "challenges": [
+          {
+            "pt": "Validar a entrada: um valor que não é número é tratado com try/except ValueError, sem encerrar o programa.",
+            "en": "Validating input: a non-numeric amount is handled with try/except ValueError instead of crashing."
+          },
+          {
+            "pt": "Moeda inexistente: o código confere se a moeda de destino está na tabela de taxas antes de calcular.",
+            "en": "Unknown currency: the code checks that the target currency is in the rates table before calculating."
+          },
+          {
+            "pt": "Ainda não há tratamento para falha de rede ou resposta de erro da API; é o próximo ponto a melhorar.",
+            "en": "Network failures and API error responses are not handled yet; that is the next thing to improve."
+          }
+        ],
+        "learned": [
+          {
+            "pt": "Ler a documentação de uma API REST e transformar a resposta JSON em dados úteis.",
+            "en": "Reading a REST API's documentation and turning its JSON response into useful data."
+          },
+          {
+            "pt": "Por que separar entrada, regra de negócio e saída em funções diferentes facilita testar e mudar o código.",
+            "en": "Why separating input, business logic and output into different functions makes code easier to test and change."
+          },
+          {
+            "pt": "A importância de tratar erros de entrada em programas interativos.",
+            "en": "The importance of handling input errors in interactive programs."
+          }
+        ]
       }
     },
     {
@@ -83,6 +171,94 @@
           "=== Suas Tarefas ===",
           "[✓] 1. Estudar",
           "[✗] 2. Ler"
+        ]
+      },
+      "caseStudy": {
+        "draft": true,
+        "problem": {
+          "pt": "Organizar tarefas pessoais num programa simples de terminal, sem perder os dados ao fechar.",
+          "en": "Keep track of personal tasks in a simple terminal program without losing data when it closes."
+        },
+        "decisions": [
+          {
+            "pt": "SQLite pela biblioteca padrão do Python (sqlite3): persistência em arquivo, sem servidor e sem dependências externas.",
+            "en": "SQLite through Python's standard library (sqlite3): file-based persistence, no server and no external dependencies."
+          },
+          {
+            "pt": "Consultas parametrizadas (?) em todas as operações, o que impede SQL injection a partir do texto digitado.",
+            "en": "Parameterized queries (?) in every operation, which prevents SQL injection from typed text."
+          },
+          {
+            "pt": "Uma função para cada operação do CRUD e um menu numerado que apenas chama essas funções.",
+            "en": "One function per CRUD operation and a numbered menu that only calls those functions."
+          },
+          {
+            "pt": "A tabela é criada com CREATE TABLE IF NOT EXISTS na inicialização, então o primeiro uso não exige configuração.",
+            "en": "The table is created with CREATE TABLE IF NOT EXISTS at startup, so first use needs no setup."
+          }
+        ],
+        "architecture": {
+          "steps": [
+            {
+              "label": {
+                "pt": "Menu no terminal",
+                "en": "Terminal menu"
+              },
+              "detail": {
+                "pt": "opções de 1 a 5",
+                "en": "options 1 to 5"
+              }
+            },
+            {
+              "label": {
+                "pt": "Funções de CRUD",
+                "en": "CRUD functions"
+              },
+              "detail": "criar, listar, concluir, deletar"
+            },
+            {
+              "label": "sqlite3",
+              "detail": {
+                "pt": "consultas parametrizadas",
+                "en": "parameterized queries"
+              }
+            },
+            {
+              "label": "tasks.db",
+              "detail": {
+                "pt": "arquivo local",
+                "en": "local file"
+              }
+            }
+          ]
+        },
+        "challenges": [
+          {
+            "pt": "Abrir e fechar a conexão a cada operação mantém o código simples, mas repete trabalho; usar um gerenciador de contexto (with) é o próximo passo.",
+            "en": "Opening and closing the connection on every operation keeps the code simple but repeats work; a context manager (with) is the next step."
+          },
+          {
+            "pt": "Um ID não numérico ainda encerra o programa com erro, porque int() é chamado sem tratamento.",
+            "en": "A non-numeric ID still crashes the program, because int() is called without handling."
+          },
+          {
+            "pt": "Representar o status \"concluída\" como inteiro 0/1, já que o SQLite não tem tipo booleano.",
+            "en": "Storing the \"done\" status as a 0/1 integer, since SQLite has no boolean type."
+          }
+        ],
+        "learned": [
+          {
+            "pt": "Modelar uma tabela e escrever as quatro operações do CRUD em SQL.",
+            "en": "Modeling a table and writing the four CRUD operations in SQL."
+          },
+          {
+            "pt": "Por que usar parâmetros em vez de montar SQL com f-strings.",
+            "en": "Why to use parameters instead of building SQL with f-strings."
+          },
+          {
+            "pt": "Como a persistência em arquivo muda o comportamento de um programa entre execuções.",
+            "en": "How file persistence changes a program's behavior between runs."
+          }
         ]
       }
     }
