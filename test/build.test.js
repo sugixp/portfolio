@@ -108,3 +108,14 @@ test("--drafts renders draft case studies for preview, marked noindex", async ()
         await rm(previewDir, { recursive: true, force: true });
     }
 });
+
+test("screenshot previews ship as AVIF and WebP, lazy-loaded, with dimensions", async () => {
+    const shots = content.data.projects.projects.filter((p) => p.preview?.type === "screenshot");
+    const html = await page("index.html");
+    for (const p of shots) {
+        assert.ok(html.includes(`assets/projects/${p.id}-640.avif 640w`), `${p.id} avif`);
+        assert.ok(html.includes(`assets/projects/${p.id}-1280.webp 1280w`), `${p.id} webp`);
+        await assert.doesNotReject(readFile(join(outDir, "assets", "projects", `${p.id}-1280.avif`)));
+    }
+    if (shots.length) assert.match(html, /<img src="[^"]+-640\.webp" alt="[^"]+" width="1280" height="800" loading="lazy" decoding="async" \/>/);
+});
