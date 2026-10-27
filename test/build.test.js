@@ -33,7 +33,7 @@ test("every project, stack item, certification and experience is pre-rendered in
         const lang = locale._meta.lang;
         const html = await page(join(locale._meta.path, "index.html"));
         for (const p of projects.projects) assert.ok(html.includes(`<h3>${p.title}</h3>`), `${lang}: project ${p.id}`);
-        for (const g of stack.groups) for (const item of g.items) assert.ok(html.includes(`<li>${item}</li>`), `${lang}: stack ${item}`);
+        for (const g of stack.groups) for (const item of g.items) assert.ok(html.includes(`<li>${localize(item, lang)}</li>`), `${lang}: stack ${localize(item, lang)}`);
         for (const c of certifications.certifications) assert.ok(html.includes(localize(c.name, lang)), `${lang}: certification`);
         for (const e of experience.experience) assert.ok(html.includes(localize(e.title, lang)), `${lang}: experience`);
     }

@@ -126,7 +126,7 @@ function stack({ t, lang, data }) {
                 (group) => html`<div class="stack-group">
               <h3>${localize(group.title, lang)}</h3>
               <ul class="${group.planned ? "tag-list tag-list-mono tag-list-planned" : "tag-list tag-list-mono"}">
-                ${group.items.map((item) => html`<li>${item}</li>`)}
+                ${group.items.map((item) => html`<li>${localize(item, lang)}</li>`)}
               </ul>
             </div>`,
             )}
