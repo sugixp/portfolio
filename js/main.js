@@ -3,10 +3,12 @@
 import { initProjectFilter } from "./project-filter.js";
 import { initLangSwitch } from "./lang-switch.js";
 import { initTheme } from "./theme.js";
+import { initCaseStudies } from "./case-study.js";
 
 initProjectFilter(document.querySelector("[data-project-filter]"));
 initLangSwitch();
 initTheme();
+initCaseStudies();
 
 // 404 page: show which address was requested (textContent, never markup).
 const route = document.querySelector("[data-route]");

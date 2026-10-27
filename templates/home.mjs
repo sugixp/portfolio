@@ -110,7 +110,7 @@ function projects(ctx) {
               </div>
               <p class="filter-count mono" aria-live="polite" data-one="${count.one}" data-other="${count.other}">${plural(count, list.length)}</p>
             </div>
-            <div class="stations">
+            <div class="stations" data-case-labels data-close="${t("caseStudy.close")}" data-page="${t("caseStudy.openPage")}">
             ${list.map((project) => projectCard(ctx, project))}
             </div>
           </div>
