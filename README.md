@@ -15,18 +15,23 @@ data/                   conteúdo
   stack.json            ferramentas, agrupadas
   certifications.json   certificações
   experience.json       linha do tempo
+  github.json           gerado diariamente pelo workflow github-data.yml (não editar)
   schema/               JSON Schema de cada arquivo acima
 i18n/
   pt.json, en.json      textos de interface, um arquivo por idioma
 templates/              funções que devolvem HTML (rodam só no build)
   layout.mjs            <head>, barra superior, rodapé, sugestão de idioma
   home.mjs              seções da página inicial
+  case-study.mjs        página de estudo de caso (/projects/<id>/)
+  terminal.mjs          diálogo do terminal + dados dos comandos (JSON na página)
+  parts.mjs             peças comuns: lâmpada com texto, prévia do projeto
   not-found.mjs         página 404
   seo.mjs               canonical, hreflang, Open Graph, JSON-LD, sitemap, robots
   og-image.mjs          página que vira a imagem de prévia do link
 scripts/
   build.mjs             gera dist/ a partir de data/ + i18n/ + templates/
-  lib/                  funções puras do build (escape de HTML, i18n, ordenação)
+  lib/                  funções puras do build (escape de HTML, i18n, ordenação, GitHub)
+  fetch-github.mjs      gera data/github.json pela API do GitHub (usado pelo workflow)
   og-image.mjs          gera assets/og/*.png com o Chrome headless (Playwright)
   serve.mjs             servidor local de dist/, sem dependências
   validate-data.mjs     valida data/*.json contra os schemas
@@ -35,10 +40,15 @@ js/                     JavaScript do navegador, só interatividade (copiado par
   main.js               ponto de entrada
   project-filter.js     filtro de projetos por tecnologia
   lang-switch.js        troca de idioma e sugestão do idioma preferido
+  theme.js              tema claro/escuro (escuro é o padrão)
+  case-study.js         abre o estudo de caso num <dialog>
+  terminal-core.js      lógica do terminal, sem DOM (testada no Node)
+  terminal.js           interface do terminal
 assets/                 favicon, ícone e imagens de prévia (copiado para dist/)
 test/                   testes (node:test)
 .github/workflows/
-  deploy.yml            testa, valida, gera e publica
+  deploy.yml            testa, valida, gera e publica (também chamado pelo github-data.yml)
+  github-data.yml       atualiza data/github.json uma vez por dia e republica
 ```
 
 ### Fluxo de build e deploy
@@ -59,14 +69,42 @@ css/ js/ assets/ ── copiados ────────> ├── en/index.ht
    `github-pages` só aceita deploy da `main`.
 3. Se um deploy falhar, a versão anterior continua no ar.
 
+### Dados do GitHub
+
+O navegador nunca chama a API do GitHub. Uma vez por dia (ou manualmente, em *Actions →
+GitHub data → Run workflow*), `github-data.yml`:
+
+1. roda `scripts/fetch-github.mjs`, que gera `data/github.json` (repositórios públicos sem
+   forks, linguagens, último commit de cada repositório e atividade recente);
+2. valida o arquivo e **só comita se ele mudou**. O JSON não tem data de geração, e os
+   commits do próprio bot são ignorados, para não gerar um commit novo todo dia;
+3. chama `deploy.yml` diretamente, porque um push feito com o `GITHUB_TOKEN` não dispara
+   outros workflows. O rebuild diário mantém as datas relativas ("há 3 dias") corretas.
+
+Se a API falhar, o arquivo antigo continua. Sem o arquivo, o quadro de status mostra só
+as linhas fixas do perfil. As "linguagens principais" contam em quantos repositórios cada
+linguagem é a principal, porque o total em bytes é distorcido por notebooks e bibliotecas
+copiadas para dentro do repositório.
+
 ### O que acontece no navegador
 
 - **Sem JavaScript**, a página já está completa: projetos, stack, certificações e
   experiência estão no HTML. É isso que robôs de busca e prévias de link (LinkedIn,
   WhatsApp) leem.
 - **Com JavaScript**, entram só melhorias: o filtro por tecnologia (o filtro escolhido
-  fica na URL, ex.: `?tech=Python`), a troca de idioma que mantém a seção e o filtro, e
-  um aviso discreto quando o navegador prefere outro idioma.
+  fica na URL, ex.: `?tech=Python`), a troca de idioma que mantém a seção e o filtro,
+  um aviso discreto quando o navegador prefere outro idioma, o botão de tema, o estudo de
+  caso em diálogo e o terminal.
+- **Tema:** escuro por padrão. A escolha do claro fica salva e é aplicada por um script de
+  uma linha no `<head>`, antes da primeira pintura, para não piscar.
+- **Estudos de caso** são páginas de verdade (`/projects/<id>/`): funcionam sem JS, podem
+  ser compartilhadas e indexadas. Com JS, o link abre a mesma página num `<dialog>` e muda
+  a URL com `pushState`; o "voltar" do navegador fecha o diálogo.
+- **Terminal:** Ctrl+K, a tecla `` ` `` (fora de campos de texto) ou o botão `>_`. Comandos:
+  `help`, `whoami`, `projects`, `open <projeto>`, `stack`, `contact`, `lang pt|en`,
+  `theme dark|light`, `clear`. Tab completa e ↑/↓ navegam no histórico.
+- **Lâmpadas** (verde, âmbar, apagada) só aparecem onde têm significado e sempre vêm
+  com o estado escrito ao lado ("no ar", "em busca"): a cor nunca é a única pista.
 - **A troca de idioma é um link comum** (`/` ↔ `/en/`). Não há redirecionamento
   automático: isso esconderia páginas dos buscadores e passaria por cima da escolha
   de quem lê.
@@ -101,7 +139,11 @@ npm test               # testes
 npm run build          # só gera dist/
 npm run validate:data  # só valida data/*.json
 npm run og             # regera as imagens de prévia (usa o Chrome instalado)
+npm run start:drafts   # como npm start, mas mostra também os estudos de caso em rascunho
 ```
+
+Para atualizar `data/github.json` localmente (opcional):
+`GITHUB_TOKEN=$(gh auth token) node scripts/fetch-github.mjs`.
 
 O servidor local imita o GitHub Pages: serve em `/portfolio/`, redireciona pastas sem
 barra final e responde com `404.html`. Para usar outra porta: `PORT=5000 npm run serve`.
@@ -141,6 +183,8 @@ Edite apenas `data/projects.json`, adicionando um objeto ao array `projects`:
 | `links` | sim | `repo` e/ou `demo`, ambos opcionais, sempre `https://` |
 | `status` | sim | `deployed`, `stable`, `in-progress` ou `archived` |
 | `featured` | sim | `true` exibe o card em destaque, ocupando a linha toda |
+| `preview` | não | imagem no card: `{ "type": "screenshot", "alt": {…} }` (captura de `links.demo`) ou `{ "type": "terminal", "command", "output": [...] }` (exemplo do README) |
+| `caseStudy` | não | estudo de caso; veja abaixo |
 
 Depois:
 
@@ -152,6 +196,24 @@ Comite e dê push na `main`: o workflow publica em cerca de um minuto.
 
 Para **remover** um projeto, apague o objeto do array. Projetos em destaque aparecem
 primeiro; os demais seguem a ordem do arquivo.
+
+### Estudo de caso
+
+Adicione `caseStudy` ao projeto. Todos os textos aceitam `{ "pt", "en" }`:
+
+```json
+"caseStudy": {
+  "draft": true,
+  "problem": { "pt": "…", "en": "…" },
+  "architecture": { "steps": [{ "label": "Entrada", "detail": "…" }, { "label": "API" }] },
+  "decisions": [{ "pt": "…", "en": "…" }],
+  "challenges": [{ "pt": "…", "en": "…" }],
+  "learned": [{ "pt": "…", "en": "…" }]
+}
+```
+
+Enquanto `"draft": true`, nada é publicado: o card não mostra o link e a página não é
+gerada. Para revisar, rode `npm run start:drafts`. Para publicar, troque para `false`.
 
 Stack, certificações e experiência seguem a mesma ideia, em `data/stack.json`,
 `data/certifications.json` e `data/experience.json`. Textos de interface (títulos de
