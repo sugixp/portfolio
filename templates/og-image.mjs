@@ -1,83 +1,54 @@
 // Standalone 1200×630 page that scripts/og-image.mjs screenshots into the
 // Open Graph image (the preview card shown by LinkedIn, Slack, WhatsApp...).
 import { html } from "../scripts/lib/html.mjs";
+import { FONTS_URL } from "./layout.mjs";
 
 export const OG_SIZE = { width: 1200, height: 630 };
 
 export function ogImagePage({ t, site }) {
     const host = site.url.replace(/^https:\/\//, "").replace(/\/$/, "");
+    const rows = t("panel.rows");
     return html`<!doctype html>
 <html lang="${t("_meta.htmlLang")}">
   <head>
     <meta charset="UTF-8" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=IBM+Plex+Sans:wght@400&display=block"
-      rel="stylesheet"
-    />
+    <link href="${FONTS_URL.replace("display=swap", "display=block")}" rel="stylesheet" />
     <style>
       * { box-sizing: border-box; margin: 0; }
       body {
         width: ${OG_SIZE.width}px;
         height: ${OG_SIZE.height}px;
-        background: #EEF1F4;
-        color: #10192B;
-        font-family: "IBM Plex Sans", sans-serif;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 48px;
-        align-items: center;
-        padding: 0 72px;
-        border-top: 10px solid #0F8C82;
-      }
-      .eyebrow, h1, .role, .url, .panel { font-family: "JetBrains Mono", monospace; }
-      .eyebrow { color: #0B6A62; font-size: 24px; margin-bottom: 18px; }
-      h1 { font-size: 60px; line-height: 1.08; letter-spacing: -0.01em; margin-bottom: 22px; }
-      .role { color: #0B6A62; font-size: 27px; font-weight: 700; margin-bottom: 40px; }
-      .url { color: #5B6472; font-size: 22px; }
-      .panel {
-        background: #10192B;
-        color: #fff;
-        border-radius: 16px;
-        padding: 30px 30px 22px;
-        box-shadow: 0 30px 60px -30px rgba(16, 25, 43, 0.55);
-      }
-      .head {
+        background: #15171A;
+        color: #ECEAE4;
+        font-family: "Archivo", sans-serif;
+        padding: 64px 72px;
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
-        padding-bottom: 18px;
-        margin-bottom: 8px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-        font-size: 17px;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-        color: rgba(255, 255, 255, 0.55);
       }
-      .online { color: #7FE8DA; text-transform: none; }
-      .online::before { content: "● "; }
-      .row {
-        display: flex;
-        justify-content: space-between;
-        gap: 20px;
-        padding: 13px 0;
-        border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
-        font-size: 17px;
-      }
-      .row:last-child { border-bottom: none; }
-      .row span:first-child { color: rgba(255, 255, 255, 0.5); white-space: nowrap; }
-      .row span:last-child { text-align: right; }
+      .mono { font-family: "Martian Mono", monospace; font-stretch: 87.5%; }
+      h1 { font-size: 78px; font-weight: 800; font-stretch: 125%; line-height: 0.95; letter-spacing: -0.02em; }
+      .role { margin-top: 22px; font-size: 30px; font-weight: 600; font-stretch: 112%; color: #A9A79F; }
+      .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #2E3339; border: 1px solid #2E3339; border-radius: 10px; overflow: hidden; }
+      .cell { background: #1C1F23; padding: 20px 22px; display: grid; gap: 10px; }
+      .label { display: flex; justify-content: space-between; font-size: 15px; color: #8A8982; }
+      .value { font-size: 21px; font-weight: 600; font-stretch: 112%; }
+      .state { display: inline-flex; align-items: center; gap: 8px; color: #E3A21A; }
+      .lamp { width: 10px; height: 10px; border-radius: 50%; background: #E3A21A; box-shadow: 0 0 14px rgba(227, 162, 26, 0.6); }
+      .foot { display: flex; justify-content: space-between; font-size: 16px; color: #8A8982; }
     </style>
   </head>
   <body>
     <div>
-      <p class="eyebrow">${t("hero.eyebrow")}</p>
       <h1>${site.name}</h1>
       <p class="role">${t("hero.role")}</p>
-      <p class="url">${host}</p>
     </div>
-    <div class="panel">
-      <div class="head"><span>${t("panel.title")}</span><span class="online">${t("panel.online")}</span></div>
-      ${t("panel.rows").map((row) => html`<div class="row"><span>${row.label}</span><span>${row.value}</span></div>`)}
+    <div class="board">
+      <div class="cell"><p class="label mono">${rows[1].label}</p><p class="value">${rows[1].value}</p></div>
+      <div class="cell"><p class="label mono">${rows[2].label}</p><p class="value">${rows[2].value}</p></div>
+      <div class="cell"><p class="label mono">${rows[4].label}<span class="state"><span class="lamp"></span>${rows[4].state}</span></p><p class="value">${rows[4].value}</p></div>
     </div>
+    <p class="foot mono"><span>${t("panel.footRight")}</span><span>${host}</span></p>
   </body>
 </html>
 `;

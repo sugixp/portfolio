@@ -37,7 +37,7 @@ try {
 
     const icon = await browser.newPage({ viewport: { width: 180, height: 180 } });
     const svg = await readFile(join("assets", "favicon.svg"), "utf8");
-    await icon.setContent(`<style>*{margin:0}body{background:#10192B}svg{display:block;width:180px;height:180px}</style>${svg}`);
+    await icon.setContent(`<style>*{margin:0}body{background:#15171A}svg{display:block;width:180px;height:180px}</style>${svg}`);
     await icon.screenshot({ path: join("assets", "apple-touch-icon.png") });
     console.log("✓ assets/apple-touch-icon.png");
 } finally {
