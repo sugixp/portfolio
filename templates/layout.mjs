@@ -1,6 +1,7 @@
 // Document shell shared by every page: <head>, top bar, footer.
 import { html } from "../scripts/lib/html.mjs";
 import { translator } from "../scripts/lib/i18n.mjs";
+import { terminalButton, terminalDialog } from "./terminal.mjs";
 
 // Only the axes and weights the CSS uses: Archivo 400–800 at widths 100–125
 // (one variable file) and Martian Mono 400/500. display=swap shows the
@@ -8,13 +9,13 @@ import { translator } from "../scripts/lib/i18n.mjs";
 export const FONTS_URL =
     "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=Martian+Mono:wdth,wght@87.5,400;87.5,500&display=swap";
 
-function langSwitch(ctx) {
+function langSwitch(ctx, relPath = "") {
     return html`<nav class="lang-switch" aria-label="${ctx.t("langSwitch.label")}">
             ${ctx.locales.map((locale, i) => {
                 const { lang, htmlLang, label, name } = locale._meta;
                 const current = lang === ctx.lang;
                 return html`${i > 0 ? html`<span class="lang-sep" aria-hidden="true">/</span>` : ""}<a
-              href="${ctx.homePath(locale)}"
+              href="${ctx.homePath(locale)}${relPath}"
               class="${current ? "lang-opt is-active" : "lang-opt"}"
               hreflang="${htmlLang}"
               lang="${htmlLang}"
@@ -44,7 +45,7 @@ function langSuggestions(ctx) {
         });
 }
 
-function topbar(ctx, { navPrefix }) {
+function topbar(ctx, { navPrefix, relPath }) {
     const t = ctx.t;
     const links = [
         ["sobre", "nav.about"],
@@ -68,17 +69,18 @@ function topbar(ctx, { navPrefix }) {
             <span class="status-chip-full">${t("statusChip.full")}</span>
             <span class="status-chip-short" aria-hidden="true">${t("statusChip.short")}</span>
           </span>
+          ${terminalButton(ctx)}
           <button type="button" class="icon-btn" data-theme-toggle data-label-light="${t("theme.toLight")}" data-label-dark="${t("theme.toDark")}" aria-label="${t("theme.toLight")}" hidden>
             <span aria-hidden="true">◐</span>
           </button>
-          ${langSwitch(ctx)}
+          ${langSwitch(ctx, relPath)}
         </div>
       </div>
     </header>`;
 }
 
 /**
- * page: { title, description, head (extra markup), body, navPrefix,
+ * page: { title, description, head (extra markup), body, navPrefix, relPath (path below the language root),
  *         suggestLanguages (offer the other languages when the visitor prefers one) }
  */
 export function layout(ctx, page) {
@@ -120,6 +122,8 @@ ${page.body}
         <span>© ${ctx.year} ${ctx.site.shortName}</span>
       </div>
     </footer>
+
+    ${terminalDialog(ctx, page.relPath)}
   </body>
 </html>
 `;

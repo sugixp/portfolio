@@ -145,5 +145,31 @@
     "draft": "Draft: only visible in the local preview",
     "close": "Close",
     "openPage": "Open as a page"
+  },
+  "terminal": {
+    "open": "Open terminal",
+    "title": "terminal — sugi.dev",
+    "inputLabel": "Command",
+    "close": "Close",
+    "hint": "Type help to see the commands. Tab completes, ↑ and ↓ browse history, Esc closes.",
+    "help": {
+      "help": "list the commands",
+      "whoami": "who I am",
+      "projects": "list the projects",
+      "open": "open a project: open <name>",
+      "stack": "tools I use",
+      "contact": "how to reach me",
+      "lang": "switch language: lang pt | lang en",
+      "theme": "switch theme: theme dark | theme light",
+      "clear": "clear the screen"
+    },
+    "openHint": "use open <name> to open a project",
+    "usage": "usage: {usage}",
+    "unknownProject": "project not found: {name}. See the list with projects.",
+    "opening": "opening {name}…",
+    "notFound": "command not found: {cmd}. Type help.",
+    "langSame": "you are already in {lang}.",
+    "themeSet": "theme: {theme}",
+    "themeSame": "the theme is already {theme}."
   }
 }

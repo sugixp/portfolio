@@ -131,6 +131,7 @@ export async function build({ outDir = join(ROOT, "dist"), root = ROOT, drafts =
                 title,
                 description,
                 navPrefix: ctx.homePath(locale),
+                relPath: pagePath,
                 head: pageHead(ctx, { relPath: pagePath, title, description, noindex: project.caseStudy.draft }),
                 body: caseStudyBody(ctx, project),
             }));
