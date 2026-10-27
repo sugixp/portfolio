@@ -131,5 +131,19 @@
     "toDark": "Ativar tema escuro",
     "light": "claro",
     "dark": "escuro"
+  },
+  "caseStudy": {
+    "label": "Estudo de caso",
+    "titleSuffix": "estudo de caso",
+    "back": "Voltar aos projetos",
+    "problem": "Problema",
+    "decisions": "Decisões técnicas",
+    "architecture": "Arquitetura",
+    "architectureLabel": "Fluxo da aplicação, passo a passo",
+    "challenges": "Desafios",
+    "learned": "O que aprendi",
+    "draft": "Rascunho: visível só na pré-visualização local",
+    "close": "Fechar",
+    "openPage": "Abrir como página"
   }
 }

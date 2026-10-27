@@ -3,17 +3,20 @@
 // HTML itself; the browser JS only adds interactivity.
 //
 //   node scripts/build.mjs            -> dist/
-//   build({ outDir })                 -> used by the tests
+//   node scripts/build.mjs --drafts   -> also renders draft case studies (local preview only)
+//   build({ outDir, drafts })         -> used by the tests
 import { cp, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { dirname, join, posix } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { html } from "./lib/html.mjs";
 import { publishedLocales, translator } from "./lib/i18n.mjs";
 import { boardSummary, relativeDay } from "./lib/github.mjs";
+import { localize } from "./lib/localize.mjs";
 import { layout } from "../templates/layout.mjs";
 import { homeBody } from "../templates/home.mjs";
 import { notFoundBody } from "../templates/not-found.mjs";
-import { homeHead, robots, sitemap } from "../templates/seo.mjs";
+import { caseStudyBody } from "../templates/case-study.mjs";
+import { pageHead, robots, sitemap } from "../templates/seo.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DATA_FILES = ["site", "projects", "stack", "certifications", "experience"];
@@ -63,7 +66,14 @@ function githubCells(github, t, htmlLang, now) {
     return cells;
 }
 
-function context({ data, locales, root }, locale, now = new Date().toISOString()) {
+const CASE_STUDY_DIR = "projects";
+
+/** Projects whose case study is published (drafts only when previewing). */
+export function caseStudyProjects(projects, { drafts = false } = {}) {
+    return projects.filter((p) => p.caseStudy && (drafts || !p.caseStudy.draft));
+}
+
+function context({ data, locales, root }, locale, { now = new Date().toISOString(), drafts = false } = {}) {
     const site = data.site;
     const base = new URL(site.url).pathname; // "/portfolio/"
     const t = translator(locale);
@@ -79,8 +89,9 @@ function context({ data, locales, root }, locale, now = new Date().toISOString()
         homePath: (l) => base + l._meta.path,
         homeUrl: (l) => site.url + l._meta.path,
         root,
-        // Filled in by the case-study and GitHub steps; null means "not available".
-        caseStudyPath: () => null,
+        // null when the project has no published case study (no link on the card).
+        caseStudyPath: (project) =>
+            caseStudyProjects([project], { drafts }).length ? `${base}${locale._meta.path}${CASE_STUDY_DIR}/${project.id}/` : null,
         board: githubCells(data.github, t, locale._meta.htmlLang, now),
     };
 }
@@ -91,24 +102,40 @@ async function writePage(outDir, relPath, content) {
     await writeFile(path, String(content));
 }
 
-export async function build({ outDir = join(ROOT, "dist"), root = ROOT } = {}) {
+export async function build({ outDir = join(ROOT, "dist"), root = ROOT, drafts = false } = {}) {
     const content = await loadContent(root);
+    const studies = caseStudyProjects(content.data.projects.projects, { drafts });
     await rm(outDir, { recursive: true, force: true });
     await mkdir(outDir, { recursive: true });
 
     const pages = [];
     for (const locale of content.locales) {
-        const ctx = context(content, locale);
+        const ctx = context(content, locale, { drafts });
         const relPath = posix.join(locale._meta.path, "index.html");
         await writePage(outDir, relPath, layout(ctx, {
             title: ctx.t("meta.title"),
             description: ctx.t("meta.description"),
             navPrefix: "",
-            head: homeHead(ctx),
+            head: pageHead(ctx),
             suggestLanguages: true,
             body: homeBody(ctx),
         }));
         pages.push(relPath);
+
+        for (const project of studies) {
+            const pagePath = `${CASE_STUDY_DIR}/${project.id}/`;
+            const title = `${project.title} — ${ctx.t("caseStudy.titleSuffix")} · ${ctx.site.shortName}`;
+            const description = localize(project.description, ctx.lang);
+            const file = posix.join(locale._meta.path, pagePath, "index.html");
+            await writePage(outDir, file, layout(ctx, {
+                title,
+                description,
+                navPrefix: ctx.homePath(locale),
+                head: pageHead(ctx, { relPath: pagePath, title, description, noindex: project.caseStudy.draft }),
+                body: caseStudyBody(ctx, project),
+            }));
+            pages.push(file);
+        }
     }
 
     const ctx = context(content, content.locales[0]);
@@ -121,7 +148,8 @@ export async function build({ outDir = join(ROOT, "dist"), root = ROOT } = {}) {
     }));
     pages.push("404.html");
 
-    await writePage(outDir, "sitemap.xml", sitemap(ctx));
+    const published = studies.filter((p) => !p.caseStudy.draft).map((p) => `${CASE_STUDY_DIR}/${p.id}/`);
+    await writePage(outDir, "sitemap.xml", sitemap(ctx, ["", ...published]));
     await writePage(outDir, "robots.txt", robots(ctx));
 
     for (const dir of STATIC_DIRS) await cp(join(root, dir), join(outDir, dir), { recursive: true });
@@ -130,6 +158,8 @@ export async function build({ outDir = join(ROOT, "dist"), root = ROOT } = {}) {
 
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {
     const started = performance.now();
-    const { pages } = await build();
+    const drafts = process.argv.includes("--drafts");
+    if (drafts) console.warn("Including draft case studies: preview only, do not deploy this build.");
+    const { pages } = await build({ drafts });
     console.log(`Built ${pages.length} pages in ${Math.round(performance.now() - started)} ms: ${pages.join(", ")}`);
 }

@@ -131,5 +131,19 @@
     "toDark": "Switch to dark theme",
     "light": "light",
     "dark": "dark"
+  },
+  "caseStudy": {
+    "label": "Case study",
+    "titleSuffix": "case study",
+    "back": "Back to projects",
+    "problem": "Problem",
+    "decisions": "Technical decisions",
+    "architecture": "Architecture",
+    "architectureLabel": "Application flow, step by step",
+    "challenges": "Challenges",
+    "learned": "What I learned",
+    "draft": "Draft: only visible in the local preview",
+    "close": "Close",
+    "openPage": "Open as a page"
   }
 }

@@ -558,6 +558,109 @@ p { margin: 0; }
 }
 
 /* ==========================================================
+   CASE STUDY — page and dialog share the same <article>
+   ========================================================== */
+.cs-page { padding: 40px var(--gutter) 80px; max-width: 920px; }
+.cs-back { margin-bottom: 28px; }
+.cs-back a { color: var(--dim); }
+
+.case-study { display: grid; gap: 40px; }
+.cs-draft {
+  color: var(--warn);
+  border: 1px dashed var(--warn);
+  border-radius: 4px;
+  padding: 8px 12px;
+}
+.cs-head { display: grid; gap: 14px; }
+.cs-head h1 {
+  font-size: clamp(2rem, 1.2rem + 3.6vw, 3.4rem);
+  font-weight: 800;
+  font-stretch: 120%;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+.cs-head .station-status { gap: 16px; color: var(--faint); }
+.cs-summary { color: var(--dim); font-size: 18px; max-width: 64ch; }
+
+.cs-section { display: grid; gap: 14px; }
+.cs-section h2 { font-size: 22px; font-weight: 700; font-stretch: 115%; }
+.cs-section > p { color: var(--dim); max-width: 68ch; }
+.cs-list { margin: 0; padding-left: 20px; display: grid; gap: 10px; color: var(--dim); max-width: 70ch; }
+.cs-list li::marker { color: var(--faint); }
+
+/* Architecture: an ordered list drawn as a flow of stations. */
+.flow {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 28px;
+  counter-reset: step;
+}
+.flow-step {
+  position: relative;
+  counter-increment: step;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: grid;
+  gap: 6px;
+  align-content: start;
+}
+.flow-step::before {
+  content: counter(step);
+  font: 500 11px var(--mono);
+  color: var(--faint);
+}
+/* connector to the next step */
+.flow-step + .flow-step::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -29px;
+  width: 28px;
+  height: 2px;
+  background: var(--ok);
+}
+.flow-label { font-weight: 600; font-stretch: 110%; overflow-wrap: anywhere; }
+.flow-detail { color: var(--faint); overflow-wrap: anywhere; }
+
+@media (max-width: 760px) {
+  .flow { grid-auto-flow: row; gap: 20px; }
+  .flow-step + .flow-step::after { top: -21px; left: 24px; width: 2px; height: 20px; }
+}
+
+/* Dialog used by js/case-study.js on the home page. */
+.case-dialog {
+  width: min(920px, calc(100% - 24px));
+  max-height: calc(100dvh - 32px);
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  overscroll-behavior: contain;
+}
+.case-dialog::backdrop { background: rgba(8, 9, 10, 0.72); backdrop-filter: blur(3px); }
+.case-dialog-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+}
+.case-dialog-bar a { color: var(--dim); font-size: 14px; }
+.case-dialog-body { padding: 28px clamp(16px, 4vw, 40px) 40px; }
+
+/* ==========================================================
    404
    ========================================================== */
 .not-found { min-height: 60vh; display: flex; align-items: center; border-top: 0; }

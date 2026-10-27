@@ -107,6 +107,9 @@
               "additionalProperties": false
             }
           ]
+        },
+        "caseStudy": {
+          "$ref": "#/$defs/caseStudy"
         }
       },
       "required": [
@@ -117,6 +120,77 @@
         "links",
         "status",
         "featured"
+      ],
+      "additionalProperties": false
+    },
+    "caseStudy": {
+      "description": "Optional case study, published at /projects/<id>/ and opened in a dialog from the card. While draft is true it is not published: the card shows no case-study link.",
+      "type": "object",
+      "properties": {
+        "draft": {
+          "type": "boolean"
+        },
+        "problem": {
+          "$ref": "common.schema.json#/$defs/localized"
+        },
+        "decisions": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/localized"
+          },
+          "minItems": 1
+        },
+        "architecture": {
+          "description": "The application flow as ordered steps, drawn as a diagram and read as a list by screen readers.",
+          "type": "object",
+          "properties": {
+            "steps": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "$ref": "common.schema.json#/$defs/localized"
+                  },
+                  "detail": {
+                    "$ref": "common.schema.json#/$defs/localized"
+                  }
+                },
+                "required": [
+                  "label"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "steps"
+          ],
+          "additionalProperties": false
+        },
+        "challenges": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/localized"
+          },
+          "minItems": 1
+        },
+        "learned": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/localized"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "draft",
+        "problem",
+        "decisions",
+        "architecture",
+        "challenges",
+        "learned"
       ],
       "additionalProperties": false
     }

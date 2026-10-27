@@ -80,3 +80,31 @@ test("the status board shows live GitHub cells when data/github.json exists", as
     assert.ok(html.includes(`<p class="board-value">${content.data.github.repos.length}</p>`), "repository count");
     assert.match(html, /class="lamp lamp-(ok|off)" aria-hidden="true"><\/span>(ativo|pausado)/, "activity lamp with text");
 });
+
+test("draft case studies are not published: no page, no link, not in the sitemap", async () => {
+    const drafts = content.data.projects.projects.filter((p) => p.caseStudy?.draft);
+    const home = await page("index.html");
+    for (const p of drafts) {
+        await assert.rejects(readFile(join(outDir, "projects", p.id, "index.html")), `${p.id} page`);
+        assert.ok(!home.includes(`/projects/${p.id}/`), `${p.id} link`);
+        assert.ok(!(await page("sitemap.xml")).includes(`/projects/${p.id}/`), `${p.id} sitemap`);
+    }
+});
+
+test("--drafts renders draft case studies for preview, marked noindex", async () => {
+    const drafts = content.data.projects.projects.filter((p) => p.caseStudy?.draft);
+    if (!drafts.length) return;
+    const previewDir = await mkdtemp(join(tmpdir(), "portfolio-drafts-"));
+    try {
+        await build({ outDir: previewDir, drafts: true });
+        for (const locale of content.locales) {
+            const file = join(previewDir, locale._meta.path, "projects", drafts[0].id, "index.html");
+            const html = await readFile(file, "utf8");
+            assert.match(html, /<meta name="robots" content="noindex" \/>/);
+            assert.match(html, /class="flow"/, "architecture diagram");
+        }
+        assert.ok((await readFile(join(previewDir, "index.html"), "utf8")).includes("data-case-study"), "card link");
+    } finally {
+        await rm(previewDir, { recursive: true, force: true });
+    }
+});

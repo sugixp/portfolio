@@ -10,7 +10,8 @@
     "serve": "node scripts/serve.mjs",
     "test": "node --test",
     "validate:data": "node scripts/validate-data.mjs",
-    "og": "node scripts/og-image.mjs"
+    "og": "node scripts/og-image.mjs",
+    "start:drafts": "npm run validate:data && node scripts/build.mjs --drafts && node scripts/serve.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",
