@@ -33,6 +33,7 @@ scripts/
   lib/                  funções puras do build (escape de HTML, i18n, ordenação, GitHub)
   fetch-github.mjs      gera data/github.json pela API do GitHub (usado pelo workflow)
   og-image.mjs          gera assets/og/*.png com o Chrome headless (Playwright)
+  project-previews.mjs  captura as demos e gera assets/projects/*.avif|webp (Playwright + sharp)
   serve.mjs             servidor local de dist/, sem dependências
   validate-data.mjs     valida data/*.json contra os schemas
 css/style.css           estilos (copiado para dist/)
@@ -44,6 +45,7 @@ js/                     JavaScript do navegador, só interatividade (copiado par
   case-study.js         abre o estudo de caso num <dialog>
   terminal-core.js      lógica do terminal, sem DOM (testada no Node)
   terminal.js           interface do terminal
+  spotlight.js          destaque que segue o cursor nos cards
 assets/                 favicon, ícone e imagens de prévia (copiado para dist/)
 test/                   testes (node:test)
 .github/workflows/
@@ -124,6 +126,17 @@ copiadas para dentro do repositório.
   e um teste garante que todos os idiomas têm as mesmas chaves que `pt.json`.
 - **Imagens de prévia versionadas:** `assets/og/*.png` muda raramente, então é gerada
   sob demanda (`npm run og`) e comitada. O deploy fica rápido e não precisa de navegador.
+- **Fontes sem bloquear a pintura:** só os eixos e pesos usados (Archivo 400–800,
+  larguras 100–125, num arquivo variável; Martian Mono 400/500), com `display=swap`,
+  `preload` e aplicação no `onload`. O texto aparece na fonte do sistema e troca quando
+  a fonte chega. No Lighthouse local (mobile), a primeira pintura caiu de 2,9 s para 1,1 s.
+- **Prévias dos projetos:** capturas das demos em AVIF e WebP (640 e 1280 px, 3–10 KB),
+  com `<picture>`, `srcset`, `loading="lazy"` e dimensões fixas, para nada pular de
+  lugar. Projetos de linha de comando mostram o exemplo do README como texto, não imagem.
+- **Movimento:** a entrada por scroll usa `animation-timeline: view()` só onde existe e
+  mexe apenas na posição, nunca na opacidade: se a animação não rodar, o conteúdo já está
+  no lugar. Destaque com o cursor só com mouse. Tudo desligado com
+  `prefers-reduced-motion`. View Transitions na troca de tema e ao abrir estudos de caso.
 - **`robots.txt`:** os buscadores só leem o `robots.txt` da raiz do domínio
   (`sugixp.github.io/robots.txt`), então num site de projeto ele só passa a valer com
   domínio próprio. O sitemap deve ser enviado pelo Google Search Console.
@@ -140,6 +153,7 @@ npm run build          # só gera dist/
 npm run validate:data  # só valida data/*.json
 npm run og             # regera as imagens de prévia (usa o Chrome instalado)
 npm run start:drafts   # como npm start, mas mostra também os estudos de caso em rascunho
+npm run previews       # recaptura as demos dos projetos (assets/projects/)
 ```
 
 Para atualizar `data/github.json` localmente (opcional):
@@ -150,7 +164,8 @@ barra final e responde com `404.html`. Para usar outra porta: `PORT=5000 npm run
 
 Depois de editar algo, rode `npm run build` (ou `npm start` de novo) e recarregue.
 
-Rode `npm run og` depois de mudar nome, cargo ou o painel de status, e comite as imagens.
+Rode `npm run og` depois de mudar nome, cargo ou o painel de status, e `npm run previews`
+depois de mudar a demo de um projeto. Comite as imagens geradas.
 
 ## Como adicionar um projeto
 
