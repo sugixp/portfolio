@@ -45,3 +45,31 @@ test("the language switch is made of plain links", async () => {
         assert.ok(html.includes(`href="${new URL(content.data.site.url).pathname}${locale._meta.path}"`), locale._meta.lang);
     }
 });
+
+test("each page has a canonical URL and reciprocal hreflang links to every language", async () => {
+    const homeUrl = (l) => content.data.site.url + l._meta.path;
+    for (const locale of content.locales) {
+        const html = await page(join(locale._meta.path, "index.html"));
+        assert.ok(html.includes(`<link rel="canonical" href="${homeUrl(locale)}" />`), `${locale._meta.lang}: canonical`);
+        for (const other of content.locales) {
+            assert.ok(html.includes(`<link rel="alternate" hreflang="${other._meta.htmlLang}" href="${homeUrl(other)}" />`),
+                `${locale._meta.lang}: hreflang ${other._meta.lang}`);
+        }
+        assert.ok(html.includes(`hreflang="x-default" href="${homeUrl(content.locales[0])}"`), `${locale._meta.lang}: x-default`);
+    }
+});
+
+test("the Open Graph image of each page exists in the build", async () => {
+    for (const locale of content.locales) {
+        const html = await page(join(locale._meta.path, "index.html"));
+        const image = html.match(/<meta property="og:image" content="([^"]+)"/)[1];
+        assert.ok(image.startsWith(content.data.site.url), "absolute URL");
+        await assert.doesNotReject(readFile(join(outDir, image.slice(content.data.site.url.length))), image);
+    }
+});
+
+test("sitemap lists every language and 404 is not indexed", async () => {
+    const xml = await page("sitemap.xml");
+    for (const locale of content.locales) assert.ok(xml.includes(`<loc>${content.data.site.url}${locale._meta.path}</loc>`));
+    assert.match(await page("404.html"), /<meta name="robots" content="noindex" \/>/);
+});

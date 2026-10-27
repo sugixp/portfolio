@@ -63,6 +63,9 @@ export function layout(ctx, page) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${page.title}</title>
     <meta name="description" content="${page.description}" />
+    <meta name="theme-color" content="#EEF1F4" />
+    <link rel="icon" href="${base}assets/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="${base}assets/apple-touch-icon.png" />
     ${page.head ?? ""}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

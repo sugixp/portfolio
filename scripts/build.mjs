@@ -12,6 +12,7 @@ import { publishedLocales, translator } from "./lib/i18n.mjs";
 import { layout } from "../templates/layout.mjs";
 import { homeBody } from "../templates/home.mjs";
 import { notFoundBody } from "../templates/not-found.mjs";
+import { homeHead, robots, sitemap } from "../templates/seo.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DATA_FILES = ["site", "projects", "stack", "certifications", "experience"];
@@ -70,6 +71,7 @@ export async function build({ outDir = join(ROOT, "dist"), root = ROOT } = {}) {
             title: ctx.t("meta.title"),
             description: ctx.t("meta.description"),
             navPrefix: "",
+            head: homeHead(ctx),
             body: homeBody(ctx),
         }));
         pages.push(relPath);
@@ -84,6 +86,9 @@ export async function build({ outDir = join(ROOT, "dist"), root = ROOT } = {}) {
         body: notFoundBody(ctx),
     }));
     pages.push("404.html");
+
+    await writePage(outDir, "sitemap.xml", sitemap(ctx));
+    await writePage(outDir, "robots.txt", robots(ctx));
 
     for (const dir of STATIC_DIRS) await cp(join(root, dir), join(outDir, dir), { recursive: true });
     return { pages };
