@@ -23,6 +23,7 @@ templates/              funções que devolvem HTML (rodam só no build)
   layout.mjs            <head>, barra superior, rodapé, sugestão de idioma
   home.mjs              seções da página inicial
   case-study.mjs        página de estudo de caso (/projects/<id>/)
+  cv.mjs                currículo (/cv/), uma coluna, pensado para ATS
   terminal.mjs          diálogo do terminal + dados dos comandos (JSON na página)
   parts.mjs             peças comuns: lâmpada com texto, prévia do projeto
   not-found.mjs         página 404
@@ -35,7 +36,8 @@ scripts/
   og-image.mjs          gera assets/og/*.png com o Chrome headless (Playwright)
   fetch-fonts.mjs       baixa as fontes (subconjunto latino) do Google Fonts para assets/fonts/
   project-previews.mjs  captura as demos e gera assets/projects/*.avif|webp (Playwright + sharp)
-  serve.mjs             servidor local de dist/, sem dependências
+  cv-pdf.mjs            imprime cada /cv/ em PDF A4 (Playwright), depois do build
+  serve.mjs             servidor local de dist/, sem dependências (usado também pelo cv-pdf)
   validate-data.mjs     valida data/*.json contra os schemas
 css/style.css           estilos (copiado para dist/)
 js/                     JavaScript do navegador, só interatividade (copiado para dist/)
@@ -72,6 +74,23 @@ css/ js/ assets/ ── copiados ────────> ├── en/index.ht
    `github-pages` só aceita deploy da `main`.
 3. Se um deploy falhar, a versão anterior continua no ar.
 
+### Currículo em PDF
+
+`/cv/` (e `/en/cv/`) é gerado dos mesmos JSON do site e tem CSS de impressão A4. Depois
+do build, `npm run cv` abre cada página no Chrome headless e salva o PDF ao lado dela
+(`cv/henrique-sugi-curriculo.pdf`, `en/cv/henrique-sugi-resume.pdf`). O workflow de deploy
+faz isso a cada publicação, ou seja, a cada push e a cada atualização diária dos dados: o
+PDF nunca fica desatualizado em relação ao site.
+
+Pensado para sistemas de triagem (ATS): uma coluna, títulos de seção comuns ("Experiência",
+"Formação"...), texto selecionável e links escritos por extenso. O kerning fica desligado
+no currículo porque, com ele, o Chrome às vezes grava as palavras sem o caractere de espaço
+no PDF, e o texto extraído vira "JPavançado".
+
+Na linha do tempo (`data/experience.json`), `"kind": "education"` manda o item para
+"Formação"; os demais vão para "Experiência". O botão "Baixar currículo" do topo e o comando
+`cv` do terminal apontam para o PDF do idioma da página.
+
 ### Dados do GitHub
 
 O navegador nunca chama a API do GitHub. Uma vez por dia (ou manualmente, em *Actions →
@@ -104,7 +123,7 @@ copiadas para dentro do repositório.
   ser compartilhadas e indexadas. Com JS, o link abre a mesma página num `<dialog>` e muda
   a URL com `pushState`; o "voltar" do navegador fecha o diálogo.
 - **Terminal:** Ctrl+K, a tecla `` ` `` (fora de campos de texto) ou o botão `>_`. Comandos:
-  `help`, `whoami`, `projects`, `open <projeto>`, `stack`, `contact`, `lang pt|en`,
+  `help`, `whoami`, `projects`, `open <projeto>`, `stack`, `contact`, `cv`, `lang pt|en`,
   `theme dark|light`, `clear`. Tab completa e ↑/↓ navegam no histórico.
 - **Lâmpadas** (verde, âmbar, apagada) só aparecem onde têm significado e sempre vêm
   com o estado escrito ao lado ("no ar", "em busca"): a cor nunca é a única pista.
@@ -159,6 +178,7 @@ npm run validate:data  # só valida data/*.json
 npm run og             # regera as imagens de prévia (usa o Chrome instalado)
 npm run start:drafts   # como npm start, mas mostra também os estudos de caso em rascunho
 npm run previews       # recaptura as demos dos projetos (assets/projects/)
+npm run cv             # gera os PDFs do currículo em dist/ (rode depois do build)
 ```
 
 Para atualizar `data/github.json` localmente (opcional):
