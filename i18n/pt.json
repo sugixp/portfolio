@@ -71,7 +71,8 @@
     "footRight": "disponível para estágio · Curitiba ou remoto",
     "repos": "repositórios públicos",
     "lastActivity": "última atividade no GitHub",
-    "topLanguage": "linguagem mais usada"
+    "idleState": "pausado",
+    "mainLanguages": "linguagens principais"
   },
   "about": {
     "eyebrow": "// sobre",

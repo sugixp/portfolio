@@ -71,7 +71,8 @@
     "footRight": "open to internships · Curitiba or remote",
     "repos": "public repositories",
     "lastActivity": "last GitHub activity",
-    "topLanguage": "most used language"
+    "idleState": "idle",
+    "mainLanguages": "main languages"
   },
   "about": {
     "eyebrow": "// about",

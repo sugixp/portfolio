@@ -9,6 +9,7 @@ import { dirname, join, posix } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { html } from "./lib/html.mjs";
 import { publishedLocales, translator } from "./lib/i18n.mjs";
+import { boardSummary, relativeDay } from "./lib/github.mjs";
 import { layout } from "../templates/layout.mjs";
 import { homeBody } from "../templates/home.mjs";
 import { notFoundBody } from "../templates/not-found.mjs";
@@ -26,6 +27,12 @@ async function readJSON(path) {
 export async function loadContent(root = ROOT) {
     const data = {};
     for (const name of DATA_FILES) data[name] = await readJSON(join(root, "data", `${name}.json`));
+    // Optional: written daily by .github/workflows/github-data.yml. Without it the
+    // status board shows only the profile rows.
+    data.github = await readJSON(join(root, "data", "github.json")).catch((err) => {
+        if (err.code === "ENOENT") return null;
+        throw err;
+    });
 
     const files = (await readdir(join(root, "i18n"))).filter((f) => f.endsWith(".json"));
     const all = await Promise.all(files.map((f) => readJSON(join(root, "i18n", f))));
@@ -35,9 +42,31 @@ export async function loadContent(root = ROOT) {
     return { data, locales, root };
 }
 
-function context({ data, locales, root }, locale) {
+// Live cells for the status board, from data/github.json.
+function githubCells(github, t, htmlLang, now) {
+    const summary = boardSummary(github);
+    if (!summary) return null;
+    const cells = [{ label: t("panel.repos"), value: String(summary.repoCount), span: 2 }];
+    if (summary.lastActivity) {
+        const { date, repo } = summary.lastActivity;
+        const recent = Date.parse(now) - Date.parse(date) < 30 * 86_400_000;
+        cells.push({
+            label: t("panel.lastActivity"),
+            value: relativeDay(date, now, htmlLang),
+            detail: repo,
+            span: 2,
+            lamp: recent ? "ok" : "off",
+            state: recent ? t("panel.activeState") : t("panel.idleState"),
+        });
+    }
+    if (summary.mainLanguages.length) cells.push({ label: t("panel.mainLanguages"), value: summary.mainLanguages.join(" · "), span: 2 });
+    return cells;
+}
+
+function context({ data, locales, root }, locale, now = new Date().toISOString()) {
     const site = data.site;
     const base = new URL(site.url).pathname; // "/portfolio/"
+    const t = translator(locale);
     return {
         data,
         site,
@@ -45,14 +74,14 @@ function context({ data, locales, root }, locale) {
         locales,
         locale,
         lang: locale._meta.lang,
-        t: translator(locale),
+        t,
         year: new Date().getFullYear(),
         homePath: (l) => base + l._meta.path,
         homeUrl: (l) => site.url + l._meta.path,
         root,
         // Filled in by the case-study and GitHub steps; null means "not available".
         caseStudyPath: () => null,
-        board: null,
+        board: githubCells(data.github, t, locale._meta.htmlLang, now),
     };
 }
 

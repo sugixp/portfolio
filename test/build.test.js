@@ -73,3 +73,10 @@ test("sitemap lists every language and 404 is not indexed", async () => {
     for (const locale of content.locales) assert.ok(xml.includes(`<loc>${content.data.site.url}${locale._meta.path}</loc>`));
     assert.match(await page("404.html"), /<meta name="robots" content="noindex" \/>/);
 });
+
+test("the status board shows live GitHub cells when data/github.json exists", async (t) => {
+    if (!content.data.github) return t.skip("no data/github.json");
+    const html = await page("index.html");
+    assert.ok(html.includes(`<p class="board-value">${content.data.github.repos.length}</p>`), "repository count");
+    assert.match(html, /class="lamp lamp-(ok|off)" aria-hidden="true"><\/span>(ativo|pausado)/, "activity lamp with text");
+});
