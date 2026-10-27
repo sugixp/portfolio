@@ -155,8 +155,9 @@ function certifications({ t, lang, data }) {
 }
 
 function experience({ t, lang, data }) {
-    // Oldest first, read left to right like a production line.
-    const items = [...data.experience.experience].reverse();
+    // Most recent first (the order of experience.json): left to right on wide
+    // screens, top to bottom on phones.
+    const items = data.experience.experience;
     return html`      <section id="trajetoria" class="section">
         <div class="wrap">
           ${sectionHead(t, "experience")}

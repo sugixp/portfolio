@@ -139,3 +139,18 @@ test("the hero download button points at the PDF of the same language", async ()
     }
     assert.ok((await page("sitemap.xml")).includes(`${content.data.site.url}cv/</loc>`));
 });
+
+test("the timeline and the CV list experience most recent first", async () => {
+    const starts = (html, selector) => [...html.matchAll(selector)].map((m) => Number(m[1]));
+    const isDescending = (list) => list.every((v, i) => i === 0 || list[i - 1] >= v);
+    for (const locale of content.locales) {
+        const home = await page(join(locale._meta.path, "index.html"));
+        const timeline = starts(home, /<p class="timeline-date mono">(\d{4})–/g);
+        assert.ok(timeline.length > 1 && isDescending(timeline), `${locale._meta.lang} timeline: ${timeline}`);
+        const cv = await page(join(locale._meta.path, "cv", "index.html"));
+        const cvDates = starts(cv, /<span class="cv-entry-meta">(\d{4})–/g);
+        assert.ok(cvDates.length > 1, "cv dates found");
+        // Projects have no dates; education and experience blocks are each descending.
+        assert.ok(isDescending(cvDates.slice(-2)), `${locale._meta.lang} cv experience: ${cvDates}`);
+    }
+});
