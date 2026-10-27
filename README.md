@@ -33,6 +33,7 @@ scripts/
   lib/                  funções puras do build (escape de HTML, i18n, ordenação, GitHub)
   fetch-github.mjs      gera data/github.json pela API do GitHub (usado pelo workflow)
   og-image.mjs          gera assets/og/*.png com o Chrome headless (Playwright)
+  fetch-fonts.mjs       baixa as fontes (subconjunto latino) do Google Fonts para assets/fonts/
   project-previews.mjs  captura as demos e gera assets/projects/*.avif|webp (Playwright + sharp)
   serve.mjs             servidor local de dist/, sem dependências
   validate-data.mjs     valida data/*.json contra os schemas
@@ -126,10 +127,14 @@ copiadas para dentro do repositório.
   e um teste garante que todos os idiomas têm as mesmas chaves que `pt.json`.
 - **Imagens de prévia versionadas:** `assets/og/*.png` muda raramente, então é gerada
   sob demanda (`npm run og`) e comitada. O deploy fica rápido e não precisa de navegador.
-- **Fontes sem bloquear a pintura:** só os eixos e pesos usados (Archivo 400–800,
-  larguras 100–125, num arquivo variável; Martian Mono 400/500), com `display=swap`,
-  `preload` e aplicação no `onload`. O texto aparece na fonte do sistema e troca quando
-  a fonte chega. No Lighthouse local (mobile), a primeira pintura caiu de 2,9 s para 1,1 s.
+- **Fontes servidas pelo próprio site:** Archivo e Martian Mono vêm do Google Fonts
+  (licença OFL), mas só o subconjunto latino e os eixos usados (Archivo 400–800, larguras
+  100–125; Martian Mono 400/500), baixados por `scripts/fetch-fonts.mjs` para
+  `assets/fonts/`. Usam `font-display: swap` (o texto aparece na hora, na fonte do
+  sistema) e a Archivo, que desenha o nome no topo, tem `preload`. Carregar do Google
+  exigia duas conexões externas antes da primeira pintura e fazia o Lighthouse em produção
+  oscilar entre 85 e 100; servir daqui remove isso e ainda evita que o visitante faça
+  requisições ao Google.
 - **Prévias dos projetos:** capturas das demos em AVIF e WebP (640 e 1280 px, 3–10 KB),
   com `<picture>`, `srcset`, `loading="lazy"` e dimensões fixas, para nada pular de
   lugar. Projetos de linha de comando mostram o exemplo do README como texto, não imagem.
