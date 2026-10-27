@@ -34,8 +34,8 @@
       "id": "currency-converter",
       "title": "currency-converter",
       "description": {
-        "pt": "Conversor de moedas em Python consumindo a API real da Open Exchange Rates, com suporte a mais de 150 moedas.",
-        "en": "Currency converter in Python consuming the real Open Exchange Rates API, supporting 150+ currencies."
+        "pt": "Conversor de moedas em Python que consulta cotações em tempo real na API pública da ExchangeRate-API (open.er-api.com), com suporte a mais de 150 moedas.",
+        "en": "Currency converter in Python that fetches real-time rates from the public ExchangeRate-API (open.er-api.com), supporting 150+ currencies."
       },
       "tech": [
         "Python",
