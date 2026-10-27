@@ -1,0 +1,182 @@
+{
+  "$schema": "./schema/github.schema.json",
+  "user": "sugixp",
+  "repos": [
+    {
+      "name": "portfolio",
+      "description": null,
+      "url": "https://github.com/sugixp/portfolio",
+      "homepage": null,
+      "language": "JavaScript",
+      "stars": 1,
+      "archived": false,
+      "lastCommit": {
+        "sha": "b07789a",
+        "date": "2026-10-27T21:59:18Z",
+        "message": "feat(content): replace Azure and IoT with AI agent-assisted development"
+      }
+    },
+    {
+      "name": "task-api",
+      "description": null,
+      "url": "https://github.com/sugixp/task-api",
+      "homepage": null,
+      "language": "Python",
+      "stars": 0,
+      "archived": false,
+      "lastCommit": {
+        "sha": "215a441",
+        "date": "2026-08-18T18:52:18Z",
+        "message": "Update README"
+      }
+    },
+    {
+      "name": "biblioteca-csharp",
+      "description": null,
+      "url": "https://github.com/sugixp/biblioteca-csharp",
+      "homepage": null,
+      "language": "C#",
+      "stars": 0,
+      "archived": false,
+      "lastCommit": {
+        "sha": "dec41d3",
+        "date": "2026-08-13T11:30:28Z",
+        "message": "Corrige o README"
+      }
+    },
+    {
+      "name": "task-manager",
+      "description": null,
+      "url": "https://github.com/sugixp/task-manager",
+      "homepage": null,
+      "language": "Python",
+      "stars": 0,
+      "archived": false,
+      "lastCommit": {
+        "sha": "d6babbf",
+        "date": "2026-08-03T03:51:51Z",
+        "message": "Add README"
+      }
+    },
+    {
+      "name": "currency-converter",
+      "description": null,
+      "url": "https://github.com/sugixp/currency-converter",
+      "homepage": null,
+      "language": "Python",
+      "stars": 0,
+      "archived": false,
+      "lastCommit": {
+        "sha": "8bd36d3",
+        "date": "2026-08-03T02:37:24Z",
+        "message": "Add README"
+      }
+    },
+    {
+      "name": "data_visual",
+      "description": null,
+      "url": "https://github.com/sugixp/data_visual",
+      "homepage": null,
+      "language": "JavaScript",
+      "stars": 0,
+      "archived": false,
+      "lastCommit": {
+        "sha": "954c687",
+        "date": "2025-10-08T02:46:09Z",
+        "message": "Update README.md"
+      }
+    },
+    {
+      "name": "dotfiles",
+      "description": "my-arch-linux",
+      "url": "https://github.com/sugixp/dotfiles",
+      "homepage": null,
+      "language": "Shell",
+      "stars": 0,
+      "archived": false,
+      "lastCommit": {
+        "sha": "ac8b13a",
+        "date": "2025-04-13T12:32:01Z",
+        "message": "Add .gitignore"
+      }
+    },
+    {
+      "name": "ibm_data_science",
+      "description": null,
+      "url": "https://github.com/sugixp/ibm_data_science",
+      "homepage": null,
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "archived": false,
+      "lastCommit": {
+        "sha": "5a5c2b1",
+        "date": "2025-03-30T07:57:22Z",
+        "message": "Data wrangling"
+      }
+    },
+    {
+      "name": "Game_Project",
+      "description": null,
+      "url": "https://github.com/sugixp/Game_Project",
+      "homepage": null,
+      "language": "JavaScript",
+      "stars": 0,
+      "archived": false,
+      "lastCommit": {
+        "sha": "f2cb8d6",
+        "date": "2024-06-09T05:15:32Z",
+        "message": "Instructions and cleaning"
+      }
+    }
+  ],
+  "languages": [
+    {
+      "name": "Jupyter Notebook",
+      "bytes": 1104646,
+      "share": 0.863
+    },
+    {
+      "name": "JavaScript",
+      "bytes": 128144,
+      "share": 0.1
+    },
+    {
+      "name": "CSS",
+      "bytes": 17120,
+      "share": 0.013
+    },
+    {
+      "name": "C#",
+      "bytes": 13771,
+      "share": 0.011
+    },
+    {
+      "name": "Python",
+      "bytes": 13494,
+      "share": 0.011
+    },
+    {
+      "name": "HTML",
+      "bytes": 2753,
+      "share": 0.002
+    },
+    {
+      "name": "Dockerfile",
+      "bytes": 202,
+      "share": 0
+    },
+    {
+      "name": "Shell",
+      "bytes": 172,
+      "share": 0
+    }
+  ],
+  "recentActivity": [
+    {
+      "type": "push",
+      "repo": "portfolio",
+      "date": "2026-10-26T14:20:46Z",
+      "commits": 0
+    }
+  ]
+}
