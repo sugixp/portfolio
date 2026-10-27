@@ -11,9 +11,9 @@
       "stars": 1,
       "archived": false,
       "lastCommit": {
-        "sha": "b07789a",
-        "date": "2026-10-27T21:59:18Z",
-        "message": "feat(content): replace Azure and IoT with AI agent-assisted development"
+        "sha": "b0e92eb",
+        "date": "2026-10-27T22:31:49Z",
+        "message": "docs(readme): document GitHub data, case studies, theme and terminal"
       }
     },
     {
@@ -133,27 +133,27 @@
     {
       "name": "Jupyter Notebook",
       "bytes": 1104646,
-      "share": 0.863
+      "share": 0.83
     },
     {
       "name": "JavaScript",
-      "bytes": 128144,
-      "share": 0.1
+      "bytes": 171652,
+      "share": 0.129
     },
     {
       "name": "CSS",
-      "bytes": 17120,
-      "share": 0.013
+      "bytes": 24562,
+      "share": 0.018
     },
     {
       "name": "C#",
       "bytes": 13771,
-      "share": 0.011
+      "share": 0.01
     },
     {
       "name": "Python",
       "bytes": 13494,
-      "share": 0.011
+      "share": 0.01
     },
     {
       "name": "HTML",
