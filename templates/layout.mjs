@@ -102,8 +102,11 @@ export function layout(ctx, page) {
     ${page.head ?? ""}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Web fonts load without blocking the first paint: text shows in the system
+         font and swaps when they arrive (display=swap). -->
     <link rel="preload" as="style" href="${FONTS_URL}" />
-    <link rel="stylesheet" href="${FONTS_URL}" />
+    <link rel="stylesheet" href="${FONTS_URL}" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="${FONTS_URL}" /></noscript>
     <link rel="stylesheet" href="${base}css/style.css" />
     <script type="module" src="${base}js/main.js"></script>
     ${(ctx.modules ?? []).filter((m) => m !== "main.js").map((m) => html`<link rel="modulepreload" href="${base}js/${m}" />
