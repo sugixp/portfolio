@@ -19,7 +19,9 @@
     {
       "id": "learning",
       "title": { "pt": "Em aprendizado", "en": "Currently learning" },
-      "items": ["Azure", "IoT"],
+      "items": [
+        { "pt": "Desenvolvimento com agentes de IA", "en": "AI agent-assisted development" }
+      ],
       "planned": true
     }
   ]
