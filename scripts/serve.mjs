@@ -1,9 +1,11 @@
 // Minimal static server for local development (npm start), without dependencies.
 // Serves dist/ under the same base path as GitHub Pages (/portfolio/), including
-// the trailing-slash redirect and 404.html, so local behaves like production.
+// the trailing-slash redirect, 404.html and gzip for text files, so local
+// behaves (and measures, e.g. in Lighthouse) like production.
 import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
 import { extname, join, normalize, resolve } from "node:path";
+import { gzipSync } from "node:zlib";
 
 const ROOT = resolve("dist");
 const PORT = Number(process.env.PORT) || 4173;
@@ -25,12 +27,20 @@ const TYPES = {
     ".pdf": "application/pdf",
 };
 
-async function send(res, status, path) {
-    const body = await readFile(path); // read first: a missing file must not leave headers half-sent
-    res.writeHead(status, {
+const COMPRESSIBLE = new Set([".html", ".css", ".js", ".json", ".xml", ".txt", ".svg"]);
+
+async function send(res, status, path, req) {
+    let body = await readFile(path); // read first: a missing file must not leave headers half-sent
+    const headers = {
         "Content-Type": TYPES[extname(path)] || "application/octet-stream",
         "Cache-Control": "no-store",
-    });
+    };
+    if (COMPRESSIBLE.has(extname(path)) && /\bgzip\b/.test(req.headers["accept-encoding"] ?? "")) {
+        body = gzipSync(body);
+        headers["Content-Encoding"] = "gzip";
+        headers.Vary = "Accept-Encoding";
+    }
+    res.writeHead(status, headers);
     res.end(body);
 }
 
@@ -54,11 +64,11 @@ createServer(async (req, res) => {
                 res.writeHead(301, { Location: `${pathname}/` }).end();
                 return;
             }
-            return await send(res, 200, join(path, "index.html"));
+            return await send(res, 200, join(path, "index.html"), req);
         }
-        await send(res, 200, path);
+        await send(res, 200, path, req);
     } catch {
-        await send(res, 404, join(ROOT, "404.html")).catch(() => res.writeHead(404).end("404"));
+        await send(res, 404, join(ROOT, "404.html"), req).catch(() => res.writeHead(404).end("404"));
     }
 }).listen(PORT, () => {
     console.log(`Serving dist/ at http://localhost:${PORT}${BASE}`);
