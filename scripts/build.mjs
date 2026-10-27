@@ -72,6 +72,7 @@ export async function build({ outDir = join(ROOT, "dist"), root = ROOT } = {}) {
             description: ctx.t("meta.description"),
             navPrefix: "",
             head: homeHead(ctx),
+            suggestLanguages: true,
             body: homeBody(ctx),
         }));
         pages.push(relPath);

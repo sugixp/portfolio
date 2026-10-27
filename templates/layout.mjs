@@ -1,5 +1,6 @@
 // Document shell shared by every page: <head>, top bar, footer.
 import { html } from "../scripts/lib/html.mjs";
+import { translator } from "../scripts/lib/i18n.mjs";
 
 function langSwitch(ctx) {
     return html`<nav class="lang-switch" aria-label="${ctx.t("langSwitch.label")}">
@@ -18,6 +19,23 @@ function langSwitch(ctx) {
             >`;
             })}
           </nav>`;
+}
+
+// One hidden notice per other language, written in that language. js/lang-switch.js
+// reveals the one matching the visitor's preference; nobody is redirected.
+function langSuggestions(ctx) {
+    return ctx.locales
+        .filter((locale) => locale !== ctx.locale)
+        .map((locale) => {
+            const t = translator(locale);
+            const { lang, htmlLang } = locale._meta;
+            return html`<aside class="lang-suggest" data-suggest-lang="${lang}" lang="${htmlLang}" aria-label="${t("langSwitch.label")}" hidden>
+      <div class="wrap lang-suggest-inner">
+        <p>${t("langSwitch.suggest")} <a href="${ctx.homePath(locale)}" hreflang="${htmlLang}" data-lang-link>${t("langSwitch.suggestLink")} →</a></p>
+        <button type="button" class="lang-suggest-dismiss" data-dismiss>${t("langSwitch.dismiss")}</button>
+      </div>
+    </aside>`;
+        });
 }
 
 function topbar(ctx, { navPrefix }) {
@@ -51,8 +69,8 @@ function topbar(ctx, { navPrefix }) {
 }
 
 /**
- * page: { title, description, path (absolute URL path), canonical (absolute URL or null),
- *         head (extra markup), body, navPrefix }
+ * page: { title, description, head (extra markup), body, navPrefix,
+ *         suggestLanguages (offer the other languages when the visitor prefers one) }
  */
 export function layout(ctx, page) {
     const { t, base } = ctx;
@@ -81,6 +99,7 @@ export function layout(ctx, page) {
     <div class="scanline" aria-hidden="true"></div>
 
     ${topbar(ctx, page)}
+    ${page.suggestLanguages ? langSuggestions(ctx) : ""}
 
     <main id="conteudo">
 ${page.body}

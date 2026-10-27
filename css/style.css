@@ -246,6 +246,38 @@ h1, h2, h3 { font-family: var(--font-mono); font-weight: 700; margin: 0; letter-
   }
 }
 
+/* Language suggestion, shown by JS only when the visitor prefers another language. */
+.lang-suggest {
+  background: var(--accent-soft);
+  border-bottom: 1px solid var(--accent-soft-strong);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+.lang-suggest-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 16px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.lang-suggest p { margin: 0; color: var(--ink); }
+.lang-suggest a { color: var(--accent-dark); font-weight: 600; }
+.lang-suggest a:hover { text-decoration: underline; }
+.lang-suggest-dismiss {
+  margin-left: auto;
+  font: inherit;
+  color: var(--ink-dim);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 6px 8px;
+  min-height: 32px;
+  cursor: pointer;
+}
+.lang-suggest-dismiss:hover { color: var(--ink); border-color: var(--border); }
+
 /* ==========================================================
    SECTIONS — GENERIC
    ========================================================== */
