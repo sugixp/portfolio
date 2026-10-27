@@ -80,7 +80,7 @@
   },
   "projects": {
     "eyebrow": "// projects",
-    "title": "Running services",
+    "title": "Projects",
     "featured": "featured",
     "status": {
       "deployed": "live",
