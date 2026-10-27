@@ -119,3 +119,23 @@ test("screenshot previews ship as AVIF and WebP, lazy-loaded, with dimensions", 
     }
     if (shots.length) assert.match(html, /<img src="[^"]+-640\.webp" alt="[^"]+" width="1280" height="800" loading="lazy" decoding="async" \/>/);
 });
+
+test("each language has a one-column CV page built from the same data", async () => {
+    const { projects, experience } = content.data;
+    for (const locale of content.locales) {
+        const lang = locale._meta.lang;
+        const html = await page(join(locale._meta.path, "cv", "index.html"));
+        assert.match(html, /<article class="cv"/, `${lang}: cv article`);
+        for (const p of projects.projects) assert.ok(html.includes(`<strong>${p.title}</strong>`), `${lang}: ${p.id}`);
+        for (const e of experience.experience) assert.ok(html.includes(localize(e.title, lang)), `${lang}: ${localize(e.title, lang)}`);
+        assert.ok(html.includes(`href="${new URL(content.data.site.url).pathname}${locale._meta.path}cv/${locale.cv.fileName}"`), `${lang}: PDF link`);
+    }
+});
+
+test("the hero download button points at the PDF of the same language", async () => {
+    for (const locale of content.locales) {
+        const html = await page(join(locale._meta.path, "index.html"));
+        assert.ok(html.includes(`cv/${locale.cv.fileName}" class="btn" download>`), locale._meta.lang);
+    }
+    assert.ok((await page("sitemap.xml")).includes(`${content.data.site.url}cv/</loc>`));
+});

@@ -688,6 +688,69 @@ p { margin: 0; }
 .case-dialog-body { padding: 28px clamp(16px, 4vw, 40px) 40px; }
 
 /* ==========================================================
+   CV — a document: light paper in any theme, one column, prints as A4
+   ========================================================== */
+.cv-page { padding: 32px 0 80px; }
+.cv-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  margin-bottom: 24px;
+  max-width: calc(210mm + 2 * var(--gutter));
+}
+.cv-note { color: var(--dim); font-size: 14px; max-width: 60ch; }
+
+.cv-sheet {
+  max-width: 210mm;
+  margin: 0 auto;
+  background: #FFFFFF;
+  color: #17191C;
+  padding: 16mm 17mm;
+  border-radius: 4px;
+  box-shadow: 0 20px 50px -25px rgba(0, 0, 0, 0.6);
+}
+.cv { font-family: var(--sans); font-size: 10pt; line-height: 1.4; display: grid; gap: 11px; font-kerning: none; }
+.cv a { color: inherit; text-decoration: none; }
+.cv-head { display: grid; gap: 2px; padding-bottom: 8px; border-bottom: 1.5px solid #17191C; }
+.cv-head h1 { font-size: 21pt; font-weight: 800; font-stretch: 110%; line-height: 1.1; }
+.cv-role { font-size: 11.5pt; font-weight: 600; }
+.cv-contact { font-size: 9pt; color: #3D4247; overflow-wrap: anywhere; }
+.cv-section { display: grid; gap: 5px; }
+.cv-section h2 {
+  font-size: 11pt;
+  font-weight: 700;
+  font-stretch: 105%;
+  padding-bottom: 2px;
+  border-bottom: 1px solid #C9CDD1;
+}
+.cv-section > p { color: #2B2F33; }
+.cv-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.cv-entry { display: grid; gap: 1px; break-inside: avoid; }
+.cv-entry-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 12px; }
+.cv-entry-meta { color: #4A4F55; font-size: 9pt; }
+.cv-entry p { color: #2B2F33; }
+.cv-links { font-size: 9pt; color: #4A4F55; overflow-wrap: anywhere; }
+.cv-plain { margin: 0; padding-left: 16px; display: grid; gap: 1px; color: #2B2F33; }
+
+@media (max-width: 760px) {
+  .cv-sheet { padding: 24px 18px; border-radius: 0; }
+}
+
+@page { size: A4; margin: 13mm 15mm; }
+@media print {
+  /* The page margins show the root background: keep the whole sheet white. */
+  html:has(.page-cv), .page-cv { background: #FFFFFF !important; color-scheme: light; }
+  .page-cv .topbar,
+  .page-cv .footer,
+  .page-cv .cv-toolbar,
+  .page-cv .lang-suggest { display: none !important; }
+  .page-cv .cv-page { padding: 0; }
+  .page-cv .cv-sheet { max-width: none; padding: 0; box-shadow: none; border-radius: 0; }
+}
+
+/* ==========================================================
    TERMINAL
    ========================================================== */
 .terminal {

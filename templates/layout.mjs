@@ -107,7 +107,7 @@ export function layout(ctx, page) {
     ${(ctx.modules ?? []).filter((m) => m !== "main.js").map((m) => html`<link rel="modulepreload" href="${base}js/${m}" />
     `)}
   </head>
-  <body id="top">
+  <body id="top"${page.bodyClass ? html` class="${page.bodyClass}"` : ""}>
     <a class="skip-link" href="#conteudo">${t("skipLink")}</a>
     ${topbar(ctx, page)}
     ${page.suggestLanguages ? langSuggestions(ctx) : ""}

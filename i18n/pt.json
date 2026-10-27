@@ -36,8 +36,7 @@
     "eyebrow": "// perfil.status",
     "role": "Desenvolvedor de software em formação",
     "desc": "Estudante de Análise e Desenvolvimento de Sistemas (PUCPR), construindo APIs, aprendendo a colocar sistemas no ar e documentando cada etapa do processo — do primeiro commit ao deploy em nuvem.",
-    "ctaProjects": "Ver projetos",
-    "ctaContact": "Entrar em contato"
+    "ctaProjects": "Ver projetos"
   },
   "panel": {
     "label": "Resumo do perfil",
@@ -161,7 +160,8 @@
       "contact": "como falar comigo",
       "lang": "troca o idioma: lang pt | lang en",
       "theme": "troca o tema: theme dark | theme light",
-      "clear": "limpa a tela"
+      "clear": "limpa a tela",
+      "cv": "baixa o currículo em PDF"
     },
     "openHint": "use open <nome> para abrir um projeto",
     "usage": "uso: {usage}",
@@ -170,6 +170,25 @@
     "notFound": "comando não encontrado: {cmd}. Digite help.",
     "langSame": "você já está em {lang}.",
     "themeSet": "tema: {theme}",
-    "themeSame": "o tema já é {theme}."
+    "themeSame": "o tema já é {theme}.",
+    "downloading": "baixando o currículo…"
+  },
+  "cv": {
+    "title": "Currículo",
+    "pageTitle": "Currículo de Henrique Sadao Sugi",
+    "download": "Baixar currículo",
+    "downloadPdf": "Baixar em PDF",
+    "print": "Versão para impressão em A4. O PDF é gerado a partir desta página a cada atualização do site.",
+    "fileName": "henrique-sugi-curriculo.pdf",
+    "summary": "Resumo",
+    "projects": "Projetos",
+    "education": "Formação",
+    "experience": "Experiência",
+    "skills": "Habilidades",
+    "certifications": "Certificações",
+    "languages": "Idiomas",
+    "location": "Curitiba, BR",
+    "availability": "Disponível para estágio em desenvolvimento de software, em Curitiba ou remoto.",
+    "portfolio": "Portfólio"
   }
 }

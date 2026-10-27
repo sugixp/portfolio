@@ -36,8 +36,7 @@
     "eyebrow": "// profile.status",
     "role": "Software developer in training",
     "desc": "Systems Analysis and Development student (PUCPR), building APIs, learning to ship real systems, and documenting every step of the process — from first commit to cloud deploy.",
-    "ctaProjects": "View projects",
-    "ctaContact": "Get in touch"
+    "ctaProjects": "View projects"
   },
   "panel": {
     "label": "Profile summary",
@@ -161,7 +160,8 @@
       "contact": "how to reach me",
       "lang": "switch language: lang pt | lang en",
       "theme": "switch theme: theme dark | theme light",
-      "clear": "clear the screen"
+      "clear": "clear the screen",
+      "cv": "download the résumé as PDF"
     },
     "openHint": "use open <name> to open a project",
     "usage": "usage: {usage}",
@@ -170,6 +170,25 @@
     "notFound": "command not found: {cmd}. Type help.",
     "langSame": "you are already in {lang}.",
     "themeSet": "theme: {theme}",
-    "themeSame": "the theme is already {theme}."
+    "themeSame": "the theme is already {theme}.",
+    "downloading": "downloading the résumé…"
+  },
+  "cv": {
+    "title": "Résumé",
+    "pageTitle": "Henrique Sadao Sugi — Résumé",
+    "download": "Download résumé",
+    "downloadPdf": "Download as PDF",
+    "print": "A4 print version. The PDF is generated from this page every time the site is updated.",
+    "fileName": "henrique-sugi-resume.pdf",
+    "summary": "Summary",
+    "projects": "Projects",
+    "education": "Education",
+    "experience": "Experience",
+    "skills": "Skills",
+    "certifications": "Certifications",
+    "languages": "Languages",
+    "location": "Curitiba, Brazil",
+    "availability": "Open to software development internships, in Curitiba or remote.",
+    "portfolio": "Portfolio"
   }
 }

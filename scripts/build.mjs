@@ -16,6 +16,7 @@ import { layout } from "../templates/layout.mjs";
 import { homeBody } from "../templates/home.mjs";
 import { notFoundBody } from "../templates/not-found.mjs";
 import { caseStudyBody } from "../templates/case-study.mjs";
+import { CV_DIR, cvBody } from "../templates/cv.mjs";
 import { pageHead, robots, sitemap } from "../templates/seo.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -125,6 +126,19 @@ export async function build({ outDir = join(ROOT, "dist"), root = ROOT, drafts =
         }));
         pages.push(relPath);
 
+        const cvPath = `${CV_DIR}/`;
+        const cvFile = posix.join(locale._meta.path, cvPath, "index.html");
+        await writePage(outDir, cvFile, layout(ctx, {
+            title: ctx.t("cv.pageTitle"),
+            description: ctx.t("hero.desc"),
+            navPrefix: ctx.homePath(locale),
+            relPath: cvPath,
+            head: pageHead(ctx, { relPath: cvPath, title: ctx.t("cv.pageTitle"), description: ctx.t("hero.desc") }),
+            bodyClass: "page-cv",
+            body: cvBody(ctx),
+        }));
+        pages.push(cvFile);
+
         for (const project of studies) {
             const pagePath = `${CASE_STUDY_DIR}/${project.id}/`;
             const title = `${project.title} — ${ctx.t("caseStudy.titleSuffix")} · ${ctx.site.shortName}`;
@@ -153,7 +167,7 @@ export async function build({ outDir = join(ROOT, "dist"), root = ROOT, drafts =
     pages.push("404.html");
 
     const published = studies.filter((p) => !p.caseStudy.draft).map((p) => `${CASE_STUDY_DIR}/${p.id}/`);
-    await writePage(outDir, "sitemap.xml", sitemap(ctx, ["", ...published]));
+    await writePage(outDir, "sitemap.xml", sitemap(ctx, ["", `${CV_DIR}/`, ...published]));
     await writePage(outDir, "robots.txt", robots(ctx));
 
     for (const dir of STATIC_DIRS) await cp(join(root, dir), join(outDir, dir), { recursive: true });
