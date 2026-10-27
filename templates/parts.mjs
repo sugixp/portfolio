@@ -4,10 +4,20 @@ import { join } from "node:path";
 import { html } from "../scripts/lib/html.mjs";
 import { localize } from "../scripts/lib/localize.mjs";
 
-/** "2023–2025", "2025–atual" or, with expectedEnd, "2025 – previsão de conclusão 2027". */
+/** "2027" stays as is; "2027-12" becomes "dez/2027" or "Dec 2027", per the page language. */
+function formatYearMonth(t, value) {
+    const [year, month] = value.split("-");
+    if (!month) return year;
+    const name = new Intl.DateTimeFormat(t("_meta.htmlLang"), { month: "short", timeZone: "UTC" })
+        .format(new Date(Date.UTC(Number(year), Number(month) - 1, 1)))
+        .replace(/\.$/, ""); // pt-BR abbreviates as "dez."
+    return t("experience.monthYear", { month: name, year });
+}
+
+/** "2023–2025", "2025–atual" or, with expectedEnd, "2025 – previsão de conclusão dez/2027". */
 export function dateRange(t, item) {
     if (item.end) return `${item.start}–${item.end}`;
-    if (item.expectedEnd) return `${item.start} – ${t("experience.expected", { year: item.expectedEnd })}`;
+    if (item.expectedEnd) return `${item.start} – ${t("experience.expected", { date: formatYearMonth(t, item.expectedEnd) })}`;
     return `${item.start}–${t("experience.present")}`;
 }
 

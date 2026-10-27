@@ -162,4 +162,7 @@ test("dateRange shows the expected completion year when there is one", async () 
     assert.equal(dateRange(t, { start: "2016", end: "2021" }), "2016–2021");
     assert.equal(dateRange(t, { start: "2025", end: null }), "2025–atual");
     assert.equal(dateRange(t, { start: "2025", end: null, expectedEnd: "2027" }), "2025 – previsão de conclusão 2027");
+    assert.equal(dateRange(t, { start: "2025", end: null, expectedEnd: "2027-12" }), "2025 – previsão de conclusão dez/2027");
+    const en = translator(content.locales.find((l) => l._meta.lang === "en"));
+    assert.equal(dateRange(en, { start: "2025", end: null, expectedEnd: "2027-12" }), "2025 – expected Dec 2027");
 });

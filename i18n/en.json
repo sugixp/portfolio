@@ -111,7 +111,8 @@
     "eyebrow": "// journey",
     "title": "Experience",
     "present": "present",
-    "expected": "expected {year}"
+    "expected": "expected {date}",
+    "monthYear": "{month} {year}"
   },
   "contact": {
     "eyebrow": "// contact",

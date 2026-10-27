@@ -111,7 +111,8 @@
     "eyebrow": "// trajetória",
     "title": "Experiência",
     "present": "atual",
-    "expected": "previsão de conclusão {year}"
+    "expected": "previsão de conclusão {date}",
+    "monthYear": "{month}/{year}"
   },
   "contact": {
     "eyebrow": "// contato",

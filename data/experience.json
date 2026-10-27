@@ -4,6 +4,7 @@
     {
       "start": "2025",
       "end": null,
+      "expectedEnd": "2027-12",
       "kind": "education",
       "title": {
         "pt": "Tecnologia em Análise e Desenvolvimento de Sistemas",
