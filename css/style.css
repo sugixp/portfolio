@@ -1,4 +1,26 @@
 /* ==========================================================
+   FONTS — latin subsets from Google Fonts, served from this site
+   (scripts/fetch-fonts.mjs). Variable files: one per family covers every
+   weight and width used. swap = text shows at once in the fallback font.
+   ========================================================== */
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 400 800;
+  font-stretch: 100% 125%;
+  font-display: swap;
+  src: url("../assets/fonts/archivo-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Martian Mono";
+  font-style: normal;
+  font-weight: 400 500;
+  font-stretch: 87.5%;
+  font-display: swap;
+  src: url("../assets/fonts/martian-mono-latin.woff2") format("woff2");
+}
+
+/* ==========================================================
    TOKENS — dark is the default; [data-theme="light"] is opt-in
    ========================================================== */
 :root {

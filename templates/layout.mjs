@@ -3,9 +3,9 @@ import { html } from "../scripts/lib/html.mjs";
 import { translator } from "../scripts/lib/i18n.mjs";
 import { terminalButton, terminalDialog } from "./terminal.mjs";
 
-// Only the axes and weights the CSS uses: Archivo 400–800 at widths 100–125
-// (one variable file) and Martian Mono 400/500. display=swap shows the
-// fallback font immediately instead of invisible text.
+// Source of the self-hosted fonts (scripts/fetch-fonts.mjs) and of the Open
+// Graph images: only the axes and weights the CSS uses, Archivo 400–800 at
+// widths 100–125 and Martian Mono 400/500.
 export const FONTS_URL =
     "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=Martian+Mono:wdth,wght@87.5,400;87.5,500&display=swap";
 
@@ -100,13 +100,8 @@ export function layout(ctx, page) {
     <link rel="icon" href="${base}assets/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="${base}assets/apple-touch-icon.png" />
     ${page.head ?? ""}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Web fonts load without blocking the first paint: text shows in the system
-         font and swaps when they arrive (display=swap). -->
-    <link rel="preload" as="style" href="${FONTS_URL}" />
-    <link rel="stylesheet" href="${FONTS_URL}" media="print" onload="this.media='all'" />
-    <noscript><link rel="stylesheet" href="${FONTS_URL}" /></noscript>
+    <!-- Archivo draws the hero name (the largest paint), so it is fetched right away. -->
+    <link rel="preload" href="${base}assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="${base}css/style.css" />
     <script type="module" src="${base}js/main.js"></script>
     ${(ctx.modules ?? []).filter((m) => m !== "main.js").map((m) => html`<link rel="modulepreload" href="${base}js/${m}" />

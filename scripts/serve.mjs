@@ -25,6 +25,7 @@ const TYPES = {
     ".avif": "image/avif",
     ".ico": "image/x-icon",
     ".pdf": "application/pdf",
+    ".woff2": "font/woff2",
 };
 
 const COMPRESSIBLE = new Set([".html", ".css", ".js", ".json", ".xml", ".txt", ".svg"]);
