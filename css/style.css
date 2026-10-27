@@ -607,6 +607,10 @@ p { margin: 0; }
   }
 }
 
+/* Theme switch: a short cross-fade through the View Transitions API. */
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: 0.3s; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }

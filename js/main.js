@@ -2,9 +2,11 @@
 // by scripts/build.mjs. If this file fails to load, the page stays complete.
 import { initProjectFilter } from "./project-filter.js";
 import { initLangSwitch } from "./lang-switch.js";
+import { initTheme } from "./theme.js";
 
 initProjectFilter(document.querySelector("[data-project-filter]"));
 initLangSwitch();
+initTheme();
 
 // 404 page: show which address was requested (textContent, never markup).
 const route = document.querySelector("[data-route]");

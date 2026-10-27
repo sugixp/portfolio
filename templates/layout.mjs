@@ -68,6 +68,9 @@ function topbar(ctx, { navPrefix }) {
             <span class="status-chip-full">${t("statusChip.full")}</span>
             <span class="status-chip-short" aria-hidden="true">${t("statusChip.short")}</span>
           </span>
+          <button type="button" class="icon-btn" data-theme-toggle data-label-light="${t("theme.toLight")}" data-label-dark="${t("theme.toDark")}" aria-label="${t("theme.toLight")}" hidden>
+            <span aria-hidden="true">◐</span>
+          </button>
           ${langSwitch(ctx)}
         </div>
       </div>
@@ -88,6 +91,10 @@ export function layout(ctx, page) {
     <title>${page.title}</title>
     <meta name="description" content="${page.description}" />
     <meta name="theme-color" content="#15171A" />
+    <script>
+      // Applies a saved light-theme choice before first paint; dark is the default.
+      try { if (localStorage.getItem("portfolio-theme") === "light") document.documentElement.dataset.theme = "light"; } catch {}
+    </script>
     <link rel="icon" href="${base}assets/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="${base}assets/apple-touch-icon.png" />
     ${page.head ?? ""}
