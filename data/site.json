@@ -1,0 +1,11 @@
+{
+  "$schema": "./schema/site.schema.json",
+  "name": "Henrique Sadao Sugi",
+  "shortName": "Henrique Sugi",
+  "url": "https://sugixp.github.io/portfolio/",
+  "email": "sugisadao@proton.me",
+  "links": {
+    "github": "https://github.com/sugixp",
+    "linkedin": "https://www.linkedin.com/in/henrique-sugi-50b6152a5"
+  }
+}

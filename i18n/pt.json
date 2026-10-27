@@ -1,0 +1,104 @@
+{
+  "_meta": {
+    "lang": "pt",
+    "htmlLang": "pt-BR",
+    "ogLocale": "pt_BR",
+    "path": "",
+    "label": "PT",
+    "name": "Português",
+    "reviewed": true
+  },
+  "meta": {
+    "title": "Henrique Sugi — Desenvolvedor de Software",
+    "description": "Portfólio de Henrique Sadao Sugi, estudante de ADS na PUCPR buscando o primeiro estágio em desenvolvimento de software: projetos, stack e trajetória.",
+    "ogImageAlt": "Henrique Sadao Sugi — Desenvolvedor de software em formação"
+  },
+  "skipLink": "Pular para o conteúdo",
+  "nav": {
+    "label": "Seções",
+    "about": "Sobre",
+    "projects": "Projetos",
+    "stack": "Stack",
+    "journey": "Trajetória",
+    "contact": "Contato"
+  },
+  "langSwitch": {
+    "label": "Idioma",
+    "suggest": "Esta página também está disponível em português.",
+    "suggestLink": "Ver em português",
+    "dismiss": "Dispensar"
+  },
+  "statusChip": {
+    "full": "disponível para estágio",
+    "short": "disponível"
+  },
+  "hero": {
+    "eyebrow": "// perfil.status",
+    "role": "Desenvolvedor de software em formação",
+    "desc": "Estudante de Análise e Desenvolvimento de Sistemas (PUCPR), construindo APIs, aprendendo a colocar sistemas no ar e documentando cada etapa do processo — do primeiro commit ao deploy em nuvem.",
+    "ctaProjects": "Ver projetos",
+    "ctaContact": "Entrar em contato"
+  },
+  "panel": {
+    "label": "Resumo do perfil",
+    "title": "status do sistema",
+    "online": "online",
+    "rows": [
+      { "label": "localização", "value": "Curitiba, BR" },
+      { "label": "formação", "value": "ADS · PUCPR · 3º semestre" },
+      { "label": "idiomas", "value": "PT nativo · EN C1 · JP avançado" },
+      { "label": "experiência intl.", "value": "6+ anos · Japão" },
+      { "label": "foco atual", "value": "1º estágio em dev" }
+    ]
+  },
+  "about": {
+    "eyebrow": "// sobre",
+    "title": "De linha de produção a linha de código",
+    "lead": "Antes de estudar desenvolvimento, passei mais de seis anos trabalhando em ambiente industrial internacional no Japão — em processos de montagem elétrica e logística de abastecimento, sob padrões rígidos de qualidade. Hoje aplico essa mesma disciplina em outro tipo de sistema: escrevo APIs, conecto bancos de dados, escrevo testes automatizados e coloco projetos no ar, do zero até a nuvem."
+  },
+  "projects": {
+    "eyebrow": "// projetos",
+    "title": "Serviços em execução",
+    "featured": "destaque",
+    "status": {
+      "deployed": "deploy validado",
+      "stable": "estável",
+      "in-progress": "em desenvolvimento",
+      "archived": "arquivado"
+    },
+    "repo": "GitHub",
+    "demo": "Demo",
+    "filterLabel": "Filtrar projetos por tecnologia",
+    "filterAll": "todas",
+    "count": {
+      "one": "1 projeto",
+      "other": "{n} projetos"
+    }
+  },
+  "stack": {
+    "eyebrow": "// stack",
+    "title": "Ferramentas em uso"
+  },
+  "certifications": {
+    "eyebrow": "// credenciais",
+    "title": "Certificações"
+  },
+  "experience": {
+    "eyebrow": "// trajetória",
+    "title": "Experiência",
+    "present": "atual"
+  },
+  "contact": {
+    "eyebrow": "// contato",
+    "title": "Vamos conversar",
+    "lead": "Aberto a oportunidades de estágio em desenvolvimento de software, em Curitiba ou remoto."
+  },
+  "footer": {
+    "built": "Construído com HTML, CSS e JavaScript · Publicado via GitHub Pages"
+  },
+  "notFound": {
+    "title": "Página não encontrada",
+    "text": "O endereço não existe ou mudou de lugar.",
+    "home": "Voltar para o início"
+  }
+}

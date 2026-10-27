@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Site",
+  "description": "Identity and contact details shared by every page.",
+  "type": "object",
+  "properties": {
+    "$schema": { "type": "string" },
+    "name": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "shortName": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "url": {
+      "description": "Public address of the site, with a trailing slash. Used for canonical URLs, the sitemap and Open Graph.",
+      "allOf": [{ "$ref": "common.schema.json#/$defs/url" }, { "type": "string", "pattern": "/$" }]
+    },
+    "email": { "type": "string", "format": "email" },
+    "links": {
+      "type": "object",
+      "properties": {
+        "github": { "$ref": "common.schema.json#/$defs/url" },
+        "linkedin": { "$ref": "common.schema.json#/$defs/url" }
+      },
+      "required": ["github", "linkedin"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["name", "shortName", "url", "email", "links"],
+  "additionalProperties": false
+}

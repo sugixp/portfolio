@@ -11,6 +11,7 @@ const SCHEMA_DIR = join(DATA_DIR, "schema");
 
 // Data files without a schema (e.g. generated ones) are skipped.
 const FILES = {
+    "site.json": "site.schema.json",
     "projects.json": "projects.schema.json",
     "stack.json": "stack.schema.json",
     "certifications.json": "certifications.schema.json",

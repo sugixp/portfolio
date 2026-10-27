@@ -1,0 +1,104 @@
+{
+  "_meta": {
+    "lang": "en",
+    "htmlLang": "en",
+    "ogLocale": "en_US",
+    "path": "en/",
+    "label": "EN",
+    "name": "English",
+    "reviewed": true
+  },
+  "meta": {
+    "title": "Henrique Sugi — Software Developer",
+    "description": "Portfolio of Henrique Sadao Sugi, a Systems Analysis and Development student at PUCPR looking for a first software development internship: projects, stack and background.",
+    "ogImageAlt": "Henrique Sadao Sugi — Software developer in training"
+  },
+  "skipLink": "Skip to content",
+  "nav": {
+    "label": "Sections",
+    "about": "About",
+    "projects": "Projects",
+    "stack": "Stack",
+    "journey": "Journey",
+    "contact": "Contact"
+  },
+  "langSwitch": {
+    "label": "Language",
+    "suggest": "This page is also available in English.",
+    "suggestLink": "View in English",
+    "dismiss": "Dismiss"
+  },
+  "statusChip": {
+    "full": "open to internships",
+    "short": "open to work"
+  },
+  "hero": {
+    "eyebrow": "// profile.status",
+    "role": "Software developer in training",
+    "desc": "Systems Analysis and Development student (PUCPR), building APIs, learning to ship real systems, and documenting every step of the process — from first commit to cloud deploy.",
+    "ctaProjects": "View projects",
+    "ctaContact": "Get in touch"
+  },
+  "panel": {
+    "label": "Profile summary",
+    "title": "system status",
+    "online": "online",
+    "rows": [
+      { "label": "location", "value": "Curitiba, BR" },
+      { "label": "education", "value": "ADS · PUCPR · 3rd semester" },
+      { "label": "languages", "value": "PT native · EN C1 · JP advanced" },
+      { "label": "intl. experience", "value": "6+ years · Japan" },
+      { "label": "current focus", "value": "1st dev internship" }
+    ]
+  },
+  "about": {
+    "eyebrow": "// about",
+    "title": "From production line to code",
+    "lead": "Before studying software development, I spent over six years working in an international industrial environment in Japan — in electrical assembly and supply-chain logistics, under strict quality standards. Today I apply that same discipline to a different kind of system: I write APIs, connect databases, write automated tests, and ship projects from scratch to the cloud."
+  },
+  "projects": {
+    "eyebrow": "// projects",
+    "title": "Running services",
+    "featured": "featured",
+    "status": {
+      "deployed": "deploy verified",
+      "stable": "stable",
+      "in-progress": "in progress",
+      "archived": "archived"
+    },
+    "repo": "GitHub",
+    "demo": "Demo",
+    "filterLabel": "Filter projects by technology",
+    "filterAll": "all",
+    "count": {
+      "one": "1 project",
+      "other": "{n} projects"
+    }
+  },
+  "stack": {
+    "eyebrow": "// stack",
+    "title": "Tools in use"
+  },
+  "certifications": {
+    "eyebrow": "// credentials",
+    "title": "Certifications"
+  },
+  "experience": {
+    "eyebrow": "// journey",
+    "title": "Experience",
+    "present": "present"
+  },
+  "contact": {
+    "eyebrow": "// contact",
+    "title": "Let's talk",
+    "lead": "Open to software development internships, in Curitiba or remote."
+  },
+  "footer": {
+    "built": "Built with HTML, CSS and JavaScript · Published via GitHub Pages"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "This address doesn't exist or has moved.",
+    "home": "Back to the home page"
+  }
+}
