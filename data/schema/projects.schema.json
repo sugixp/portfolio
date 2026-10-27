@@ -3,13 +3,19 @@
   "title": "Projects",
   "type": "object",
   "properties": {
-    "$schema": { "type": "string" },
+    "$schema": {
+      "type": "string"
+    },
     "projects": {
       "type": "array",
-      "items": { "$ref": "#/$defs/project" }
+      "items": {
+        "$ref": "#/$defs/project"
+      }
     }
   },
-  "required": ["projects"],
+  "required": [
+    "projects"
+  ],
   "additionalProperties": false,
   "$defs": {
     "project": {
@@ -20,28 +26,98 @@
           "type": "string",
           "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
         },
-        "title": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
-        "description": { "$ref": "common.schema.json#/$defs/localized" },
+        "title": {
+          "$ref": "common.schema.json#/$defs/nonEmptyString"
+        },
+        "description": {
+          "$ref": "common.schema.json#/$defs/localized"
+        },
         "tech": {
           "type": "array",
-          "items": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+          "items": {
+            "$ref": "common.schema.json#/$defs/nonEmptyString"
+          },
           "minItems": 1,
           "uniqueItems": true
         },
         "links": {
           "type": "object",
           "properties": {
-            "repo": { "$ref": "common.schema.json#/$defs/url" },
-            "demo": { "$ref": "common.schema.json#/$defs/url" }
+            "repo": {
+              "$ref": "common.schema.json#/$defs/url"
+            },
+            "demo": {
+              "$ref": "common.schema.json#/$defs/url"
+            }
           },
           "additionalProperties": false
         },
         "status": {
-          "enum": ["deployed", "stable", "in-progress", "archived"]
+          "enum": [
+            "deployed",
+            "stable",
+            "in-progress",
+            "archived"
+          ]
         },
-        "featured": { "type": "boolean" }
+        "featured": {
+          "type": "boolean"
+        },
+        "preview": {
+          "description": "Optional visual on the card. \"screenshot\": an image of links.demo captured by npm run previews into assets/projects/. \"terminal\": a command and its output, copied from the README example.",
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "const": "screenshot"
+                },
+                "alt": {
+                  "$ref": "common.schema.json#/$defs/localized"
+                }
+              },
+              "required": [
+                "type",
+                "alt"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "const": "terminal"
+                },
+                "command": {
+                  "$ref": "common.schema.json#/$defs/nonEmptyString"
+                },
+                "output": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1
+                }
+              },
+              "required": [
+                "type",
+                "command",
+                "output"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        }
       },
-      "required": ["id", "title", "description", "tech", "links", "status", "featured"],
+      "required": [
+        "id",
+        "title",
+        "description",
+        "tech",
+        "links",
+        "status",
+        "featured"
+      ],
       "additionalProperties": false
     }
   }

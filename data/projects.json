@@ -8,13 +8,27 @@
         "pt": "API REST de gerenciamento de tarefas com autenticação JWT, isolamento de dados por usuário, testes automatizados, containerizada com Docker e publicada na AWS. Inclui front-end próprio consumindo a API.",
         "en": "Task-management REST API with JWT authentication, per-user data isolation, automated tests, Dockerized and deployed to AWS. Ships with its own front-end consuming the API."
       },
-      "tech": ["FastAPI", "SQLAlchemy", "JWT", "Pytest", "Docker", "AWS"],
+      "tech": [
+        "FastAPI",
+        "SQLAlchemy",
+        "JWT",
+        "Pytest",
+        "Docker",
+        "AWS"
+      ],
       "links": {
         "repo": "https://github.com/sugixp/task-api",
         "demo": "https://sugixp.github.io/task-api/"
       },
       "status": "deployed",
-      "featured": true
+      "featured": true,
+      "preview": {
+        "type": "screenshot",
+        "alt": {
+          "pt": "Tela de login do front-end do task-api",
+          "en": "Login screen of the task-api front-end"
+        }
+      }
     },
     {
       "id": "currency-converter",
@@ -23,12 +37,27 @@
         "pt": "Conversor de moedas em Python consumindo a API real da Open Exchange Rates, com suporte a mais de 150 moedas.",
         "en": "Currency converter in Python consuming the real Open Exchange Rates API, supporting 150+ currencies."
       },
-      "tech": ["Python", "REST API"],
+      "tech": [
+        "Python",
+        "REST API"
+      ],
       "links": {
         "repo": "https://github.com/sugixp/currency-converter"
       },
       "status": "stable",
-      "featured": false
+      "featured": false,
+      "preview": {
+        "type": "terminal",
+        "command": "python conversor.py",
+        "output": [
+          "=== Conversor de Moedas ===",
+          "Moeda de origem: USD",
+          "Moeda de destino: BRL",
+          "Valor: 59",
+          "",
+          "59.0 USD = 299.13 BRL"
+        ]
+      }
     },
     {
       "id": "task-manager",
@@ -37,12 +66,25 @@
         "pt": "Gerenciador de tarefas em linha de comando, com CRUD completo e armazenamento persistente em SQLite.",
         "en": "Command-line task manager with full CRUD operations and persistent SQLite storage."
       },
-      "tech": ["Python", "SQLite", "CRUD"],
+      "tech": [
+        "Python",
+        "SQLite",
+        "CRUD"
+      ],
       "links": {
         "repo": "https://github.com/sugixp/task-manager"
       },
       "status": "stable",
-      "featured": false
+      "featured": false,
+      "preview": {
+        "type": "terminal",
+        "command": "python tasks.py",
+        "output": [
+          "=== Suas Tarefas ===",
+          "[✓] 1. Estudar",
+          "[✗] 2. Ler"
+        ]
+      }
     }
   ]
 }

@@ -44,12 +44,34 @@
     "title": "system status",
     "online": "online",
     "rows": [
-      { "label": "location", "value": "Curitiba, BR" },
-      { "label": "education", "value": "ADS · PUCPR · 3rd semester" },
-      { "label": "languages", "value": "PT native · EN C1 · JP advanced" },
-      { "label": "intl. experience", "value": "6+ years · Japan" },
-      { "label": "current focus", "value": "1st dev internship" }
-    ]
+      {
+        "label": "location",
+        "value": "Curitiba, BR"
+      },
+      {
+        "label": "education",
+        "value": "ADS · PUCPR · 3rd semester"
+      },
+      {
+        "label": "languages",
+        "value": "PT native · EN C1 · JP advanced"
+      },
+      {
+        "label": "intl. experience",
+        "value": "6+ years · Japan"
+      },
+      {
+        "label": "current focus",
+        "value": "1st dev internship",
+        "state": "looking"
+      }
+    ],
+    "activeState": "active",
+    "foot": "line: career",
+    "footRight": "open to internships · Curitiba or remote",
+    "repos": "public repositories",
+    "lastActivity": "last GitHub activity",
+    "topLanguage": "most used language"
   },
   "about": {
     "eyebrow": "// about",
@@ -61,7 +83,7 @@
     "title": "Running services",
     "featured": "featured",
     "status": {
-      "deployed": "deploy verified",
+      "deployed": "live",
       "stable": "stable",
       "in-progress": "in progress",
       "archived": "archived"
@@ -73,7 +95,9 @@
     "count": {
       "one": "1 project",
       "other": "{n} projects"
-    }
+    },
+    "caseStudy": "Case study",
+    "terminalCaption": "Example run in the terminal:"
   },
   "stack": {
     "eyebrow": "// stack",
@@ -100,5 +124,11 @@
     "title": "Page not found",
     "text": "This address doesn't exist or has moved.",
     "home": "Back to the home page"
+  },
+  "theme": {
+    "toLight": "Switch to light theme",
+    "toDark": "Switch to dark theme",
+    "light": "light",
+    "dark": "dark"
   }
 }

@@ -44,12 +44,34 @@
     "title": "status do sistema",
     "online": "online",
     "rows": [
-      { "label": "localização", "value": "Curitiba, BR" },
-      { "label": "formação", "value": "ADS · PUCPR · 3º semestre" },
-      { "label": "idiomas", "value": "PT nativo · EN C1 · JP avançado" },
-      { "label": "experiência intl.", "value": "6+ anos · Japão" },
-      { "label": "foco atual", "value": "1º estágio em dev" }
-    ]
+      {
+        "label": "localização",
+        "value": "Curitiba, BR"
+      },
+      {
+        "label": "formação",
+        "value": "ADS · PUCPR · 3º semestre"
+      },
+      {
+        "label": "idiomas",
+        "value": "PT nativo · EN C1 · JP avançado"
+      },
+      {
+        "label": "experiência intl.",
+        "value": "6+ anos · Japão"
+      },
+      {
+        "label": "foco atual",
+        "value": "1º estágio em dev",
+        "state": "em busca"
+      }
+    ],
+    "activeState": "ativo",
+    "foot": "linha: carreira",
+    "footRight": "disponível para estágio · Curitiba ou remoto",
+    "repos": "repositórios públicos",
+    "lastActivity": "última atividade no GitHub",
+    "topLanguage": "linguagem mais usada"
   },
   "about": {
     "eyebrow": "// sobre",
@@ -61,7 +83,7 @@
     "title": "Serviços em execução",
     "featured": "destaque",
     "status": {
-      "deployed": "deploy validado",
+      "deployed": "no ar",
       "stable": "estável",
       "in-progress": "em desenvolvimento",
       "archived": "arquivado"
@@ -73,7 +95,9 @@
     "count": {
       "one": "1 projeto",
       "other": "{n} projetos"
-    }
+    },
+    "caseStudy": "Estudo de caso",
+    "terminalCaption": "Exemplo de execução no terminal:"
   },
   "stack": {
     "eyebrow": "// stack",
@@ -100,5 +124,11 @@
     "title": "Página não encontrada",
     "text": "O endereço não existe ou mudou de lugar.",
     "home": "Voltar para o início"
+  },
+  "theme": {
+    "toLight": "Ativar tema claro",
+    "toDark": "Ativar tema escuro",
+    "light": "claro",
+    "dark": "escuro"
   }
 }

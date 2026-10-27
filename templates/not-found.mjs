@@ -2,22 +2,20 @@
 // the language, so it shows every published language and only uses absolute links.
 import { html } from "../scripts/lib/html.mjs";
 import { translator } from "../scripts/lib/i18n.mjs";
+import { lamp } from "./parts.mjs";
 
 export function notFoundBody(ctx) {
     return html`      <section class="section not-found">
         <div class="wrap not-found-inner">
-          <div class="status-panel not-found-panel" aria-hidden="true">
-            <div class="status-panel-head">
-              <span class="status-panel-title">HTTP/1.1</span>
-              <span class="status-pill status-pill-error">
-                <span class="dot dot-amber"></span>
-                <span>404</span>
-              </span>
+          <div class="board" aria-hidden="true">
+            <div class="board-cell">
+              <p class="board-label mono">HTTP${lamp("off", "404")}</p>
+              <p class="board-value">not found</p>
             </div>
-            <dl class="status-list">
-              <div class="status-row"><dt>status</dt><dd>not found</dd></div>
-              <div class="status-row"><dt>route</dt><dd data-route>—</dd></div>
-            </dl>
+            <div class="board-cell">
+              <p class="board-label mono">route</p>
+              <p class="board-value not-found-route" data-route>—</p>
+            </div>
           </div>
           <div class="not-found-msgs">
             ${ctx.locales.map((locale, i) => {
@@ -27,7 +25,7 @@ export function notFoundBody(ctx) {
                 return html`<div class="not-found-msg" lang="${locale._meta.htmlLang}">
               ${title}
               <p>${t("notFound.text")}</p>
-              <a class="${i === 0 ? "btn btn-primary" : "btn btn-ghost"}" href="${ctx.homePath(locale)}">${t("notFound.home")}</a>
+              <a class="${i === 0 ? "btn btn-primary" : "btn"}" href="${ctx.homePath(locale)}">${t("notFound.home")}</a>
             </div>`;
             })}
           </div>

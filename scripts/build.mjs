@@ -32,10 +32,10 @@ export async function loadContent(root = ROOT) {
     // The default language (empty path, served at the site root) comes first.
     const locales = publishedLocales(all).sort((a, b) => a._meta.path.length - b._meta.path.length || a._meta.lang.localeCompare(b._meta.lang));
     if (locales[0]?._meta.path !== "") throw new Error("i18n: no published locale with an empty path (the default language)");
-    return { data, locales };
+    return { data, locales, root };
 }
 
-function context({ data, locales }, locale) {
+function context({ data, locales, root }, locale) {
     const site = data.site;
     const base = new URL(site.url).pathname; // "/portfolio/"
     return {
@@ -49,6 +49,10 @@ function context({ data, locales }, locale) {
         year: new Date().getFullYear(),
         homePath: (l) => base + l._meta.path,
         homeUrl: (l) => site.url + l._meta.path,
+        root,
+        // Filled in by the case-study and GitHub steps; null means "not available".
+        caseStudyPath: () => null,
+        board: null,
     };
 }
 

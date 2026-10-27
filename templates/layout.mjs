@@ -2,6 +2,12 @@
 import { html } from "../scripts/lib/html.mjs";
 import { translator } from "../scripts/lib/i18n.mjs";
 
+// Only the axes and weights the CSS uses: Archivo 400–800 at widths 100–125
+// (one variable file) and Martian Mono 400/500. display=swap shows the
+// fallback font immediately instead of invisible text.
+export const FONTS_URL =
+    "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=Martian+Mono:wdth,wght@87.5,400;87.5,500&display=swap";
+
 function langSwitch(ctx) {
     return html`<nav class="lang-switch" aria-label="${ctx.t("langSwitch.label")}">
             ${ctx.locales.map((locale, i) => {
@@ -58,7 +64,7 @@ function topbar(ctx, { navPrefix }) {
         </nav>
         <div class="topbar-actions">
           <span class="status-chip">
-            <span class="dot" aria-hidden="true"></span>
+            <span class="lamp lamp-warn" aria-hidden="true"></span>
             <span class="status-chip-full">${t("statusChip.full")}</span>
             <span class="status-chip-short" aria-hidden="true">${t("statusChip.short")}</span>
           </span>
@@ -81,23 +87,19 @@ export function layout(ctx, page) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${page.title}</title>
     <meta name="description" content="${page.description}" />
-    <meta name="theme-color" content="#EEF1F4" />
+    <meta name="theme-color" content="#15171A" />
     <link rel="icon" href="${base}assets/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="${base}assets/apple-touch-icon.png" />
     ${page.head ?? ""}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preload" as="style" href="${FONTS_URL}" />
+    <link rel="stylesheet" href="${FONTS_URL}" />
     <link rel="stylesheet" href="${base}css/style.css" />
     <script type="module" src="${base}js/main.js"></script>
   </head>
   <body id="top">
     <a class="skip-link" href="#conteudo">${t("skipLink")}</a>
-    <div class="scanline" aria-hidden="true"></div>
-
     ${topbar(ctx, page)}
     ${page.suggestLanguages ? langSuggestions(ctx) : ""}
 

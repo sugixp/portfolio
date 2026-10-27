@@ -3,46 +3,55 @@ import { html } from "../scripts/lib/html.mjs";
 import { plural } from "../scripts/lib/i18n.mjs";
 import { localize } from "../scripts/lib/localize.mjs";
 import { collectTechs, sortProjects } from "../scripts/lib/projects.mjs";
+import { lamp, projectPreview, statusLamp } from "./parts.mjs";
 
 function external(href, content, attrs = "") {
     return html`<a href="${href}" target="_blank" rel="noopener" ${attrs}>${content}</a>`;
 }
 
-function sectionHead(t, key) {
-    return html`<p class="eyebrow">${t(`${key}.eyebrow`)}</p>
-          <h2>${t(`${key}.title`)}</h2>`;
+function sectionHead(t, key, aside = "") {
+    return html`<div class="sec-head">
+            <h2>${t(`${key}.title`)}</h2>
+            ${aside ? html`<span class="sec-aside mono">${aside}</span>` : ""}
+          </div>`;
 }
 
-function hero({ t, site }) {
+// Status board: the profile rows from i18n plus, when data/github.json exists,
+// live cells from it (ctx.board). span = columns out of 6.
+function boardCells({ t, board }) {
+    const rows = t("panel.rows");
+    const cells = [
+        { ...rows[0], span: 2 },
+        { ...rows[1], span: 2 },
+        { ...rows[2], span: 2 },
+        { ...rows[3], span: 3 },
+        { ...rows[4], span: 3, lamp: "warn" },
+    ];
+    return [...cells, ...(board ?? [])];
+}
+
+function hero(ctx) {
+    const { t, site } = ctx;
     return html`      <section class="hero">
-        <div class="wrap hero-inner">
-          <div class="hero-text">
-            <p class="eyebrow">${t("hero.eyebrow")}</p>
-            <h1>${site.name}</h1>
-            <p class="hero-role">${t("hero.role")}</p>
-            <p class="hero-desc">${t("hero.desc")}</p>
+        <div class="wrap">
+          <h1 class="hero-name">${site.name}</h1>
+          <div class="hero-sub">
+            <p class="hero-desc"><strong>${t("hero.role")}</strong> ${t("hero.desc")}</p>
             <div class="hero-actions">
               <a href="#projetos" class="btn btn-primary">${t("hero.ctaProjects")}</a>
-              <a href="#contato" class="btn btn-ghost">${t("hero.ctaContact")}</a>
+              <a href="#contato" class="btn">${t("hero.ctaContact")}</a>
             </div>
           </div>
 
-          <div class="status-panel" role="group" aria-label="${t("panel.label")}">
-            <div class="status-panel-head">
-              <span class="status-panel-title">${t("panel.title")}</span>
-              <span class="status-pill">
-                <span class="dot" aria-hidden="true"></span>
-                <span>${t("panel.online")}</span>
-              </span>
-            </div>
-            <dl class="status-list">
-              ${t("panel.rows").map(
-                  (row) => html`<div class="status-row">
-                <dt>${row.label}</dt>
-                <dd>${row.value}</dd>
-              </div>`,
-              )}
-            </dl>
+          <div class="board" role="group" aria-label="${t("panel.label")}">
+            ${boardCells(ctx).map(
+                (cell) => html`<div class="board-cell spot" data-span="${cell.span}">
+              <p class="board-label mono">${cell.label}${cell.lamp ? lamp(cell.lamp, cell.state) : ""}</p>
+              <p class="board-value">${cell.value}</p>
+              ${cell.detail ? html`<p class="board-detail mono">${cell.detail}</p>` : ""}
+            </div>`,
+            )}
+            <div class="board-foot mono"><span>${t("panel.foot")}</span><span>${t("panel.footRight")}</span></div>
           </div>
         </div>
       </section>`;
@@ -50,42 +59,35 @@ function hero({ t, site }) {
 
 function about({ t }) {
     return html`      <section id="sobre" class="section">
-        <div class="wrap">
-          ${sectionHead(t, "about")}
+        <div class="wrap about">
+          <h2>${t("about.title")}</h2>
           <p class="section-lead">${t("about.lead")}</p>
         </div>
       </section>`;
 }
 
-const STATUS_DOT = { stable: "dot dot-muted", archived: "dot dot-muted", "in-progress": "dot dot-amber" };
-
-function projectLink(href, label, title) {
-    return external(
-        href,
-        html`${label}<span class="visually-hidden"> — ${title}</span><span aria-hidden="true"> →</span>`,
-    );
-}
-
-function projectCard({ t, lang }, project) {
+function projectCard(ctx, project) {
+    const { t, lang } = ctx;
+    const preview = projectPreview(ctx, project);
+    const caseStudy = ctx.caseStudyPath(project);
+    const hidden = html`<span class="visually-hidden"> — ${project.title}</span>`;
     return html`<article
-              class="${project.featured ? "project-card project-card-featured" : "project-card"}"
+              class="${["station", "spot", "reveal", project.featured && "station-featured", !preview && "station-plain"].filter(Boolean).join(" ")}"
               data-tech="${JSON.stringify(project.tech)}"
             >
-              <div class="project-top">
-                ${project.featured ? html`<span class="project-badge">${t("projects.featured")}</span>` : ""}
-                <span class="project-status"
-                  ><span class="${STATUS_DOT[project.status] ?? "dot"}" aria-hidden="true"></span
-                  ><span>${t(`projects.status.${project.status}`)}</span></span
-                >
-              </div>
-              <h3>${project.title}</h3>
-              <p>${localize(project.description, lang)}</p>
-              <ul class="tag-list">
-                ${project.tech.map((tech) => html`<li>${tech}</li>`)}
-              </ul>
-              <div class="project-links">
-                ${project.links.repo ? projectLink(project.links.repo, t("projects.repo"), project.title) : ""}
-                ${project.links.demo ? projectLink(project.links.demo, t("projects.demo"), project.title) : ""}
+              ${preview ? html`<div class="station-shot">${preview}</div>` : ""}
+              <div class="station-body">
+                <p class="station-status mono">${statusLamp(project.status, t(`projects.status.${project.status}`))}${project.featured ? html`<span class="badge">${t("projects.featured")}</span>` : ""}</p>
+                <h3>${project.title}</h3>
+                <p>${localize(project.description, lang)}</p>
+                <ul class="tags">
+                  ${project.tech.map((tech) => html`<li>${tech}</li>`)}
+                </ul>
+                <div class="station-links">
+                  ${caseStudy ? html`<a href="${caseStudy}" data-case-study>${t("projects.caseStudy")}${hidden}</a>` : ""}
+                  ${project.links.repo ? external(project.links.repo, html`${t("projects.repo")}${hidden}`) : ""}
+                  ${project.links.demo ? external(project.links.demo, html`${t("projects.demo")}${hidden}`) : ""}
+                </div>
               </div>
             </article>`;
 }
@@ -95,10 +97,9 @@ function projects(ctx) {
     const list = sortProjects(data.projects.projects);
     const count = t("projects.count");
     // The filter needs JS to work, so it ships hidden and js/project-filter.js reveals it.
-    return html`      <section id="projetos" class="section section-alt">
+    return html`      <section id="projetos" class="section">
         <div class="wrap">
           ${sectionHead(t, "projects")}
-
           <div class="projects-root" data-project-filter>
             <div class="filter-bar">
               <div class="filter" role="group" aria-label="${t("projects.filterLabel")}" hidden>
@@ -107,9 +108,9 @@ function projects(ctx) {
                     (tech) => html`<button type="button" class="filter-btn" data-tech="${tech}" aria-pressed="false">${tech}</button>`,
                 )}
               </div>
-              <p class="filter-count" aria-live="polite" data-one="${count.one}" data-other="${count.other}">${plural(count, list.length)}</p>
+              <p class="filter-count mono" aria-live="polite" data-one="${count.one}" data-other="${count.other}">${plural(count, list.length)}</p>
             </div>
-            <div class="projects-grid">
+            <div class="stations">
             ${list.map((project) => projectCard(ctx, project))}
             </div>
           </div>
@@ -121,11 +122,11 @@ function stack({ t, lang, data }) {
     return html`      <section id="stack" class="section">
         <div class="wrap">
           ${sectionHead(t, "stack")}
-          <div class="stack-grid">
+          <div class="stack">
             ${data.stack.groups.map(
-                (group) => html`<div class="stack-group">
+                (group) => html`<div class="${group.planned ? "stack-group stack-group-planned spot reveal" : "stack-group spot reveal"}">
               <h3>${localize(group.title, lang)}</h3>
-              <ul class="${group.planned ? "tag-list tag-list-mono tag-list-planned" : "tag-list tag-list-mono"}">
+              <ul>
                 ${group.items.map((item) => html`<li>${localize(item, lang)}</li>`)}
               </ul>
             </div>`,
@@ -136,38 +137,34 @@ function stack({ t, lang, data }) {
 }
 
 function certifications({ t, lang, data }) {
-    return html`      <section id="certificacoes" class="section section-alt">
+    return html`      <section id="certificacoes" class="section">
         <div class="wrap">
           ${sectionHead(t, "certifications")}
-          <div class="cert-grid">
+          <ul class="certs">
             ${data.certifications.certifications.map((cert) => {
                 const name = localize(cert.name, lang);
-                return html`<div class="cert-item">
-              <span class="cert-check" aria-hidden="true">✓</span>
-              <div>
-                <p class="cert-name">${cert.url ? external(cert.url, name) : name}</p>
-                <p class="cert-meta">${localize(cert.meta, lang)}</p>
-              </div>
-            </div>`;
+                return html`<li class="cert reveal">
+              <p class="cert-name">${cert.url ? external(cert.url, name) : name}</p>
+              <p class="cert-meta mono">${localize(cert.meta, lang)}</p>
+            </li>`;
             })}
-          </div>
+          </ul>
         </div>
       </section>`;
 }
 
 function experience({ t, lang, data }) {
+    // Oldest first, read left to right like a production line.
+    const items = [...data.experience.experience].reverse();
     return html`      <section id="trajetoria" class="section">
         <div class="wrap">
           ${sectionHead(t, "experience")}
           <ol class="timeline">
-            ${data.experience.experience.map(
-                (item) => html`<li class="timeline-item">
-              <div class="timeline-marker" aria-hidden="true"></div>
-              <div class="timeline-content">
-                <p class="timeline-date">${item.start} — ${item.end ?? t("experience.present")}</p>
-                <h3>${localize(item.title, lang)}</h3>
-                <p>${localize(item.description, lang)}</p>
-              </div>
+            ${items.map(
+                (item) => html`<li class="timeline-item reveal">
+              <p class="timeline-date mono">${item.start}–${item.end ?? t("experience.present")}</p>
+              <h3>${localize(item.title, lang)}</h3>
+              <p>${localize(item.description, lang)}</p>
             </li>`,
             )}
           </ol>
@@ -176,14 +173,20 @@ function experience({ t, lang, data }) {
 }
 
 function contact({ t, site }) {
-    return html`      <section id="contato" class="section section-contact">
+    return html`      <section id="contato" class="section">
         <div class="wrap">
-          ${sectionHead(t, "contact")}
-          <p class="section-lead">${t("contact.lead")}</p>
-          <div class="contact-links">
-            <a href="mailto:${site.email}" class="btn btn-primary">${site.email}</a>
-            ${external(site.links.linkedin, "LinkedIn →", html`class="btn btn-ghost"`)}
-            ${external(site.links.github, "GitHub →", html`class="btn btn-ghost"`)}
+          <div class="contact spot">
+            <div>
+              <h2>${t("contact.title")}</h2>
+              <p class="section-lead">${t("contact.lead")}</p>
+            </div>
+            <div class="contact-links">
+              <a href="mailto:${site.email}" class="contact-email">${site.email}</a>
+              <p class="contact-social">
+                ${external(site.links.linkedin, "LinkedIn")}
+                ${external(site.links.github, "GitHub")}
+              </p>
+            </div>
           </div>
         </div>
       </section>`;
