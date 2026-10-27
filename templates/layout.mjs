@@ -106,6 +106,8 @@ export function layout(ctx, page) {
     <link rel="stylesheet" href="${FONTS_URL}" />
     <link rel="stylesheet" href="${base}css/style.css" />
     <script type="module" src="${base}js/main.js"></script>
+    ${(ctx.modules ?? []).filter((m) => m !== "main.js").map((m) => html`<link rel="modulepreload" href="${base}js/${m}" />
+    `)}
   </head>
   <body id="top">
     <a class="skip-link" href="#conteudo">${t("skipLink")}</a>

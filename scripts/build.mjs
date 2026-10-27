@@ -42,7 +42,9 @@ export async function loadContent(root = ROOT) {
     // The default language (empty path, served at the site root) comes first.
     const locales = publishedLocales(all).sort((a, b) => a._meta.path.length - b._meta.path.length || a._meta.lang.localeCompare(b._meta.lang));
     if (locales[0]?._meta.path !== "") throw new Error("i18n: no published locale with an empty path (the default language)");
-    return { data, locales, root };
+    // Browser modules, preloaded together so imports don't load one level at a time.
+    const modules = (await readdir(join(root, "js"))).filter((f) => f.endsWith(".js")).sort();
+    return { data, locales, root, modules };
 }
 
 // Live cells for the status board, from data/github.json.
@@ -73,7 +75,7 @@ export function caseStudyProjects(projects, { drafts = false } = {}) {
     return projects.filter((p) => p.caseStudy && (drafts || !p.caseStudy.draft));
 }
 
-function context({ data, locales, root }, locale, { now = new Date().toISOString(), drafts = false } = {}) {
+function context({ data, locales, root, modules }, locale, { now = new Date().toISOString(), drafts = false } = {}) {
     const site = data.site;
     const base = new URL(site.url).pathname; // "/portfolio/"
     const t = translator(locale);
@@ -89,6 +91,7 @@ function context({ data, locales, root }, locale, { now = new Date().toISOString
         homePath: (l) => base + l._meta.path,
         homeUrl: (l) => site.url + l._meta.path,
         root,
+        modules,
         // null when the project has no published case study (no link on the card).
         caseStudyPath: (project) =>
             caseStudyProjects([project], { drafts }).length ? `${base}${locale._meta.path}${CASE_STUDY_DIR}/${project.id}/` : null,
