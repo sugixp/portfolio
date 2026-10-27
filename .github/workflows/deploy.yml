@@ -39,6 +39,11 @@ jobs:
       - name: Build
         run: npm run build
 
+      # Prints each /cv/ page to PDF with headless Chrome (preinstalled on the
+      # runner), so the résumé always matches the data being deployed.
+      - name: CV PDFs
+        run: npm run cv
+
       - uses: actions/upload-pages-artifact@v5
         with:
           path: dist

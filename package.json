@@ -12,7 +12,8 @@
     "validate:data": "node scripts/validate-data.mjs",
     "og": "node scripts/og-image.mjs",
     "start:drafts": "npm run validate:data && node scripts/build.mjs --drafts && node scripts/serve.mjs",
-    "previews": "node scripts/project-previews.mjs"
+    "previews": "node scripts/project-previews.mjs",
+    "cv": "node scripts/cv-pdf.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",

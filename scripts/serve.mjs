@@ -2,15 +2,16 @@
 // Serves dist/ under the same base path as GitHub Pages (/portfolio/), including
 // the trailing-slash redirect, 404.html and gzip for text files, so local
 // behaves (and measures, e.g. in Lighthouse) like production.
+// Also used by scripts/cv-pdf.mjs through startServer().
 import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
 import { extname, join, normalize, resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 import { gzipSync } from "node:zlib";
 
 const ROOT = resolve("dist");
-const PORT = Number(process.env.PORT) || 4173;
 const { url: siteUrl } = JSON.parse(await readFile("data/site.json", "utf8"));
-const BASE = new URL(siteUrl).pathname; // "/portfolio/"
+export const BASE = new URL(siteUrl).pathname; // "/portfolio/"
 
 const TYPES = {
     ".html": "text/html; charset=utf-8",
@@ -45,7 +46,7 @@ async function send(res, status, path, req) {
     res.end(body);
 }
 
-createServer(async (req, res) => {
+async function handle(req, res) {
     const { pathname } = new URL(req.url, "http://localhost");
     if (pathname === "/" || pathname === BASE.slice(0, -1)) {
         res.writeHead(301, { Location: BASE }).end();
@@ -71,6 +72,18 @@ createServer(async (req, res) => {
     } catch {
         await send(res, 404, join(ROOT, "404.html"), req).catch(() => res.writeHead(404).end("404"));
     }
-}).listen(PORT, () => {
-    console.log(`Serving dist/ at http://localhost:${PORT}${BASE}`);
-});
+}
+
+/** Starts the server; port 0 picks a free port. Resolves with { server, url }. */
+export function startServer(port = 0) {
+    return new Promise((done, fail) => {
+        const server = createServer(handle);
+        server.once("error", fail);
+        server.listen(port, () => done({ server, url: `http://localhost:${server.address().port}${BASE}` }));
+    });
+}
+
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+    const { url } = await startServer(Number(process.env.PORT) || 4173);
+    console.log(`Serving dist/ at ${url}`);
+}
