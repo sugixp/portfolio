@@ -16,7 +16,7 @@ import { notFoundBody } from "../templates/not-found.mjs";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DATA_FILES = ["site", "projects", "stack", "certifications", "experience"];
 // Copied to dist/ as they are.
-const STATIC_DIRS = ["css", "js"];
+const STATIC_DIRS = ["css", "js", "assets"];
 
 async function readJSON(path) {
     return JSON.parse(await readFile(path, "utf8"));
