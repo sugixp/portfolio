@@ -2,7 +2,7 @@
 // command line into output lines plus an optional action for the UI to perform.
 // A line is a list of parts: plain strings or { text, href } links.
 
-export const COMMANDS = ["help", "whoami", "projects", "open", "stack", "contact", "lang", "theme", "clear"];
+export const COMMANDS = ["help", "whoami", "projects", "open", "stack", "contact", "cv", "lang", "theme", "clear"];
 
 const fill = (template, vars) => template.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : m));
 
@@ -52,7 +52,7 @@ export function createHistory() {
 }
 
 /**
- * data: { s (strings), whoami, projects[{ id, title, status, description, href }],
+ * data: { s (strings), whoami, cv (PDF URL), projects[{ id, title, status, description, href }],
  *         stack[{ title, items }], contact[{ label, href }], langs[{ code, label, href, current }] }
  * env:  { theme } — current state the UI knows about.
  */
@@ -85,6 +85,8 @@ export function run(input, data, env = {}) {
             return { lines: data.stack.map((g) => [`${g.title}: ${g.items.join(", ")}`]) };
         case "contact":
             return { lines: data.contact.map((c) => [`${c.label.padEnd(9)} `, { text: c.text, href: c.href }]) };
+        case "cv":
+            return { lines: [[s.downloading]], action: { type: "download", href: data.cv } };
         case "lang": {
             const target = data.langs.find((l) => l.code === arg);
             if (!target) return { lines: [[fill(s.usage, { usage: `lang ${data.langs.map((l) => l.code).join(" | ")}` })]] };

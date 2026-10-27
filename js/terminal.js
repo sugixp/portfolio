@@ -48,6 +48,12 @@ export function initTerminal() {
     function perform(action) {
         if (!action) return;
         if (action.type === "clear") output.replaceChildren();
+        if (action.type === "download") {
+            const a = document.createElement("a");
+            a.href = action.href;
+            a.download = "";
+            a.click();
+        }
         if (action.type === "theme") setTheme(action.value);
         if (action.type === "navigate") {
             const target = new URL(action.href, location.href);

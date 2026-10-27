@@ -4,7 +4,8 @@ import { complete, createHistory, parse, run } from "../js/terminal-core.js";
 
 const data = {
     s: {
-        help: { help: "h", whoami: "w", projects: "p", open: "o", stack: "s", contact: "c", lang: "l", theme: "t", clear: "x" },
+        help: { help: "h", whoami: "w", projects: "p", open: "o", stack: "s", contact: "c", cv: "v", lang: "l", theme: "t", clear: "x" },
+        downloading: "downloading",
         openHint: "open <name>",
         usage: "usage: {usage}",
         unknownProject: "not found: {name}",
@@ -15,6 +16,7 @@ const data = {
         themeSame: "already {theme}",
     },
     whoami: ["Henrique", "dev"],
+    cv: "/portfolio/cv/resume.pdf",
     projects: [
         { id: "task-api", title: "task-api", status: "live", href: "https://github.com/x/task-api", caseStudy: false },
         { id: "task-manager", title: "task-manager", status: "stable", href: "/portfolio/projects/task-manager/", caseStudy: true },
@@ -32,7 +34,11 @@ test("parse splits the command and its arguments, ignoring extra spaces", () => 
 });
 
 test("help lists every command", () => {
-    assert.equal(run("help", data).lines.length, 9);
+    assert.equal(run("help", data).lines.length, 10);
+});
+
+test("cv asks the UI to download the PDF", () => {
+    assert.deepEqual(run("cv", data).action, { type: "download", href: "/portfolio/cv/resume.pdf" });
 });
 
 test("open finds a project and asks the UI to open it", () => {
@@ -70,7 +76,8 @@ test("complete resolves arguments, and leaves ambiguous input alone", () => {
     assert.equal(complete("open task-m", data), "open task-manager");
     assert.equal(complete("open task", data), "open task");
     assert.equal(complete("theme l", data), "theme light");
-    assert.equal(complete("c", data), "c"); // contact, clear
+    assert.equal(complete("c", data), "c"); // contact, cv, clear
+    assert.equal(complete("cv", data), "cv ");
 });
 
 test("history walks back and forth and skips duplicates", () => {

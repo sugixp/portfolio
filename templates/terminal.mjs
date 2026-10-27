@@ -3,12 +3,14 @@
 import { html, jsonForScript } from "../scripts/lib/html.mjs";
 import { localize } from "../scripts/lib/localize.mjs";
 import { sortProjects } from "../scripts/lib/projects.mjs";
+import { cvPdfPath } from "./cv.mjs";
 
 function terminalData(ctx, relPath) {
     const { t, lang, site, data } = ctx;
     const strip = (url) => url.replace(/^https:\/\//, "");
     return {
         s: t("terminal"),
+        cv: cvPdfPath(ctx),
         whoami: [site.name, t("hero.role"), `${t("panel.rows")[0].value} · ${t("statusChip.full")}`],
         projects: sortProjects(data.projects.projects).map((p) => {
             const caseStudy = ctx.caseStudyPath(p);

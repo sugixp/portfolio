@@ -4,6 +4,7 @@ import { plural } from "../scripts/lib/i18n.mjs";
 import { localize } from "../scripts/lib/localize.mjs";
 import { collectTechs, sortProjects } from "../scripts/lib/projects.mjs";
 import { lamp, projectPreview, statusLamp } from "./parts.mjs";
+import { cvPdfPath } from "./cv.mjs";
 
 function external(href, content, attrs = "") {
     return html`<a href="${href}" target="_blank" rel="noopener" ${attrs}>${content}</a>`;
@@ -39,7 +40,7 @@ function hero(ctx) {
             <p class="hero-desc"><strong>${t("hero.role")}</strong> ${t("hero.desc")}</p>
             <div class="hero-actions">
               <a href="#projetos" class="btn btn-primary">${t("hero.ctaProjects")}</a>
-              <a href="#contato" class="btn">${t("hero.ctaContact")}</a>
+              <a href="${cvPdfPath(ctx)}" class="btn" download>${t("cv.download")}<span class="visually-hidden"> (PDF)</span></a>
             </div>
           </div>
 
