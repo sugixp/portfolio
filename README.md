@@ -88,7 +88,9 @@ no currículo porque, com ele, o Chrome às vezes grava as palavras sem o caract
 no PDF, e o texto extraído vira "JPavançado".
 
 Na linha do tempo (`data/experience.json`), `"kind": "education"` manda o item para
-"Formação"; os demais vão para "Experiência". O botão "Baixar currículo" do topo e o comando
+"Formação"; os demais vão para "Experiência". Um curso em andamento pode ter `"expectedEnd": "2027-12"`
+(ou só o ano), exibido como "2025 – previsão de conclusão dez/2027" / "2025 – expected
+Dec 2027". O botão "Baixar currículo" do topo e o comando
 `cv` do terminal apontam para o PDF do idioma da página.
 
 ### Dados do GitHub
@@ -284,9 +286,6 @@ na `main` todo dia), `npm install` e `npm start`.
 
 ### Conteúdo pendente
 
-- **Previsão de conclusão do curso:** preencher `"expectedEnd": "AAAA"` no item de formação
-  em `data/experience.json`. Site e currículo passam a mostrar "2025 – previsão de conclusão
-  AAAA".
 - **Experiência no Japão:** trocar as `description` da Mitsubishi e da Advics em
   `data/experience.json` pelos textos finais.
 - **Estudos de caso:** escrever o `learned` ("O que aprendi") de `currency-converter` e
