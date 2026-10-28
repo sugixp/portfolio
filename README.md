@@ -180,6 +180,7 @@ npm run validate:data  # só valida data/*.json
 npm run og             # regera as imagens de prévia (usa o Chrome instalado)
 npm run start:drafts   # como npm start, mas mostra também os estudos de caso em rascunho
 npm run previews       # recaptura as demos dos projetos (assets/projects/)
+npm run previews -- custompc=caminho/imagem.png   # usa uma imagem pronta em vez de capturar
 npm run cv             # gera os PDFs do currículo em dist/ (rode depois do build)
 ```
 
@@ -225,7 +226,7 @@ Edite apenas `data/projects.json`, adicionando um objeto ao array `projects`:
 | `links` | sim | `repo` e/ou `demo`, ambos opcionais, sempre `https://` |
 | `status` | sim | `deployed`, `stable`, `in-progress` ou `archived` |
 | `featured` | sim | `true` exibe o card em destaque, ocupando a linha toda |
-| `preview` | não | imagem no card: `{ "type": "screenshot", "alt": {…} }` (captura de `links.demo`) ou `{ "type": "terminal", "command", "output": [...] }` (exemplo do README) |
+| `preview` | não | imagem no card: `{ "type": "screenshot", "alt": {…} }` (captura de `links.demo`, ou uma imagem pronta via `npm run previews -- <id>=<arquivo>`) ou `{ "type": "terminal", "command", "output": [...] }` (exemplo do README) |
 | `highlights` | não | 1 a 3 bullets `{ "pt", "en" }` para o currículo, que os mostra no lugar da `description` |
 | `caseStudy` | não | estudo de caso; veja abaixo |
 
