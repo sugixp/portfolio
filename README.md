@@ -265,8 +265,15 @@ seção, botões, painel de status) ficam em `i18n/pt.json` e `i18n/en.json`.
 
 ## Roadmap
 
-Projeto em pausa desde 27/10/2026. Para retomar: `git pull` (o workflow de dados comita
+Projeto em pausa desde 28/10/2026. Para retomar: `git pull` (o workflow de dados comita
 na `main` todo dia), `npm install` e `npm start`.
+
+Última mudança antes da pausa: o **custompc** (https://custompc-builder.vercel.app) virou o
+projeto em destaque no lugar do task-api, que saiu do site, do terminal e do currículo. A
+prévia vem de `../custompc/docs/screenshots/builder-desktop.png`
+(`npm run previews -- custompc=<arquivo>`), e os bullets do currículo ficam em `highlights`.
+A stack ganhou TypeScript, Next.js, PostgreSQL / Prisma e Playwright e perdeu o AWS Elastic
+Beanstalk.
 
 ### Etapas pendentes
 
@@ -294,6 +301,11 @@ na `main` todo dia), `npm install` e `npm start`.
   `task-manager` em `data/projects.json`, revisar o resto e trocar `"draft"` para `false`.
 - **Prévias:** gravar GIFs dos projetos de linha de comando, se quiser substituir o texto
   do terminal.
+- **custompc:** os números do card e do currículo (20 regras de compatibilidade, 400+ testes
+  unitários) vêm do README e do `docs/STATUS.md` do custompc; revise-os quando ele mudar
+  (fase 2: login e builds salvas). Um estudo de caso dele ainda não existe.
+- **Bullets no currículo:** só o custompc tem `highlights`; os outros projetos mostram a
+  `description`.
 
 ### Adicionar um projeto, em resumo
 
