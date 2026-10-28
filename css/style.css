@@ -731,6 +731,7 @@ p { margin: 0; }
 .cv-entry-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 12px; }
 .cv-entry-meta { color: #4A4F55; font-size: 9pt; }
 .cv-entry p { color: #2B2F33; }
+.cv-bullets { list-style: disc; margin: 0; padding-left: 16px; display: grid; gap: 1px; color: #2B2F33; }
 .cv-links { font-size: 9pt; color: #4A4F55; overflow-wrap: anywhere; }
 .cv-plain { margin: 0; padding-left: 16px; display: grid; gap: 1px; color: #2B2F33; }
 

@@ -226,6 +226,7 @@ Edite apenas `data/projects.json`, adicionando um objeto ao array `projects`:
 | `status` | sim | `deployed`, `stable`, `in-progress` ou `archived` |
 | `featured` | sim | `true` exibe o card em destaque, ocupando a linha toda |
 | `preview` | não | imagem no card: `{ "type": "screenshot", "alt": {…} }` (captura de `links.demo`) ou `{ "type": "terminal", "command", "output": [...] }` (exemplo do README) |
+| `highlights` | não | 1 a 3 bullets `{ "pt", "en" }` para o currículo, que os mostra no lugar da `description` |
 | `caseStudy` | não | estudo de caso; veja abaixo |
 
 Depois:

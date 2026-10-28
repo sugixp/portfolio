@@ -132,6 +132,18 @@ test("each language has a one-column CV page built from the same data", async ()
     }
 });
 
+test("the CV lists a project's highlights as bullets instead of its description", async () => {
+    const withHighlights = content.data.projects.projects.filter((p) => p.highlights);
+    for (const locale of content.locales) {
+        const lang = locale._meta.lang;
+        const html = await page(join(locale._meta.path, "cv", "index.html"));
+        for (const p of withHighlights) {
+            for (const h of p.highlights) assert.ok(html.includes(`<li>${localize(h, lang)}</li>`), `${lang}: ${p.id} bullet`);
+            assert.ok(!html.includes(`<p>${localize(p.description, lang)}</p>`), `${lang}: ${p.id} description`);
+        }
+    }
+});
+
 test("the hero download button points at the PDF of the same language", async () => {
     for (const locale of content.locales) {
         const html = await page(join(locale._meta.path, "index.html"));

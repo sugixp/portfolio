@@ -32,6 +32,15 @@
         "description": {
           "$ref": "common.schema.json#/$defs/localized"
         },
+        "highlights": {
+          "description": "Optional résumé bullets (2 or 3, results first). The CV shows them instead of the description.",
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/localized"
+          },
+          "minItems": 1,
+          "maxItems": 3
+        },
         "tech": {
           "type": "array",
           "items": {

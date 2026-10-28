@@ -15,10 +15,10 @@ export function cvPdfPath(ctx, locale = ctx.locale) {
     return `${ctx.base}${locale._meta.path}${CV_DIR}/${locale.cv.fileName}`;
 }
 
-function entry({ title, meta, body, links }) {
+function entry({ title, meta, body, bullets, links }) {
     return html`<li class="cv-entry">
             <p class="cv-entry-head"><strong>${title}</strong>${meta ? html`<span class="cv-entry-meta">${meta}</span>` : ""}</p>
-            ${body ? html`<p>${body}</p>` : ""}
+            ${bullets?.length ? html`<ul class="cv-bullets">${bullets.map((b) => html`<li>${b}</li>`)}</ul>` : body ? html`<p>${body}</p>` : ""}
             ${links?.length ? html`<p class="cv-links">${links.map((l, i) => html`${i ? " | " : ""}<a href="${l}">${strip(l)}</a>`)}</p>` : ""}
           </li>`;
 }
@@ -61,6 +61,7 @@ export function cvArticle(ctx) {
                   title: p.title,
                   meta: p.tech.join(", "),
                   body: localize(p.description, lang),
+                  bullets: p.highlights?.map((h) => localize(h, lang)),
                   links: [p.links.demo, p.links.repo].filter(Boolean),
               }),
           )}
