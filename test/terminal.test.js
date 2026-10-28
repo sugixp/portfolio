@@ -18,8 +18,9 @@ const data = {
     whoami: ["Henrique", "dev"],
     cv: "/portfolio/cv/resume.pdf",
     projects: [
-        { id: "task-api", title: "task-api", status: "live", href: "https://github.com/x/task-api", caseStudy: false },
+        { id: "custompc", title: "custompc", status: "live", href: "https://github.com/x/custompc", caseStudy: false },
         { id: "task-manager", title: "task-manager", status: "stable", href: "/portfolio/projects/task-manager/", caseStudy: true },
+        { id: "currency-converter", title: "currency-converter", status: "stable", href: "https://github.com/x/currency-converter", caseStudy: false },
     ],
     stack: [{ title: "Languages", items: ["Python", "SQL"] }],
     contact: [{ label: "email", text: "a@b.c", href: "mailto:a@b.c" }],
@@ -30,7 +31,7 @@ const data = {
 };
 
 test("parse splits the command and its arguments, ignoring extra spaces", () => {
-    assert.deepEqual(parse("  OPEN   task-api "), { name: "open", args: ["task-api"] });
+    assert.deepEqual(parse("  OPEN   custompc "), { name: "open", args: ["custompc"] });
 });
 
 test("help lists every command", () => {
@@ -74,7 +75,7 @@ test("complete fills unique commands and arguments", () => {
 
 test("complete resolves arguments, and leaves ambiguous input alone", () => {
     assert.equal(complete("open task-m", data), "open task-manager");
-    assert.equal(complete("open task", data), "open task");
+    assert.equal(complete("open cu", data), "open cu"); // custompc, currency-converter
     assert.equal(complete("theme l", data), "theme light");
     assert.equal(complete("c", data), "c"); // contact, cv, clear
     assert.equal(complete("cv", data), "cv ");

@@ -4,17 +4,17 @@
     {
       "id": "languages",
       "title": { "pt": "Linguagens", "en": "Languages" },
-      "items": ["Python", "SQL", "HTML", "CSS", "JavaScript"]
+      "items": ["Python", "SQL", "HTML", "CSS", "JavaScript", "TypeScript"]
     },
     {
       "id": "frameworks",
       "title": { "pt": "Frameworks & Ferramentas", "en": "Frameworks & Tools" },
-      "items": ["FastAPI", "SQLAlchemy", "Pytest", "Git / GitHub"]
+      "items": ["FastAPI", "SQLAlchemy", "Pytest", "Next.js", "PostgreSQL / Prisma", "Playwright", "Git / GitHub"]
     },
     {
       "id": "infra",
       "title": { "pt": "Cloud & Infra", "en": "Cloud & Infra" },
-      "items": ["Docker", "AWS Elastic Beanstalk", "Linux"]
+      "items": ["Docker", "Linux"]
     },
     {
       "id": "learning",

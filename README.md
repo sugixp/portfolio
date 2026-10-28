@@ -156,7 +156,7 @@ copiadas para dentro do repositório.
   exigia duas conexões externas antes da primeira pintura e fazia o Lighthouse em produção
   oscilar entre 85 e 100; servir daqui remove isso e ainda evita que o visitante faça
   requisições ao Google.
-- **Prévias dos projetos:** capturas das demos em AVIF e WebP (640 e 1280 px, 3–10 KB),
+- **Prévias dos projetos:** capturas das demos em AVIF e WebP (640 e 1280 px, 3–55 KB),
   com `<picture>`, `srcset`, `loading="lazy"` e dimensões fixas, para nada pular de
   lugar. Projetos de linha de comando mostram o exemplo do README como texto, não imagem.
 - **Movimento:** a entrada por scroll usa `animation-timeline: view()` só onde existe e
