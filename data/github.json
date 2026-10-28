@@ -11,9 +11,23 @@
       "stars": 1,
       "archived": false,
       "lastCommit": {
-        "sha": "b0e92eb",
-        "date": "2026-10-27T22:31:49Z",
-        "message": "docs(readme): document GitHub data, case studies, theme and terminal"
+        "sha": "ec4cfa3",
+        "date": "2026-10-28T07:58:54Z",
+        "message": "docs(readme): record the custompc swap and what to check on resuming"
+      }
+    },
+    {
+      "name": "custompc",
+      "description": "Monte seu PC com preços em reais, lojas brasileiras e verificação de compatibilidade · PC builder for Brazil",
+      "url": "https://github.com/sugixp/custompc",
+      "homepage": "https://custompc-builder.vercel.app",
+      "language": "TypeScript",
+      "stars": 1,
+      "archived": false,
+      "lastCommit": {
+        "sha": "954bc82",
+        "date": "2026-10-28T07:38:35Z",
+        "message": "docs: close Phase 1 with the demo address and the next steps"
       }
     },
     {
@@ -133,27 +147,32 @@
     {
       "name": "Jupyter Notebook",
       "bytes": 1104646,
-      "share": 0.83
+      "share": 0.643
+    },
+    {
+      "name": "TypeScript",
+      "bytes": 358471,
+      "share": 0.209
     },
     {
       "name": "JavaScript",
-      "bytes": 171652,
-      "share": 0.129
+      "bytes": 194066,
+      "share": 0.113
     },
     {
       "name": "CSS",
-      "bytes": 24562,
-      "share": 0.018
+      "bytes": 29893,
+      "share": 0.017
     },
     {
       "name": "C#",
       "bytes": 13771,
-      "share": 0.01
+      "share": 0.008
     },
     {
       "name": "Python",
       "bytes": 13494,
-      "share": 0.01
+      "share": 0.008
     },
     {
       "name": "HTML",
