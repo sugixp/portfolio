@@ -3,6 +3,20 @@
   "user": "sugixp",
   "repos": [
     {
+      "name": "custompc",
+      "description": "Monte seu PC com preços em reais, lojas brasileiras e verificação de compatibilidade · PC builder for Brazil",
+      "url": "https://github.com/sugixp/custompc",
+      "homepage": "https://custompc-builder.vercel.app",
+      "language": "TypeScript",
+      "stars": 1,
+      "archived": false,
+      "lastCommit": {
+        "sha": "82bda57",
+        "date": "2026-10-31T06:07:28Z",
+        "message": "docs: record the pause after Phase 2 stage 2"
+      }
+    },
+    {
       "name": "portfolio",
       "description": null,
       "url": "https://github.com/sugixp/portfolio",
@@ -14,20 +28,6 @@
         "sha": "ec4cfa3",
         "date": "2026-10-28T07:58:54Z",
         "message": "docs(readme): record the custompc swap and what to check on resuming"
-      }
-    },
-    {
-      "name": "custompc",
-      "description": "Monte seu PC com preços em reais, lojas brasileiras e verificação de compatibilidade · PC builder for Brazil",
-      "url": "https://github.com/sugixp/custompc",
-      "homepage": "https://custompc-builder.vercel.app",
-      "language": "TypeScript",
-      "stars": 1,
-      "archived": false,
-      "lastCommit": {
-        "sha": "954bc82",
-        "date": "2026-10-28T07:38:35Z",
-        "message": "docs: close Phase 1 with the demo address and the next steps"
       }
     },
     {
@@ -147,17 +147,17 @@
     {
       "name": "Jupyter Notebook",
       "bytes": 1104646,
-      "share": 0.643
+      "share": 0.612
     },
     {
       "name": "TypeScript",
-      "bytes": 358471,
-      "share": 0.209
+      "bytes": 446602,
+      "share": 0.247
     },
     {
       "name": "JavaScript",
       "bytes": 194066,
-      "share": 0.113
+      "share": 0.107
     },
     {
       "name": "CSS",
@@ -172,7 +172,7 @@
     {
       "name": "Python",
       "bytes": 13494,
-      "share": 0.008
+      "share": 0.007
     },
     {
       "name": "HTML",
