@@ -49,29 +49,37 @@
       "id": "currency-converter",
       "title": "currency-converter",
       "description": {
-        "pt": "Conversor de moedas em Python que consulta cotações em tempo real na API pública da ExchangeRate-API (open.er-api.com), com suporte a mais de 150 moedas.",
-        "en": "Currency converter in Python that fetches real-time rates from the public ExchangeRate-API (open.er-api.com), supporting 150+ currencies."
+        "pt": "Conversor de moedas em tempo real com API REST em Python/FastAPI e frontend em JavaScript puro, com gráfico de 30 dias (Chart.js). Usa Decimal para precisão monetária, cache em Redis (Upstash) e um limite que protege a cota da API externa. Exibição instantânea via snapshot estático, mesmo com o servidor hibernando. Testado com pytest e publicado com CI/CD: deploy no Render condicionado aos testes e frontend no GitHub Pages.",
+        "en": "Real-time currency converter with a Python/FastAPI REST API and a vanilla JavaScript frontend featuring a 30-day Chart.js history. Uses Decimal for exact money math, Redis (Upstash) caching and a guard that protects the external API quota. Loads instantly from a static snapshot even while the server sleeps. Tested with pytest and shipped with CI/CD: Render deploys gated on tests, frontend on GitHub Pages."
       },
+      "highlights": [
+        {
+          "pt": "Evoluí um script de terminal para uma aplicação web: API FastAPI com ~170 moedas e histórico de 30 dias, precisão com Decimal e BigInt, cache em Redis e deploy no Render só com testes passando.",
+          "en": "Evolved a terminal script into a web app: a FastAPI API with ~170 currencies and a 30-day history, exact math with Decimal and BigInt, Redis caching and Render deploys gated on passing tests."
+        }
+      ],
       "tech": [
         "Python",
-        "REST API"
+        "FastAPI",
+        "JavaScript",
+        "Chart.js",
+        "Redis",
+        "Pytest",
+        "GitHub Actions"
       ],
       "links": {
-        "repo": "https://github.com/sugixp/currency-converter"
+        "repo": "https://github.com/sugixp/currency-converter",
+        "demo": "https://sugixp.github.io/currency-converter/",
+        "docs": "https://currency-converter-api-93lo.onrender.com/docs"
       },
-      "status": "stable",
+      "status": "deployed",
       "featured": false,
       "preview": {
-        "type": "terminal",
-        "command": "python conversor.py",
-        "output": [
-          "=== Conversor de Moedas ===",
-          "Moeda de origem: USD",
-          "Moeda de destino: BRL",
-          "Valor: 59",
-          "",
-          "59.0 USD = 299.13 BRL"
-        ]
+        "type": "screenshot",
+        "alt": {
+          "pt": "Conversor de moedas com 100 USD convertidos para BRL na placa de resultado, cotação ao vivo, e o gráfico de USD para BRL nos últimos 30 dias",
+          "en": "Currency converter showing 100 USD converted to BRL on the result board with live rates, and the 30-day USD to BRL chart"
+        }
       },
       "caseStudy": {
         "draft": true,
