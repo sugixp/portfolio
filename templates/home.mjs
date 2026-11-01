@@ -88,6 +88,7 @@ function projectCard(ctx, project) {
                   ${caseStudy ? html`<a href="${caseStudy}" data-case-study>${t("projects.caseStudy")}${hidden}</a>` : ""}
                   ${project.links.repo ? external(project.links.repo, html`${t("projects.repo")}${hidden}`) : ""}
                   ${project.links.demo ? external(project.links.demo, html`${t("projects.demo")}${hidden}`) : ""}
+                  ${project.links.docs ? external(project.links.docs, html`${t("projects.docs")}${hidden}`) : ""}
                 </div>
               </div>
             </article>`;

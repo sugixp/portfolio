@@ -178,3 +178,16 @@ test("dateRange shows the expected completion year when there is one", async () 
     const en = translator(content.locales.find((l) => l._meta.lang === "en"));
     assert.equal(dateRange(en, { start: "2025", end: null, expectedEnd: "2027-12" }), "2025 – expected Dec 2027");
 });
+
+test("a project's API docs link shows on its card, after GitHub and Demo, but not in the CV", async () => {
+    const withDocs = content.data.projects.projects.filter((p) => p.links.docs);
+    for (const locale of content.locales) {
+        const lang = locale._meta.lang;
+        const home = await page(join(locale._meta.path, "index.html"));
+        const cv = await page(join(locale._meta.path, "cv", "index.html"));
+        for (const p of withDocs) {
+            assert.ok(home.includes(`<a href="${p.links.docs}" target="_blank" rel="noopener" >${locale.projects.docs}`), `${lang}: ${p.id} docs link`);
+            assert.ok(!cv.includes(p.links.docs), `${lang}: ${p.id} docs not in CV`);
+        }
+    }
+});

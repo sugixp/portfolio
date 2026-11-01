@@ -57,6 +57,10 @@
             },
             "demo": {
               "$ref": "common.schema.json#/$defs/url"
+            },
+            "docs": {
+              "description": "Optional API documentation (e.g. Swagger /docs). Shown on the card only, not in the CV.",
+              "$ref": "common.schema.json#/$defs/url"
             }
           },
           "additionalProperties": false

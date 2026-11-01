@@ -223,7 +223,7 @@ Edite apenas `data/projects.json`, adicionando um objeto ao array `projects`:
 | `title` | sim | nome exibido no card |
 | `description` | sim | `{ "pt", "en" }` (ou uma string, se for igual nos dois idiomas) |
 | `tech` | sim | lista de tecnologias; alimenta o filtro automaticamente |
-| `links` | sim | `repo` e/ou `demo`, ambos opcionais, sempre `https://` |
+| `links` | sim | `repo`, `demo` e `docs` (documentação da API), todos opcionais, sempre `https://`; `docs` aparece só no card, não no currículo |
 | `status` | sim | `deployed`, `stable`, `in-progress` ou `archived` |
 | `featured` | sim | `true` exibe o card em destaque, ocupando a linha toda |
 | `preview` | não | imagem no card: `{ "type": "screenshot", "alt": {…} }` (captura de `links.demo`, ou uma imagem pronta via `npm run previews -- <id>=<arquivo>`) ou `{ "type": "terminal", "command", "output": [...] }` (exemplo do README) |

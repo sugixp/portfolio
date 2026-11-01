@@ -90,6 +90,7 @@
     },
     "repo": "GitHub",
     "demo": "Demo",
+    "docs": "Docs da API",
     "filterLabel": "Filtrar projetos por tecnologia",
     "filterAll": "todas",
     "count": {
