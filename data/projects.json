@@ -311,20 +311,16 @@
         ],
         "learned": [
           {
-            "pt": "Por que separar a lógica das interfaces: com o TaskManager isolado, a interface web entrou sem reescrever as regras, e um teste do core vale para as duas.",
-            "en": "Why to separate logic from interfaces: with TaskManager isolated, the web interface was added without rewriting the rules, and a core test covers both."
+            "pt": "Separar a lógica das interfaces.",
+            "en": "Separating logic from interfaces."
           },
           {
-            "pt": "Evoluir o esquema de um banco que já tem dados, migrando na inicialização em vez de pedir para apagar o arquivo.",
-            "en": "Evolving the schema of a database that already holds data, migrating at startup instead of asking users to delete the file."
+            "pt": "Migrar o esquema de um banco que já tem dados.",
+            "en": "Migrating the schema of a database that already holds data."
           },
           {
-            "pt": "Testar em camadas e na CI: unitários para as regras, de rota para a web, end-to-end para o que só aparece no navegador e mais de uma versão do Python.",
-            "en": "Testing in layers and in CI: unit tests for the rules, route tests for the web, end-to-end tests for what only shows in the browser, and more than one Python version."
-          },
-          {
-            "pt": "O custo de uma demo estática: ela é simples de publicar, mas cria uma segunda implementação que precisa ser mantida e testada.",
-            "en": "The cost of a static demo: it is simple to publish, but it creates a second implementation that has to be maintained and tested."
+            "pt": "Testar em camadas, e o custo de manter uma demo com a lógica duplicada.",
+            "en": "Testing in layers, and the cost of keeping a demo with duplicated logic."
           }
         ]
       }
