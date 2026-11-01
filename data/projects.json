@@ -204,6 +204,7 @@
       "preview": {
         "type": "screenshot",
         "selector": "main.container",
+        "until": "#list-view",
         "alt": {
           "pt": "Task Manager com 2 de 6 tarefas concluídas na barra de progresso, o formulário de nova tarefa com prioridade, os filtros por status e a lista com selos de prioridade alta, média e baixa",
           "en": "Task Manager with 2 of 6 tasks done on the progress bar, the new-task form with a priority picker, the status filters and the list with high, medium and low priority badges"
