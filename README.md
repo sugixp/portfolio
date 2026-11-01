@@ -268,7 +268,20 @@ seção, botões, painel de status) ficam em `i18n/pt.json` e `i18n/en.json`.
 Projeto em pausa desde 28/10/2026. Para retomar: `git pull` (o workflow de dados comita
 na `main` todo dia), `npm install` e `npm start`.
 
-Última mudança (01/11/2026): o **currency-converter** deixou de ser o script de terminal e
+Última mudança (01/11/2026): o **task-manager** deixou de ser o CRUD de terminal e virou a
+aplicação web em Flask + CLI, com demo estática em https://sugixp.github.io/task-manager/. O
+card ganhou screenshot, links Demo e GitHub e a stack nova nas tags, e continua em 3º lugar
+(depois do currency-converter, que tem backend publicado; a demo do task-manager é estática).
+No currículo, um bullet de **uma linha** em `highlights`: com duas linhas, o PDF em PT passava
+para 2 páginas.
+
+A prévia é o `docs/screenshot.png` do task-manager **sem recorte**
+(`npm run previews -- task-manager=../task-manager/docs/screenshot.png`). A coluna da imagem
+estica até a altura do texto e corta as laterais (`object-fit: cover`), e o app ocupa a
+faixa central da captura; um recorte mais justo perdia o título e o botão "Add task" no
+desktop. Se a descrição crescer, confira o card de novo.
+
+Mudança anterior: o **currency-converter** deixou de ser o script de terminal e
 virou a aplicação web publicada (https://sugixp.github.io/currency-converter/, API em
 https://currency-converter-api-93lo.onrender.com/docs). O card ganhou screenshot, os links
 Demo, GitHub e Docs da API (`links.docs`, só no card) e a stack nova nas tags; no currículo,
@@ -313,17 +326,16 @@ Beanstalk.
   `data/experience.json` pelos textos finais.
 - **Estudos de caso:** o rascunho de `currency-converter` ainda descreve o script de terminal
   antigo e precisa ser reescrito para a aplicação web (FastAPI, Redis, snapshot, CI/CD). O de
-  `task-manager` precisa do `learned` ("O que aprendi") e de revisão. Depois, trocar `"draft"`
+  `task-manager` também descreve a versão de terminal e precisa ser reescrito para a
+  aplicação web (Flask + CLI, migração de esquema, Playwright, CI). Depois, trocar `"draft"`
   para `false`.
 - **Habilidades:** avaliar se Redis, Chart.js e GitHub Actions entram em `data/stack.json`
   (o currículo em PT está a cerca de uma linha do limite de 1 página).
-- **Prévias:** gravar GIFs dos projetos de linha de comando, se quiser substituir o texto
-  do terminal.
 - **custompc:** os números do card e do currículo (20 regras de compatibilidade, 400+ testes
   unitários) vêm do README e do `docs/STATUS.md` do custompc; revise-os quando ele mudar
   (fase 2: login e builds salvas). Um estudo de caso dele ainda não existe.
-- **Bullets no currículo:** custompc (3) e currency-converter (1) têm `highlights`; o
-  task-manager mostra a `description`. Depois de mudar o currículo, confira que os dois PDFs
+- **Bullets no currículo:** custompc (3), currency-converter (1) e task-manager (1) têm
+  `highlights`. Depois de mudar o currículo, confira que os dois PDFs
   continuam com 1 página.
 
 ### Adicionar um projeto, em resumo
