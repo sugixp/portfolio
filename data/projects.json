@@ -84,88 +84,106 @@
       "caseStudy": {
         "draft": true,
         "problem": {
-          "pt": "Converter valores entre moedas com cotações atualizadas, direto no terminal, sem abrir um site de câmbio a cada consulta.",
-          "en": "Convert amounts between currencies with up-to-date rates, straight from the terminal, without opening an exchange website for every lookup."
+          "pt": "Transformar um script de terminal, que consultava uma API de câmbio a cada conversão, numa aplicação web publicada em planos gratuitos: o provedor de cotações permite 1.000 requisições por mês, o servidor hiberna sem tráfego e o disco é apagado a cada reinício.",
+          "en": "Turn a terminal script that called an exchange-rate API on every conversion into a web app hosted on free plans: the rates provider allows 1,000 requests a month, the server sleeps without traffic and its disk is wiped on every restart."
         },
         "decisions": [
           {
-            "pt": "Consumir a API pública open.er-api.com (ExchangeRate-API), que não exige chave: o programa funciona logo depois do clone.",
-            "en": "Use the public open.er-api.com API (ExchangeRate-API), which needs no key: the program works right after cloning."
+            "pt": "Separar o núcleo de conversão (service.py) das interfaces: a API em FastAPI e a CLI chamam o mesmo serviço, que não conhece HTTP nem terminal, e só o oxr_client.py fala com o Open Exchange Rates.",
+            "en": "Keep the conversion core (service.py) apart from the interfaces: the FastAPI API and the CLI call the same service, which knows nothing about HTTP or the terminal, and only oxr_client.py talks to Open Exchange Rates."
           },
           {
-            "pt": "Usar a biblioteca requests para a chamada HTTP e para ler o JSON da resposta.",
-            "en": "Use the requests library for the HTTP call and to read the JSON response."
+            "pt": "Calcular com Decimal e devolver valores em dinheiro como texto no JSON, sem erros de arredondamento de ponto flutuante. O plano gratuito só tem cotações com base em USD, então cada par é uma taxa cruzada (USD→destino ÷ USD→origem).",
+            "en": "Compute with Decimal and return money values as strings in the JSON, with no floating-point rounding errors. The free plan only has USD-based rates, so every pair is a cross rate (USD→target ÷ USD→source)."
           },
           {
-            "pt": "Separar responsabilidades em funções: buscar_taxas() faz a requisição, converter() calcula e exibe, main() controla o laço de interação.",
-            "en": "Split responsibilities into functions: buscar_taxas() makes the request, converter() calculates and prints, main() runs the interaction loop."
+            "pt": "Poupar a cota em camadas: as cotações atuais ficam em cache por 1 hora (configurável), cada dia do histórico é guardado para sempre e compartilhado por todos os pares, e uma trava lê o uso real da conta (usage.json, que não conta na cota) e pausa só o histórico antes de gastar a reserva das conversões.",
+            "en": "Save quota in layers: latest rates are cached for 1 hour (configurable), each history day is kept forever and shared by every pair, and a guard reads the account's real usage (usage.json, which does not count toward the quota) and pauses only the history before it eats into the requests reserved for conversions."
           },
           {
-            "pt": "Exibir a data da última atualização da cotação, que vem da própria API, para que o resultado possa ser conferido.",
-            "en": "Show when the rate was last updated, as reported by the API, so the result can be checked."
+            "pt": "Guardar os caches no Upstash Redis, porque o disco do Render no plano gratuito é apagado a cada reinício. Uma falha do Upstash é registrada e tratada como cache vazio, sem derrubar a conversão.",
+            "en": "Keep the caches in Upstash Redis, because the Render free plan wipes the disk on every restart. An Upstash failure is logged and treated as a cache miss, so it never breaks a conversion."
+          },
+          {
+            "pt": "Usar os testes como condição para o deploy: o GitHub Actions roda o pytest, com um cliente falso que nunca chama a API real, e os testes em Node do frontend; o Render só publica a API depois que eles passam, e o frontend em HTML, CSS e JavaScript puros vai para o GitHub Pages sem etapa de build.",
+            "en": "Make the tests a condition for deploying: GitHub Actions runs pytest, with a fake client that never calls the real API, and the frontend's Node tests; Render deploys the API only after they pass, and the plain HTML, CSS and JavaScript frontend goes to GitHub Pages with no build step."
           }
         ],
         "architecture": {
           "steps": [
             {
               "label": {
-                "pt": "Entrada no terminal",
-                "en": "Terminal input"
+                "pt": "Frontend",
+                "en": "Frontend"
               },
               "detail": {
-                "pt": "moeda de origem, destino e valor",
-                "en": "source currency, target currency, amount"
+                "pt": "GitHub Pages, gráfico com Chart.js",
+                "en": "GitHub Pages, Chart.js chart"
               }
             },
             {
-              "label": "buscar_taxas()",
-              "detail": "GET open.er-api.com/v6/latest/{moeda}"
-            },
-            {
-              "label": "converter()",
+              "label": "FastAPI",
               "detail": {
-                "pt": "valor × taxa da moeda de destino",
-                "en": "amount × target currency rate"
+                "pt": "Render: /convert, /history, /currencies",
+                "en": "Render: /convert, /history, /currencies"
               }
             },
             {
               "label": {
-                "pt": "Saída",
-                "en": "Output"
+                "pt": "Serviço de conversão",
+                "en": "Conversion service"
               },
               "detail": {
-                "pt": "resultado e data da cotação",
-                "en": "result and rate date"
+                "pt": "service.py: validação, taxa cruzada, Decimal",
+                "en": "service.py: validation, cross rate, Decimal"
+              }
+            },
+            {
+              "label": "Upstash Redis",
+              "detail": {
+                "pt": "cotações com expiração, histórico permanente",
+                "en": "expiring latest rates, permanent history"
+              }
+            },
+            {
+              "label": "Open Exchange Rates",
+              "detail": {
+                "pt": "só quando nada está em cache",
+                "en": "only when nothing is cached"
               }
             }
           ]
         },
         "challenges": [
           {
-            "pt": "Validar a entrada: um valor que não é número é tratado com try/except ValueError, sem encerrar o programa.",
-            "en": "Validating input: a non-numeric amount is handled with try/except ValueError instead of crashing."
+            "pt": "Servidor que hiberna: no plano gratuito, a API dorme depois de cerca de 15 minutos sem tráfego e levou uns 20 s para acordar nos testes. A página mostra na hora um snapshot de cotações publicado com o site e troca os valores pelos da API quando ela responde. O snapshot é gerado a cada 2 horas a partir do cache no Upstash, com um token só de leitura, sem gastar cota nem acordar a API, e a página avisa quando ele tem mais de 3 dias.",
+            "en": "A sleeping server: on the free plan the API sleeps after about 15 minutes without traffic and took around 20 s to wake up in testing. The page shows a rates snapshot published with the site at once and swaps in the API's values when it answers. The snapshot is built every 2 hours from the Upstash cache with a read-only token, spending no quota and never waking the API, and the page warns when it is more than 3 days old."
           },
           {
-            "pt": "Moeda inexistente: o código confere se a moeda de destino está na tabela de taxas antes de calcular.",
-            "en": "Unknown currency: the code checks that the target currency is in the rates table before calculating."
+            "pt": "Conversão provisória exata no navegador: números em JavaScript são ponto flutuante, então a conta com o snapshot usa BigInt e arredonda meio para cima, como o Decimal da API. Os testes em Node usam os mesmos casos do pytest para garantir os mesmos centavos.",
+            "en": "An exact provisional conversion in the browser: JavaScript numbers are floating point, so the snapshot math uses BigInt and rounds half up, like the API's Decimal. The Node tests use the same cases as the pytest suite to guarantee the same cents."
           },
           {
-            "pt": "Ainda não há tratamento para falha de rede ou resposta de erro da API; é o próximo ponto a melhorar.",
-            "en": "Network failures and API error responses are not handled yet; that is the next thing to improve."
+            "pt": "Distinguir \"acordando\" de \"inacessível\": o Render segura a requisição aberta enquanto o servidor sobe, então a página mantém uma única chamada a /health por até 90 s. Um erro de rede em menos de 2 s não é o servidor subindo, e sim bloqueio, DNS ou falta de internet, e cada caso tem a sua mensagem.",
+            "en": "Telling \"waking up\" from \"unreachable\": Render holds the request open while the server boots, so the page keeps a single /health call open for up to 90 s. A network error in under 2 s is not a boot but a block, DNS or no internet, and each case gets its own message."
+          },
+          {
+            "pt": "Histórico sem desperdício: o plano gratuito devolve um dia por requisição, então o primeiro gráfico de 30 dias custa 29 requisições. Os dias que faltam são buscados em paralelo, com uma trava por dia para que pedidos simultâneos não busquem o mesmo dia duas vezes, e o cache é lido de uma vez só (MGET).",
+            "en": "History without waste: the free plan returns one day per request, so the first 30-day chart costs 29 requests. Missing days are fetched in parallel, with a lock per day so simultaneous requests never fetch the same day twice, and the cache is read in a single call (MGET)."
           }
         ],
         "learned": [
           {
-            "pt": "Ler a documentação de uma API REST e transformar a resposta JSON em dados úteis.",
-            "en": "Reading a REST API's documentation and turning its JSON response into useful data."
+            "pt": "Projetar em torno dos limites de planos gratuitos: cota, hibernação e disco efêmero.",
+            "en": "Designing around free-plan limits: quota, sleeping servers and an ephemeral disk."
           },
           {
-            "pt": "Por que separar entrada, regra de negócio e saída em funções diferentes facilita testar e mudar o código.",
-            "en": "Why separating input, business logic and output into different functions makes code easier to test and change."
+            "pt": "Precisão com dinheiro: Decimal no servidor e BigInt no navegador.",
+            "en": "Precision with money: Decimal on the server and BigInt in the browser."
           },
           {
-            "pt": "A importância de tratar erros de entrada em programas interativos.",
-            "en": "The importance of handling input errors in interactive programs."
+            "pt": "Testes como condição para publicar.",
+            "en": "Tests as a condition for deploying."
           }
         ]
       }
