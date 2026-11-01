@@ -268,7 +268,21 @@ seção, botões, painel de status) ficam em `i18n/pt.json` e `i18n/en.json`.
 Projeto em pausa desde 28/10/2026. Para retomar: `git pull` (o workflow de dados comita
 na `main` todo dia), `npm install` e `npm start`.
 
-Última mudança antes da pausa: o **custompc** (https://custompc-builder.vercel.app) virou o
+Última mudança (01/11/2026): o **currency-converter** deixou de ser o script de terminal e
+virou a aplicação web publicada (https://sugixp.github.io/currency-converter/, API em
+https://currency-converter-api-93lo.onrender.com/docs). O card ganhou screenshot, os links
+Demo, GitHub e Docs da API (`links.docs`, só no card) e a stack nova nas tags; no currículo,
+um único bullet em `highlights` mantém a página única em PT e EN (dois bullets passavam
+para 2 páginas no PT). Sem contagem de testes no card e no currículo, porque desatualiza.
+
+A prévia é um recorte 16:10 da página inteira: o conteúdo do app é centralizado com largura
+fixa e vai até y≈1300, então em 1280×800 o gráfico fica fora da tela. Para recapturar:
+acorde a API (`/health`), abra o app no Playwright com viewport de 2040 px de largura,
+converta 100 USD → BRL, espere sumir o "updating…" (fonte "Live rates"), tire um
+screenshot `fullPage`, recorte 2022×1264 a partir de (9, 24) e rode
+`npm run previews -- currency-converter=<png>`.
+
+Mudança anterior: o **custompc** (https://custompc-builder.vercel.app) virou o
 projeto em destaque no lugar do task-api, que saiu do site, do terminal e do currículo. A
 prévia vem de `../custompc/docs/screenshots/builder-desktop.png`
 (`npm run previews -- custompc=<arquivo>`), e os bullets do currículo ficam em `highlights`.
@@ -297,15 +311,20 @@ Beanstalk.
 
 - **Experiência no Japão:** trocar as `description` da Mitsubishi e da Advics em
   `data/experience.json` pelos textos finais.
-- **Estudos de caso:** escrever o `learned` ("O que aprendi") de `currency-converter` e
-  `task-manager` em `data/projects.json`, revisar o resto e trocar `"draft"` para `false`.
+- **Estudos de caso:** o rascunho de `currency-converter` ainda descreve o script de terminal
+  antigo e precisa ser reescrito para a aplicação web (FastAPI, Redis, snapshot, CI/CD). O de
+  `task-manager` precisa do `learned` ("O que aprendi") e de revisão. Depois, trocar `"draft"`
+  para `false`.
+- **Habilidades:** avaliar se Redis, Chart.js e GitHub Actions entram em `data/stack.json`
+  (o currículo em PT está a cerca de uma linha do limite de 1 página).
 - **Prévias:** gravar GIFs dos projetos de linha de comando, se quiser substituir o texto
   do terminal.
 - **custompc:** os números do card e do currículo (20 regras de compatibilidade, 400+ testes
   unitários) vêm do README e do `docs/STATUS.md` do custompc; revise-os quando ele mudar
   (fase 2: login e builds salvas). Um estudo de caso dele ainda não existe.
-- **Bullets no currículo:** só o custompc tem `highlights`; os outros projetos mostram a
-  `description`.
+- **Bullets no currículo:** custompc (3) e currency-converter (1) têm `highlights`; o
+  task-manager mostra a `description`. Depois de mudar o currículo, confira que os dois PDFs
+  continuam com 1 página.
 
 ### Adicionar um projeto, em resumo
 
