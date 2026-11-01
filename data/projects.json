@@ -174,27 +174,39 @@
       "id": "task-manager",
       "title": "task-manager",
       "description": {
-        "pt": "Gerenciador de tarefas em linha de comando, com CRUD completo e armazenamento persistente em SQLite.",
-        "en": "Command-line task manager with full CRUD operations and persistent SQLite storage."
+        "pt": "Gerenciador de tarefas em Python com interface web em Flask e CLI sobre a mesma camada de lógica, persistência em SQLite com migração de esquema e layout responsivo com contraste WCAG AA. Testado com pytest e Playwright, com CI no GitHub Actions (Python 3.10 e 3.13) e demo estática em JavaScript no GitHub Pages.",
+        "en": "Python task manager with a Flask web interface and a CLI built on the same logic layer, SQLite persistence with schema migration and a responsive layout with WCAG AA contrast. Tested with pytest and Playwright, with GitHub Actions CI (Python 3.10 and 3.13) and a static JavaScript demo on GitHub Pages."
       },
+      "highlights": [
+        {
+          "pt": "Evoluí um CRUD de terminal para web (Flask) e CLI sobre a mesma lógica, com SQLite, pytest, Playwright e CI.",
+          "en": "Evolved a terminal CRUD into a Flask web app and a CLI sharing one logic layer, with SQLite, pytest, Playwright and CI."
+        }
+      ],
       "tech": [
         "Python",
+        "Flask",
+        "Jinja",
         "SQLite",
-        "CRUD"
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Pytest",
+        "Playwright",
+        "GitHub Actions"
       ],
       "links": {
-        "repo": "https://github.com/sugixp/task-manager"
+        "repo": "https://github.com/sugixp/task-manager",
+        "demo": "https://sugixp.github.io/task-manager/"
       },
-      "status": "stable",
+      "status": "deployed",
       "featured": false,
       "preview": {
-        "type": "terminal",
-        "command": "python tasks.py",
-        "output": [
-          "=== Suas Tarefas ===",
-          "[✓] 1. Estudar",
-          "[✗] 2. Ler"
-        ]
+        "type": "screenshot",
+        "alt": {
+          "pt": "Task Manager com 2 de 6 tarefas concluídas na barra de progresso, o formulário de nova tarefa com prioridade, os filtros por status e a lista com selos de prioridade alta, média e baixa",
+          "en": "Task Manager with 2 of 6 tasks done on the progress bar, the new-task form with a priority picker, the status filters and the list with high, medium and low priority badges"
+        }
       },
       "caseStudy": {
         "draft": true,
