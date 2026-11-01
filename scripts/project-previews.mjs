@@ -13,7 +13,8 @@
 // at 2x. Besides the 16:10 crop from its top (used on mobile, where the card shows
 // the whole image), it writes <id>-column-*.avif|webp with the element's own
 // proportions: on desktop the card's side column is about as tall as it is wide,
-// so a 16:10 image there loses both sides.
+// so a 16:10 image there loses both sides. "until": "#list-view" ends that
+// column version just below the given element (see columnImage).
 import { mkdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { chromium } from "@playwright/test";
@@ -48,12 +49,46 @@ async function encode(image, name) {
     await image.clone().webp({ quality: 78 }).toFile(join(OUT, `${name}.webp`));
 }
 
-async function write(id, image, { column = false } = {}) {
+async function write(id, image, column = null) {
     for (const width of PREVIEW_WIDTHS) {
         // The card reserves 1280×800, so a source in another ratio is cropped from the top.
         await encode(sharp(image).resize({ width, height: (width * VIEWPORT.height) / VIEWPORT.width, position: "top" }), `${id}-${width}`);
-        if (column) await encode(sharp(image).resize({ width }), `${id}-column-${width}`);
+        if (column) await encode(sharp(column).resize({ width }), `${id}-column-${width}`);
     }
+}
+
+// The side column crops its image with object-fit: cover from the top. An image
+// at least this tall for its width (width / height) is never cut at the sides,
+// however tall the card's text makes the column; only its plain bottom is cut.
+const COLUMN_MAX_RATIO = 0.8;
+// Space kept below the "until" element, in CSS pixels.
+const UNTIL_GAP = 16;
+
+/**
+ * The column version of an element capture. With "until", the image stops a
+ * little below that element (e.g. before a footer note that would otherwise be
+ * cut mid-line) and is extended with the page background up to COLUMN_MAX_RATIO.
+ */
+async function columnImage(page, image, { selector, until }) {
+    if (!until) return image;
+    const { cut, background } = await page.evaluate(
+        ([outer, inner]) => {
+            const top = document.querySelector(outer).getBoundingClientRect().top;
+            const bottom = document.querySelector(inner).getBoundingClientRect().bottom;
+            return { cut: bottom - top, background: getComputedStyle(document.body).backgroundColor };
+        },
+        [selector, until],
+    );
+    const [r, g, b] = background.match(/\d+/g).map(Number);
+    const { width, height } = await sharp(image).metadata();
+    const scale = await page.evaluate(() => devicePixelRatio);
+    const kept = Math.min(height, Math.round((cut + UNTIL_GAP) * scale));
+    const target = Math.max(kept, Math.ceil(width / COLUMN_MAX_RATIO));
+    return sharp(image)
+        .extract({ left: 0, top: 0, width, height: kept })
+        .extend({ bottom: target - kept, background: { r, g, b } })
+        .png()
+        .toBuffer();
 }
 
 await mkdir(OUT, { recursive: true });
@@ -72,7 +107,7 @@ if (captures.length) {
             await page.goto(project.links.demo, { waitUntil: "networkidle" });
             await page.evaluate(() => document.fonts.ready);
             const image = selector ? await page.locator(selector).screenshot() : await page.screenshot();
-            await write(project.id, image, { column: Boolean(selector) });
+            await write(project.id, image, selector ? await columnImage(page, image, project.preview) : null);
             await page.close();
             console.log(`✓ ${project.id}: ${project.links.demo}${selector ? ` (${selector})` : ""}`);
         }
