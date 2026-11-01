@@ -212,51 +212,55 @@
       "caseStudy": {
         "draft": true,
         "problem": {
-          "pt": "Organizar tarefas pessoais num programa simples de terminal, sem perder os dados ao fechar.",
-          "en": "Keep track of personal tasks in a simple terminal program without losing data when it closes."
+          "pt": "Levar um CRUD de terminal, que guardava tarefas em SQLite, para o navegador sem duplicar as regras entre as interfaces, sem perder os dados de quem usava a primeira versão e com uma demo que qualquer pessoa possa abrir.",
+          "en": "Bring a terminal CRUD that stored tasks in SQLite to the browser without duplicating rules between interfaces, without losing the data of anyone using the first version, and with a demo anyone can open."
         },
         "decisions": [
           {
-            "pt": "SQLite pela biblioteca padrão do Python (sqlite3): persistência em arquivo, sem servidor e sem dependências externas.",
-            "en": "SQLite through Python's standard library (sqlite3): file-based persistence, no server and no external dependencies."
+            "pt": "Concentrar regras e SQL na classe TaskManager (core.py). A interface web (Flask + Jinja) e a CLI só chamam esse objeto, e nenhuma das duas conhece SQL: a validação de título (não vazio, até 200 caracteres) e de prioridade é a mesma nas duas.",
+            "en": "Keep rules and SQL in the TaskManager class (core.py). The web interface (Flask + Jinja) and the CLI only call that object and neither knows any SQL, so title (non-empty, up to 200 characters) and priority validation is the same in both."
           },
           {
-            "pt": "Consultas parametrizadas (?) em todas as operações, o que impede SQL injection a partir do texto digitado.",
-            "en": "Parameterized queries (?) in every operation, which prevents SQL injection from typed text."
+            "pt": "Migrar o esquema na inicialização: PRAGMA table_info identifica um banco da primeira versão, renomeia as colunas em português (titulo, concluida) e acrescenta priority com valor padrão, sem perder tarefas.",
+            "en": "Migrate the schema at startup: PRAGMA table_info detects a first-version database, renames the Portuguese columns (titulo, concluida) and adds priority with a default value, without losing tasks."
           },
           {
-            "pt": "Uma função para cada operação do CRUD e um menu numerado que apenas chama essas funções.",
-            "en": "One function per CRUD operation and a numbered menu that only calls those functions."
+            "pt": "Publicar uma demo estática no GitHub Pages em vez de hospedar o Flask: não há servidor para manter nem para hibernar, e cada visitante tem as próprias tarefas no localStorage, em vez de um banco público compartilhado. A demo reaproveita o style.css e a marcação dos templates, então as duas versões têm a mesma aparência.",
+            "en": "Publish a static demo on GitHub Pages instead of hosting Flask: there is no server to maintain or to fall asleep, and each visitor keeps their own tasks in localStorage instead of a shared public database. The demo reuses style.css and the templates' markup, so both versions look the same."
           },
           {
-            "pt": "A tabela é criada com CREATE TABLE IF NOT EXISTS na inicialização, então o primeiro uso não exige configuração.",
-            "en": "The table is created with CREATE TABLE IF NOT EXISTS at startup, so first use needs no setup."
+            "pt": "Testar em camadas: pytest para as regras e as rotas da web, com um banco temporário por teste, e Playwright para a demo no navegador. O GitHub Actions roda tudo em cada push, em matriz com Python 3.10 (a menor versão suportada) e 3.13.",
+            "en": "Test in layers: pytest for the rules and the web routes, with a temporary database per test, and Playwright for the demo in the browser. GitHub Actions runs everything on every push, in a matrix with Python 3.10 (the oldest supported version) and 3.13."
+          },
+          {
+            "pt": "Dar ao app uma identidade visual própria (laranja e verde pastel) com contraste WCAG AA: pelo menos 4,5:1 no texto e 3:1 nas bordas dos campos, além da fonte Nunito servida pelo próprio projeto.",
+            "en": "Give the app its own visual identity (pastel orange and green) with WCAG AA contrast: at least 4.5:1 for text and 3:1 for input borders, plus the Nunito font served by the project itself."
           }
         ],
         "architecture": {
           "steps": [
             {
               "label": {
-                "pt": "Menu no terminal",
-                "en": "Terminal menu"
+                "pt": "Web e CLI",
+                "en": "Web and CLI"
               },
               "detail": {
-                "pt": "opções de 1 a 5",
-                "en": "options 1 to 5"
+                "pt": "Flask + Jinja e menu no terminal",
+                "en": "Flask + Jinja and a terminal menu"
               }
             },
             {
-              "label": {
-                "pt": "Funções de CRUD",
-                "en": "CRUD functions"
-              },
-              "detail": "criar, listar, concluir, deletar"
+              "label": "TaskManager",
+              "detail": {
+                "pt": "validação e regras de negócio",
+                "en": "validation and business rules"
+              }
             },
             {
               "label": "sqlite3",
               "detail": {
-                "pt": "consultas parametrizadas",
-                "en": "parameterized queries"
+                "pt": "consultas parametrizadas e migração do esquema",
+                "en": "parameterized queries and schema migration"
               }
             },
             {
@@ -270,30 +274,38 @@
         },
         "challenges": [
           {
-            "pt": "Abrir e fechar a conexão a cada operação mantém o código simples, mas repete trabalho; usar um gerenciador de contexto (with) é o próximo passo.",
-            "en": "Opening and closing the connection on every operation keeps the code simple but repeats work; a context manager (with) is the next step."
+            "pt": "Lógica duplicada na demo: as regras do core.py foram reescritas em JavaScript, e uma mudança feita só de um lado deixaria as versões diferentes. Os testes end-to-end conferem na demo os mesmos comportamentos que o pytest cobre no Python (título em branco, edição, filtros com contadores, exclusão com confirmação, dados mantidos ao recarregar) e rodam em todo push. Eles não comparam as duas implementações, então uma regra nova precisa de teste nos dois lados.",
+            "en": "Duplicated logic in the demo: the rules in core.py were rewritten in JavaScript, and a change made on one side only would make the versions drift. The end-to-end tests check in the demo the same behaviours pytest covers in Python (blank title, editing, filters with counters, delete with confirmation, data kept after a reload) and run on every push. They do not compare the two implementations, so a new rule needs a test on both sides."
           },
           {
-            "pt": "Um ID não numérico ainda encerra o programa com erro, porque int() é chamado sem tratamento.",
-            "en": "A non-numeric ID still crashes the program, because int() is called without handling."
+            "pt": "Banco corrompido: um arquivo que não é um SQLite válido é renomeado para tasks.db.corrupted-<data>, o app começa com a lista vazia e avisa na CLI e na web. Um erro operacional, como banco travado, não é tratado como corrupção e continua aparecendo como erro.",
+            "en": "Corrupted database: a file that is not a valid SQLite database is renamed to tasks.db.corrupted-<date>, and the app starts with an empty list and says so in the CLI and on the web. An operational error, such as a locked database, is not treated as corruption and is still reported as an error."
           },
           {
-            "pt": "Representar o status \"concluída\" como inteiro 0/1, já que o SQLite não tem tipo booleano.",
-            "en": "Storing the \"done\" status as a 0/1 integer, since SQLite has no boolean type."
+            "pt": "Entradas inválidas: título vazio ou longo demais, prioridade fora da lista e ID que não é número viram erros de validação com mensagem clara. A CLI mostra o erro e volta ao menu (na primeira versão, um ID não numérico encerrava o programa), e a web mostra a mensagem no formulário. Uma tarefa inexistente gera um aviso e volta para a lista.",
+            "en": "Invalid input: an empty or too-long title, an unknown priority and a non-numeric ID become validation errors with a clear message. The CLI shows the error and returns to the menu (in the first version, a non-numeric ID crashed the program), and the web shows the message on the form. A missing task shows a notice and goes back to the list."
+          },
+          {
+            "pt": "Testar a migração e a recuperação: os testes criam um banco com o esquema antigo e um arquivo corrompido de propósito, e conferem que as tarefas sobrevivem e que o aviso aparece.",
+            "en": "Testing migration and recovery: the tests create a database with the old schema and a deliberately corrupted file, and check that tasks survive and that the warning is shown."
           }
         ],
         "learned": [
           {
-            "pt": "Modelar uma tabela e escrever as quatro operações do CRUD em SQL.",
-            "en": "Modeling a table and writing the four CRUD operations in SQL."
+            "pt": "Por que separar a lógica das interfaces: com o TaskManager isolado, a interface web entrou sem reescrever as regras, e um teste do core vale para as duas.",
+            "en": "Why to separate logic from interfaces: with TaskManager isolated, the web interface was added without rewriting the rules, and a core test covers both."
           },
           {
-            "pt": "Por que usar parâmetros em vez de montar SQL com f-strings.",
-            "en": "Why to use parameters instead of building SQL with f-strings."
+            "pt": "Evoluir o esquema de um banco que já tem dados, migrando na inicialização em vez de pedir para apagar o arquivo.",
+            "en": "Evolving the schema of a database that already holds data, migrating at startup instead of asking users to delete the file."
           },
           {
-            "pt": "Como a persistência em arquivo muda o comportamento de um programa entre execuções.",
-            "en": "How file persistence changes a program's behavior between runs."
+            "pt": "Testar em camadas e na CI: unitários para as regras, de rota para a web, end-to-end para o que só aparece no navegador e mais de uma versão do Python.",
+            "en": "Testing in layers and in CI: unit tests for the rules, route tests for the web, end-to-end tests for what only shows in the browser, and more than one Python version."
+          },
+          {
+            "pt": "O custo de uma demo estática: ela é simples de publicar, mas cria uma segunda implementação que precisa ser mantida e testada.",
+            "en": "The cost of a static demo: it is simple to publish, but it creates a second implementation that has to be maintained and tested."
           }
         ]
       }
