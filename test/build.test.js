@@ -120,6 +120,18 @@ test("screenshot previews ship as AVIF and WebP, lazy-loaded, with dimensions", 
     if (shots.length) assert.match(html, /<img src="[^"]+-640\.webp" alt="[^"]+" width="1280" height="800" loading="lazy" decoding="async" \/>/);
 });
 
+test("element captures add desktop-only sources for the card's side column", async () => {
+    const shots = content.data.projects.projects.filter((p) => p.preview?.selector && !p.featured);
+    const html = await page("index.html");
+    for (const p of shots) {
+        const source = html.match(new RegExp(`<source media="([^"]+)" type="image/avif" srcset="[^"]*${p.id}-column-640\\.avif 640w`));
+        assert.ok(source, `${p.id} column source`);
+        assert.equal(source[1], "(min-width: 901px)", "same breakpoint as the stacked card in css/style.css");
+        // The column sources come first, so narrow screens fall through to the 16:10 image.
+        assert.ok(html.indexOf(`${p.id}-column-640.avif`) < html.indexOf(`${p.id}-640.avif`), `${p.id} order`);
+    }
+});
+
 test("each language has a one-column CV page built from the same data", async () => {
     const { projects, experience } = content.data;
     for (const locale of content.locales) {

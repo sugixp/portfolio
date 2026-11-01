@@ -8,6 +8,12 @@
 //   npm run previews custompc   -> only the given ids
 //   npm run previews custompc=../custompc/docs/screenshots/builder-desktop.png
 //                               -> resize an existing 16:10 image instead of capturing
+//
+// With "preview": { "selector": "main.container" }, only that element is captured,
+// at 2x. Besides the 16:10 crop from its top (used on mobile, where the card shows
+// the whole image), it writes <id>-column-*.avif|webp with the element's own
+// proportions: on desktop the card's side column is about as tall as it is wide,
+// so a 16:10 image there loses both sides.
 import { mkdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { chromium } from "@playwright/test";
@@ -37,12 +43,16 @@ if (!targets.length) {
     process.exit(0);
 }
 
-async function write(id, image) {
+async function encode(image, name) {
+    await image.clone().avif({ quality: 55 }).toFile(join(OUT, `${name}.avif`));
+    await image.clone().webp({ quality: 78 }).toFile(join(OUT, `${name}.webp`));
+}
+
+async function write(id, image, { column = false } = {}) {
     for (const width of PREVIEW_WIDTHS) {
         // The card reserves 1280×800, so a source in another ratio is cropped from the top.
-        const resized = sharp(image).resize({ width, height: (width * VIEWPORT.height) / VIEWPORT.width, position: "top" });
-        await resized.clone().avif({ quality: 55 }).toFile(join(OUT, `${id}-${width}.avif`));
-        await resized.clone().webp({ quality: 78 }).toFile(join(OUT, `${id}-${width}.webp`));
+        await encode(sharp(image).resize({ width, height: (width * VIEWPORT.height) / VIEWPORT.width, position: "top" }), `${id}-${width}`);
+        if (column) await encode(sharp(image).resize({ width }), `${id}-column-${width}`);
     }
 }
 
@@ -55,11 +65,16 @@ const captures = targets.filter((p) => !sources.has(p.id));
 if (captures.length) {
     const browser = await launch();
     try {
-        const page = await browser.newPage({ viewport: VIEWPORT, colorScheme: "light" });
         for (const project of captures) {
+            const { selector } = project.preview;
+            // A fresh context per project: no storage left over from another demo.
+            const page = await browser.newPage({ viewport: VIEWPORT, colorScheme: "light", deviceScaleFactor: selector ? 2 : 1 });
             await page.goto(project.links.demo, { waitUntil: "networkidle" });
-            await write(project.id, await page.screenshot());
-            console.log(`✓ ${project.id}: ${project.links.demo}`);
+            await page.evaluate(() => document.fonts.ready);
+            const image = selector ? await page.locator(selector).screenshot() : await page.screenshot();
+            await write(project.id, image, { column: Boolean(selector) });
+            await page.close();
+            console.log(`✓ ${project.id}: ${project.links.demo}${selector ? ` (${selector})` : ""}`);
         }
     } finally {
         await browser.close();

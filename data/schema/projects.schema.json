@@ -87,6 +87,10 @@
                 },
                 "alt": {
                   "$ref": "common.schema.json#/$defs/localized"
+                },
+                "selector": {
+                  "description": "CSS selector of the element to capture instead of the whole viewport (at 2x). npm run previews then also writes <id>-column-*.avif|webp with the element's own proportions, shown in the card's side column on desktop.",
+                  "$ref": "common.schema.json#/$defs/nonEmptyString"
                 }
               },
               "required": [
