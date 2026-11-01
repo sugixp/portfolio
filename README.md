@@ -226,7 +226,7 @@ Edite apenas `data/projects.json`, adicionando um objeto ao array `projects`:
 | `links` | sim | `repo`, `demo` e `docs` (documentação da API), todos opcionais, sempre `https://`; `docs` aparece só no card, não no currículo |
 | `status` | sim | `deployed`, `stable`, `in-progress` ou `archived` |
 | `featured` | sim | `true` exibe o card em destaque, ocupando a linha toda |
-| `preview` | não | imagem no card: `{ "type": "screenshot", "alt": {…} }` (captura de `links.demo`; com `"selector"`, só esse elemento, mais uma versão para a coluna do card no desktop; ou uma imagem pronta via `npm run previews -- <id>=<arquivo>`) ou `{ "type": "terminal", "command", "output": [...] }` (exemplo do README) |
+| `preview` | não | imagem no card: `{ "type": "screenshot", "alt": {…} }` (captura de `links.demo`; com `"selector"`, só esse elemento, mais uma versão para a coluna do card no desktop, que `"until"` termina abaixo de outro elemento; ou uma imagem pronta via `npm run previews -- <id>=<arquivo>`) ou `{ "type": "terminal", "command", "output": [...] }` (exemplo do README) |
 | `highlights` | não | 1 a 3 bullets `{ "pt", "en" }` para o currículo, que os mostra no lugar da `description` |
 | `caseStudy` | não | estudo de caso; veja abaixo |
 
@@ -288,9 +288,13 @@ O `"selector": "main.container"` em `preview` faz o script capturar só esse ele
 imagem inteira) e `task-manager-column-640|1280` (proporção do elemento, usada acima de
 900 px). No desktop a coluna da imagem estica até a altura do texto e fica quase quadrada;
 com `object-fit: cover`, uma imagem 16:10 ali perde as laterais, e o título e o botão
-"Add task" sumiam. Se a descrição do card crescer muito, confira de novo: a coluna fica mais
-alta e corta a imagem por baixo (hoje só a nota de rodapé da demo fica parcialmente fora no
-EN).
+"Add task" sumiam.
+
+O `"until": "#list-view"` termina a versão da coluna 16 px abaixo da lista de tarefas, antes
+da nota de rodapé da demo ("Static demo…"), e completa a imagem com a cor de fundo da página
+até a proporção 0,8 (largura/altura). Uma imagem mais alta que a coluna nunca perde as
+laterais com o `cover`; o que sobra é cortado por baixo e é só fundo liso. Sem isso, a nota
+aparecia cortada no meio da linha no card em inglês, onde a coluna é mais baixa.
 
 Mudança anterior: o **currency-converter** deixou de ser o script de terminal e
 virou a aplicação web publicada (https://sugixp.github.io/currency-converter/, API em
@@ -335,9 +339,12 @@ Beanstalk.
 
 - **Experiência no Japão:** trocar as `description` da Mitsubishi e da Advics em
   `data/experience.json` pelos textos finais.
-- **Estudos de caso:** o rascunho de `currency-converter` ainda descreve o script de terminal
-  antigo e precisa ser reescrito para a aplicação web (FastAPI, Redis, snapshot, CI/CD).
-  Depois, revisar os dois rascunhos (`npm run start:drafts`) e trocar `"draft"` para `false`.
+- **Estudos de caso:** os de `currency-converter` e `task-manager` descrevem as versões
+  atuais (cada afirmação conferida no código, nos testes e nos workflows dos repositórios) e
+  continuam com `"draft": true`. **A seção "O que aprendi" (`caseStudy.learned`) dos dois é
+  um texto provisório e precisa da revisão do Henrique, que vai reescrevê-la com as próprias
+  palavras.** Depois da revisão (`npm run start:drafts`), e só com o ok dele, trocar `"draft"`
+  para `false` nos dois.
 - **Habilidades:** avaliar se Redis, Chart.js e GitHub Actions entram em `data/stack.json`
   (o currículo em PT está a cerca de uma linha do limite de 1 página).
 - **custompc:** os números do card e do currículo (20 regras de compatibilidade, 400+ testes
