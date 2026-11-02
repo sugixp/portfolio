@@ -3,6 +3,48 @@
   "user": "sugixp",
   "repos": [
     {
+      "name": "portfolio",
+      "description": null,
+      "url": "https://github.com/sugixp/portfolio",
+      "homepage": null,
+      "language": "JavaScript",
+      "stars": 1,
+      "archived": false,
+      "lastCommit": {
+        "sha": "36e84ef",
+        "date": "2026-11-01T18:51:14Z",
+        "message": "docs(readme): document \"until\" and flag \"What I learned\" for the author's review"
+      }
+    },
+    {
+      "name": "task-manager",
+      "description": null,
+      "url": "https://github.com/sugixp/task-manager",
+      "homepage": null,
+      "language": "Python",
+      "stars": 0,
+      "archived": false,
+      "lastCommit": {
+        "sha": "e90b79c",
+        "date": "2026-11-01T18:17:06Z",
+        "message": "docs: refresh screenshots and README for the new visual identity"
+      }
+    },
+    {
+      "name": "currency-converter",
+      "description": null,
+      "url": "https://github.com/sugixp/currency-converter",
+      "homepage": null,
+      "language": "Python",
+      "stars": 0,
+      "archived": false,
+      "lastCommit": {
+        "sha": "4adbe13",
+        "date": "2026-11-01T15:28:44Z",
+        "message": "docs: document the rates snapshot, cold starts and schedule re-enabling"
+      }
+    },
+    {
       "name": "custompc",
       "description": "Monte seu PC com preços em reais, lojas brasileiras e verificação de compatibilidade · PC builder for Brazil",
       "url": "https://github.com/sugixp/custompc",
@@ -14,20 +56,6 @@
         "sha": "82bda57",
         "date": "2026-10-31T06:07:28Z",
         "message": "docs: record the pause after Phase 2 stage 2"
-      }
-    },
-    {
-      "name": "portfolio",
-      "description": null,
-      "url": "https://github.com/sugixp/portfolio",
-      "homepage": null,
-      "language": "JavaScript",
-      "stars": 1,
-      "archived": false,
-      "lastCommit": {
-        "sha": "ec4cfa3",
-        "date": "2026-10-28T07:58:54Z",
-        "message": "docs(readme): record the custompc swap and what to check on resuming"
       }
     },
     {
@@ -56,34 +84,6 @@
         "sha": "dec41d3",
         "date": "2026-08-13T11:30:28Z",
         "message": "Corrige o README"
-      }
-    },
-    {
-      "name": "task-manager",
-      "description": null,
-      "url": "https://github.com/sugixp/task-manager",
-      "homepage": null,
-      "language": "Python",
-      "stars": 0,
-      "archived": false,
-      "lastCommit": {
-        "sha": "d6babbf",
-        "date": "2026-08-03T03:51:51Z",
-        "message": "Add README"
-      }
-    },
-    {
-      "name": "currency-converter",
-      "description": null,
-      "url": "https://github.com/sugixp/currency-converter",
-      "homepage": null,
-      "language": "Python",
-      "stars": 0,
-      "archived": false,
-      "lastCommit": {
-        "sha": "8bd36d3",
-        "date": "2026-08-03T02:37:24Z",
-        "message": "Add README"
       }
     },
     {
@@ -147,37 +147,37 @@
     {
       "name": "Jupyter Notebook",
       "bytes": 1104646,
-      "share": 0.612
+      "share": 0.55
     },
     {
       "name": "TypeScript",
       "bytes": 446602,
-      "share": 0.247
+      "share": 0.222
     },
     {
       "name": "JavaScript",
-      "bytes": 194066,
-      "share": 0.107
+      "bytes": 240720,
+      "share": 0.12
+    },
+    {
+      "name": "Python",
+      "bytes": 137619,
+      "share": 0.069
     },
     {
       "name": "CSS",
-      "bytes": 29893,
-      "share": 0.017
+      "bytes": 50648,
+      "share": 0.025
+    },
+    {
+      "name": "HTML",
+      "bytes": 14230,
+      "share": 0.007
     },
     {
       "name": "C#",
       "bytes": 13771,
-      "share": 0.008
-    },
-    {
-      "name": "Python",
-      "bytes": 13494,
       "share": 0.007
-    },
-    {
-      "name": "HTML",
-      "bytes": 2753,
-      "share": 0.002
     },
     {
       "name": "Dockerfile",
@@ -193,91 +193,92 @@
   "recentActivity": [
     {
       "type": "push",
-      "repo": "portfolio",
-      "date": "2026-10-28T07:57:20Z",
+      "repo": "custompc",
+      "date": "2026-10-31T03:53:10Z",
       "commits": 0
     },
     {
       "type": "push",
       "repo": "custompc",
-      "date": "2026-10-28T06:54:08Z",
+      "date": "2026-10-31T03:14:26Z",
       "commits": 0
     },
     {
       "type": "push",
       "repo": "custompc",
-      "date": "2026-10-28T06:42:47Z",
-      "commits": 0
-    },
-    {
-      "type": "create",
-      "repo": "custompc",
-      "date": "2026-10-28T06:34:42Z"
-    },
-    {
-      "type": "push",
-      "repo": "custompc",
-      "date": "2026-10-28T06:16:23Z",
+      "date": "2026-10-31T03:12:11Z",
       "commits": 0
     },
     {
       "type": "push",
       "repo": "custompc",
-      "date": "2026-10-28T05:40:24Z",
+      "date": "2026-10-31T03:52:13Z",
       "commits": 0
     },
     {
       "type": "push",
       "repo": "custompc",
-      "date": "2026-10-28T05:19:55Z",
+      "date": "2026-10-31T06:05:41Z",
       "commits": 0
     },
     {
       "type": "push",
       "repo": "custompc",
-      "date": "2026-10-28T05:17:40Z",
+      "date": "2026-10-31T03:14:43Z",
       "commits": 0
     },
     {
       "type": "push",
       "repo": "custompc",
-      "date": "2026-10-28T06:06:53Z",
-      "commits": 0
-    },
-    {
-      "type": "push",
-      "repo": "portfolio",
-      "date": "2026-10-27T23:40:26Z",
+      "date": "2026-10-31T03:07:09Z",
       "commits": 0
     },
     {
       "type": "push",
       "repo": "custompc",
-      "date": "2026-10-28T01:55:20Z",
+      "date": "2026-10-31T05:55:10Z",
       "commits": 0
     },
     {
       "type": "push",
       "repo": "custompc",
-      "date": "2026-10-28T00:36:29Z",
+      "date": "2026-10-31T03:01:10Z",
       "commits": 0
     },
     {
       "type": "push",
       "repo": "custompc",
-      "date": "2026-10-28T00:23:52Z",
-      "commits": 0
-    },
-    {
-      "type": "push",
-      "repo": "portfolio",
-      "date": "2026-10-27T21:20:49Z",
+      "date": "2026-10-31T06:07:28Z",
       "commits": 0
     },
     {
       "type": "push",
       "repo": "custompc",
-      "date": "2026-10-28T05:42:38Z",
+      "date": "2026-10-31T02:55:44Z",
+      "commits": 0
+    },
+    {
+      "type": "push",
+      "repo": "custompc",
+      "date": "2026-10-31T03:42:04Z",
+      "commits": 0
+    },
+    {
+      "type": "push",
+      "repo": "custompc",
+      "date": "2026-10-31T03:28:22Z",
+      "commits": 0
+    },
+    {
+      "type": "push",
+      "repo": "custompc",
+      "date": "2026-10-31T03:50:16Z",
+      "commits": 0
+    },
+    {
+      "type": "push",
+      "repo": "custompc",
+      "date": "2026-10-31T03:31:02Z",
       "commits": 0
     }
   ]
