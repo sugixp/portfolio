@@ -193,6 +193,12 @@
   "recentActivity": [
     {
       "type": "push",
+      "repo": "currency-converter",
+      "date": "2026-11-01T14:32:05Z",
+      "commits": 0
+    },
+    {
+      "type": "push",
       "repo": "portfolio",
       "date": "2026-11-01T18:28:14Z",
       "commits": 0
@@ -273,12 +279,6 @@
       "type": "push",
       "repo": "task-manager",
       "date": "2026-11-01T17:39:44Z",
-      "commits": 0
-    },
-    {
-      "type": "push",
-      "repo": "currency-converter",
-      "date": "2026-11-01T13:27:09Z",
       "commits": 0
     }
   ]
